@@ -1,4 +1,4 @@
-package DAO;
+package domain;
 
 public class Product {
     private int id;

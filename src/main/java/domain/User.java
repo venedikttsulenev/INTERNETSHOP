@@ -1,4 +1,4 @@
-package DAO;
+package domain;
 
 import javax.persistence.Id;
 
