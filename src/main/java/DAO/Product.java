@@ -7,10 +7,6 @@ public class Product {
     private int count;
     private int price;
 
-    public Product() {
-
-    }
-
     public void setId(int id){
         this.id = id;
     }
