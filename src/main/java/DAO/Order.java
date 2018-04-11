@@ -10,6 +10,9 @@ public class Order {
     private Date paydate;
     private boolean isPayed;
 
+    public Order() {
+    }
+
     public int getId() {
         return id;
     }
