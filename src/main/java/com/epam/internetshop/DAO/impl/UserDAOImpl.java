@@ -10,21 +10,20 @@ import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
     public User createUser(User user) {
-        Session session = HibernateSessionFactory.getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
-
-        session.persist(user);
-
-        transaction.commit();
-
-        
-
-        session.close();
-
-        return null;
+        try {
+            Session session = HibernateSessionFactory.getSession();
+            session.beginTransaction();
+            session.save(user);
+            session.getTransaction().commit();
+            session.close();
+        } catch (Throwable e) {
+            System.out.println(e.getMessage());
+        }
+        return user;
     }
 
     public List<User> getAllUsers() {
+        Session session = HibernateSessionFactory.getSession();
         return null;
     }
 

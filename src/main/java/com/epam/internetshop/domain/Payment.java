@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Table
-public class Order {
+public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -22,7 +22,7 @@ public class Order {
     private Date paydate;
     private Boolean isPayed;
 
-    public Order() {
+    public Payment() {
     }
 
     public Long getId() {
