@@ -1,4 +1,4 @@
-package controllers.manager;
+package com.epam.internetshop.controllers.manager;
 
 import java.util.ResourceBundle;
 

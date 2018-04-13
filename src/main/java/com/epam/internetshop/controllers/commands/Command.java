@@ -1,4 +1,4 @@
-package controllers.commands;
+package com.epam.internetshop.controllers.commands;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

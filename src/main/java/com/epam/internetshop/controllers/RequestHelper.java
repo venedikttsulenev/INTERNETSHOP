@@ -1,10 +1,10 @@
-package controllers;
+package com.epam.internetshop.controllers;
 
 import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
-import controllers.commands.Command;
-import controllers.commands.LoginCommand;
-import controllers.commands.NoCommand;
+import com.epam.internetshop.controllers.commands.Command;
+import com.epam.internetshop.controllers.commands.LoginCommand;
+import com.epam.internetshop.controllers.commands.NoCommand;
 
 public class RequestHelper {
 

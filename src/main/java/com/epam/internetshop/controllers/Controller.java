@@ -1,4 +1,4 @@
-package controllers;
+package com.epam.internetshop.controllers;
 
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import controllers.commands.Command;
-import controllers.manager.MessageManager;
-import controllers.manager.ConfigurationManager;
+import com.epam.internetshop.controllers.commands.Command;
+import com.epam.internetshop.controllers.manager.MessageManager;
+import com.epam.internetshop.controllers.manager.ConfigurationManager;
 
 @WebServlet("/")
 public class Controller extends HttpServlet
