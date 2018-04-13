@@ -1,11 +1,11 @@
-package services;
+package com.epam.internetshop.services;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.DriverManager;
-import controllers.manager.ConfigurationManager;
+import com.epam.internetshop.controllers.manager.ConfigurationManager;
 
 public class LoginLogic {
 
