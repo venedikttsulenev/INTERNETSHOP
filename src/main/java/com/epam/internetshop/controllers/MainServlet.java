@@ -1,9 +1,9 @@
 package com.epam.internetshop.controllers;
 
-import com.epam.internetshop.DAO.UserDAO;
-import com.epam.internetshop.DAO.impl.UserDAOImpl;
-import com.epam.internetshop.DAO.util.HibernateSessionFactory;
+import com.epam.internetshop.DAO.DAO;
+import com.epam.internetshop.DAO.impl.UserDAO;
 import com.epam.internetshop.domain.User;
+import org.hibernate.HibernateException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/")
 public class MainServlet extends HttpServlet {
@@ -18,16 +19,7 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-
-        User user = new User();
-        user.setAdmin(false);
-        user.setBlackListed(false);
-        user.setLogin("fly2");
-        user.setPassword("password");
-
-        new UserDAOImpl().createUser(user);
-
-        req.setAttribute("name", "Matt");
+        req.setAttribute("name", "asd");
 
 
         req.getRequestDispatcher("mypage.jsp").forward(req, resp);
