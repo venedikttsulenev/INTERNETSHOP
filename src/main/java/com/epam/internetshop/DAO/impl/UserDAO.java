@@ -9,16 +9,6 @@ import javax.persistence.criteria.*;
 import java.util.List;
 
 public class UserDAO implements DAO<User> {
-    public User create(User entity) throws HibernateException {
-        Session session = HibernateSessionFactory.getSession();
-
-        session.beginTransaction();
-        session.save(entity);
-        session.getTransaction().commit();
-
-        session.close();
-        return entity;
-    }
 
     public List<User> getAll() {
         Session session = HibernateSessionFactory.getSession();
@@ -28,13 +18,12 @@ public class UserDAO implements DAO<User> {
 
         CriteriaQuery<User> criteria = builder.createQuery(User.class);
         criteria.from(User.class);
-
         List<User> list = session.createQuery(criteria).getResultList();
 
         session.getTransaction().commit();
 
         session.close();
-        return null;
+        return list;
     }
 
     public User getById(Long id) {
@@ -49,24 +38,4 @@ public class UserDAO implements DAO<User> {
         return user;
     }
 
-    public User update(User entity) {
-        Session session = HibernateSessionFactory.getSession();
-
-        session.beginTransaction();
-        session.update(entity);
-        session.getTransaction().commit();
-
-        session.close();
-        return entity;
-    }
-
-    public void delete(User entity) {
-        Session session = HibernateSessionFactory.getSession();
-
-        session.beginTransaction();
-        session.delete(entity);
-        session.getTransaction().commit();
-
-        session.close();
-    }
 }
