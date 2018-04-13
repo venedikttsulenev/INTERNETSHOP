@@ -1,23 +1,28 @@
-package domain;
+package com.epam.internetshop.domain;
 
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "user")
 public class User {
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @Column(unique = true)
     private String login;
     private String password;
-    private boolean isBlackListed;
-    private boolean isAdmin;
+    private Boolean isBlackListed;
+    private Boolean isAdmin;
 
     public User() {
 
     }
-    @Id
-    public int getId() {
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -37,19 +42,19 @@ public class User {
         this.password = password;
     }
 
-    public boolean isBlackListed() {
+    public Boolean isBlackListed() {
         return isBlackListed;
     }
 
-    public void setBlackListed(boolean blackListed) {
+    public void setBlackListed(Boolean blackListed) {
         isBlackListed = blackListed;
     }
 
-    public boolean isAdmin() {
+    public Boolean isAdmin() {
         return isAdmin;
     }
 
-    public void setAdmin(boolean admin) {
+    public void setAdmin(Boolean admin) {
         isAdmin = admin;
     }
 }
