@@ -16,7 +16,7 @@ public class ProductDAO implements DAO<Product> {
         return null;
     }
 
-    public Product getWithId(Long id) {
+    public Product getById(Long id) {
         return null;
     }
 

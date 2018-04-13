@@ -37,7 +37,7 @@ public class UserDAO implements DAO<User> {
         return null;
     }
 
-    public User getWithId(Long id) {
+    public User getById(Long id) {
         Session session = HibernateSessionFactory.getSession();
         User user = null;
 

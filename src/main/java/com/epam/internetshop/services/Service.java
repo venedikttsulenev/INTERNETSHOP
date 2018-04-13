@@ -7,26 +7,26 @@ import com.epam.internetshop.domain.User;
 import java.util.List;
 
 public class Service implements UserService{
-    private DAO userDAO = new UserDAO();
+    private DAO<User> userDAO = new UserDAO();
 
     public User create(User user) {
-        return (User)userDAO.create(user);
+        return userDAO.create(user);
     }
 
     public User update(User user) {
-        return null;
+        return userDAO.update(user);
     }
 
-    public User delete(User user) {
-        return null;
+    public void delete(User user) {
+        userDAO.delete(user);
     }
 
     public List<User> select(User user) {
         return null;
     }
 
-    public User selectById(User user) {
-        return null;
+    public User getById(Long Id) {
+        return userDAO.getById(Id);
     }
 
     public List<User> selectSort() {

@@ -16,7 +16,7 @@ public class PaymentDAO implements DAO<Payment> {
         return null;
     }
 
-    public Payment getWithId(Long id) {
+    public Payment getById(Long id) {
         return null;
     }
 
