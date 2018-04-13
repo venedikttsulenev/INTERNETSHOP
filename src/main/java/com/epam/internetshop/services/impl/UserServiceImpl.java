@@ -4,10 +4,8 @@ import com.epam.internetshop.DAO.DAO;
 import com.epam.internetshop.DAO.impl.UserDAO;
 import com.epam.internetshop.domain.User;
 import com.epam.internetshop.services.UserService;
-import org.hibernate.Hibernate;
 import org.hibernate.PropertyNotFoundException;
 import org.hibernate.PropertyValueException;
-
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
@@ -47,5 +45,9 @@ public class UserServiceImpl implements UserService {
 
     public List<User> selectSort() {
         return null;
+    }
+
+    private boolean checkFieldsNULL(User user) {
+        return (user.getLogin() == null || user.getPassword() == null);
     }
 }

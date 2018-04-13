@@ -18,6 +18,7 @@ public class UserDAO implements DAO<User> {
 
         CriteriaQuery<User> criteria = builder.createQuery(User.class);
         criteria.from(User.class);
+
         List<User> list = session.createQuery(criteria).getResultList();
 
         session.getTransaction().commit();
