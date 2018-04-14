@@ -1,30 +1,28 @@
 <%--
   Created by IntelliJ IDEA.
-  User: matty
-  Date: 11.04.2018
-  Time: 0:50
+  User: venedikttsulenev
+  Date: 13/04/2018
+  Time: 19:09
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page language="java" contentType="text/html;
-charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Login</title>
+    <title>Register</title>
 </head>
 <body>
-<h3>Login</h3>
+<h3>Register</h3>
 <hr/>
-<form name="loginForm" method="POST" action="login">
-    <input type="hidden" name="command" value="login"/>
+<form name="registerForm" method="POST" action="login">
+    <input type="hidden" name="command" value="register"/>
     Login:<br/>
     <input type="text" name="login" value=""><br/>
     Password:<br/>
     <input type="password" name="password" value="">
+    <%-- TODO: "Re-enter password" field--%>
     <br/>
     <input type="submit" value="Enter">
 </form>
-<hr/>
-<a href="register">Create account</a>
 <hr/>
 </body>
 </html>
