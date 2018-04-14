@@ -4,11 +4,9 @@ import com.epam.internetshop.DAO.DAO;
 import com.epam.internetshop.domain.User;
 import org.hibernate.*;
 import com.epam.internetshop.DAO.util.HibernateSessionFactory;
-import org.hibernate.criterion.*;
 
 import javax.persistence.criteria.*;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Order;
 
 import java.util.List;
 
@@ -22,11 +20,6 @@ public class UserDAO implements DAO<User> {
 
         CriteriaQuery<User> criteria = builder.createQuery(User.class);
         criteria.from(User.class);
-        /*
-        Root<User> userRoot = criteria.from(User.class);
-        criteria.select(userRoot);
-        criteria.orderBy(builder.asc(User.))
-        */
 
         List<User> list = session.createQuery(criteria).getResultList();
 
@@ -42,6 +35,43 @@ public class UserDAO implements DAO<User> {
 
         session.beginTransaction();
         user = session.get(User.class, id);
+        session.getTransaction().commit();
+
+        session.close();
+        return user;
+    }
+
+    public User getByLogin(User user) {
+        Session session = HibernateSessionFactory.getSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+
+        session.beginTransaction();
+
+        CriteriaQuery<User> query = builder.createQuery(User.class);
+        Root<User> root = query.from(User.class);
+        query.select(root).
+                where(builder.equal(root.get("login"), user.getLogin()));
+        user = (User) session.createQuery(query).getSingleResult();
+
+        session.getTransaction().commit();
+
+        session.close();
+        return user;
+    }
+
+    public User getByLoginAndPassword(User user) {
+        Session session = HibernateSessionFactory.getSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+
+        session.beginTransaction();
+
+        CriteriaQuery<User> query = builder.createQuery(User.class);
+        Root<User> root = query.from(User.class);
+        query.select(root).
+                where(builder.equal(root.get("login"), user.getLogin()),
+                        builder.equal(root.get("password"), user.getPassword()));
+        user = (User) session.createQuery(query).getSingleResult();
+
         session.getTransaction().commit();
 
         session.close();

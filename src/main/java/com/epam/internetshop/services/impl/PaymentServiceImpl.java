@@ -4,17 +4,24 @@ import com.epam.internetshop.DAO.DAO;
 import com.epam.internetshop.DAO.impl.PaymentDAO;
 import com.epam.internetshop.domain.Payment;
 import com.epam.internetshop.services.PaymentService;
+import com.epam.internetshop.services.validator.PaymentValidator;
+import com.epam.internetshop.services.validator.impl.PaymentValidatorImpl;
+
 import java.util.List;
 
 public class PaymentServiceImpl implements PaymentService {
     private DAO<Payment> paymentDAO = new PaymentDAO();
+    private PaymentValidator paymentValidator = new PaymentValidatorImpl();
 
     public Payment create(Payment payment) {
-        if (checkFieldsNULL(payment)) return null;
+        if (payment == null || !paymentValidator.validateAll(payment))
+            return null;
         return paymentDAO.create(payment);
     }
 
     public Payment update(Payment payment) {
+        if (payment == null || !paymentValidator.validateAll(payment))
+            return null;
         return paymentDAO.update(payment);
     }
 
@@ -36,10 +43,5 @@ public class PaymentServiceImpl implements PaymentService {
 
     public List<Payment> selectSort() {
         return null;
-    }
-
-    private boolean checkFieldsNULL(Payment payment) {
-        return (payment.getPrice() == null || payment.getPaydate() == null ||
-                payment.getProductId() == null || payment.getUserId() == null);
     }
 }

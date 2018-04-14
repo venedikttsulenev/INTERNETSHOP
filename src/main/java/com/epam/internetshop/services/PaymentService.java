@@ -14,10 +14,12 @@ public interface PaymentService {
 
     List<Payment> getAll();
 
+    @Deprecated
     List<Payment> select(Payment payment);
 
     Payment getById(Long Id);
 
+    @Deprecated
     List<Payment> selectSort();
 
 }
