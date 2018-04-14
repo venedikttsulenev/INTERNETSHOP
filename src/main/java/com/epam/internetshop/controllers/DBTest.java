@@ -1,4 +1,4 @@
-package com.epam.internetshop.controllers.manager;
+package com.epam.internetshop.controllers;
 
 import com.epam.internetshop.DAO.impl.UserDAO;
 import com.epam.internetshop.domain.Payment;
@@ -46,8 +46,11 @@ public class DBTest extends HttpServlet {
         List<Payment> list = paymentService.getAll();
 
         for (Payment payment1 : list) {
-            out.println("<h1>" + payment1.getPrice() + "</h1>");
+            out.println("<h1>" + payment1.getPaydate().toString() + "</h1>");
+            paymentService.delete(payment1);
         }
+        //userService.delete(user);
+        //productService.delete(product);
 
     }
 

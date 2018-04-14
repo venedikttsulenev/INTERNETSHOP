@@ -8,20 +8,20 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(nullable=false)
+    @Column(nullable = false)
     private String name;
-    @Column(nullable=false)
+    @Column(nullable = false)
     private String description;
-    @Column(nullable=false)
+    @Column(nullable = false)
     private Long count;
-    @Column(nullable=false)
+    @Column(nullable = false)
     private Long price;
 
     public Product() {
 
     }
 
-    public void setId(Long id){
+    public void setId(Long id) {
         this.id = id;
     }
 
