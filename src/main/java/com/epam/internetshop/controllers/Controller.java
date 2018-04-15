@@ -12,61 +12,49 @@ import com.epam.internetshop.controllers.commands.Command;
 import com.epam.internetshop.controllers.manager.MessageManager;
 import com.epam.internetshop.controllers.manager.ConfigurationManager;
 
-@WebServlet("/")
-public class Controller extends HttpServlet
-        implements javax.servlet.Servlet {
-    //объект, содержащий список возможных команд
-    RequestHelper requestHelper =
-            RequestHelper.getInstance();
+@WebServlet({"/", "/login"})
+public class Controller extends HttpServlet implements javax.servlet.Servlet {
+
+    private RequestHelper requestHelper = RequestHelper.getInstance();
 
     public Controller() {
         super();
     }
 
-    protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    protected void doPost(HttpServletRequest request,
-                          HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    private void processRequest(HttpServletRequest
-                                        request, HttpServletResponse response)
+    private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        ConfigurationManager configurationManager = ConfigurationManager.getInstance();
+        MessageManager messageManager = MessageManager.getInstance();
         String page = null;
         try {
-//определение команды, пришедшей из JSP
-            Command command =
-                    requestHelper.getCommand(request);
-/*вызов реализованного метода execute() интерфейса Command и передача
-параметров классу-обработчику конкретной команды*/
+            Command command = requestHelper.getCommand(request);
             page = command.execute(request, response);
-// метод возвращает страницу ответа
         } catch (ServletException e) {
             e.printStackTrace();
-//генерация сообщения об ошибке
-            request.setAttribute("errorMessage",
-                    MessageManager.getInstance().getProperty(
-                            MessageManager.SERVLET_EXCEPTION_ERROR_MESSAGE));
-//вызов JSP-страницы c cообщением об ошибке
-            page = ConfigurationManager.getInstance()
-                    .getProperty(ConfigurationManager.ERROR_PAGE_PATH);
+            request.setAttribute(
+                    "errorMessage",
+                    messageManager.getProperty(MessageManager.SERVLET_EXCEPTION_ERROR_MESSAGE)
+            );
+            page = configurationManager.getProperty(ConfigurationManager.ERROR_PAGE_PATH);
         } catch (IOException e) {
             e.printStackTrace();
-            request.setAttribute("errorMessage",
-                    MessageManager.getInstance()
-                            .getProperty(MessageManager.IO_EXCEPTION_ERROR_MESSAGE));
-            page = ConfigurationManager.getInstance()
-                    .getProperty(ConfigurationManager.ERROR_PAGE_PATH);
+            request.setAttribute(
+                    "errorMessage",
+                    messageManager.getProperty(MessageManager.IO_EXCEPTION_ERROR_MESSAGE)
+            );
+            page = configurationManager.getProperty(ConfigurationManager.ERROR_PAGE_PATH);
         }
-//вызов страницы ответа на запрос
-        RequestDispatcher dispatcher =
-                getServletContext().getRequestDispatcher(page);
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
         dispatcher.forward(request, response);
     }
 }
