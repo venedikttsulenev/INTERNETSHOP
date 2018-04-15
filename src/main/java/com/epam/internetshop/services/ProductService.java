@@ -14,12 +14,6 @@ public interface ProductService {
 
     List<Product> getAll();
 
-    @Deprecated
-    List<Product> select(Product product);
-
     Product getById(Long Id);
-
-    @Deprecated
-    List<Product> selectSort();
 
 }

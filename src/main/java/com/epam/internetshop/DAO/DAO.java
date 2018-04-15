@@ -2,42 +2,43 @@ package com.epam.internetshop.DAO;
 
 import com.epam.internetshop.DAO.util.HibernateSessionFactory;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.util.List;
 
-public interface DAO<T> {
-    default T create(T entity) {
+public abstract class DAO<T> {
+    public T create(T entity) {
         Session session = HibernateSessionFactory.getSession();
 
-        session.beginTransaction();
+        Transaction transaction = session.beginTransaction();
         session.save(entity);
-        session.getTransaction().commit();
+        transaction.commit();
 
         session.close();
         return entity;
     }
 
-    List<T> getAll();
+    public abstract List<T> getAll();
 
-    T getById(Long id);
+    public abstract T getById(Long id);
 
-    default T update(T entity) {
+    public T update(T entity) {
         Session session = HibernateSessionFactory.getSession();
 
-        session.beginTransaction();
+        Transaction transaction = session.beginTransaction();
         session.update(entity);
-        session.getTransaction().commit();
+        transaction.commit();
 
         session.close();
         return entity;
     }
 
-    default void delete(T entity) {
+    public void delete(T entity) {
         Session session = HibernateSessionFactory.getSession();
 
-        session.beginTransaction();
+        Transaction transaction = session.beginTransaction();
         session.delete(entity);
-        session.getTransaction().commit();
+        transaction.commit();
 
         session.close();
     }

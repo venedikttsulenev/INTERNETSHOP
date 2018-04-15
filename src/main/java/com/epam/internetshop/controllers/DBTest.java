@@ -1,5 +1,6 @@
 package com.epam.internetshop.controllers;
 
+import com.epam.internetshop.DAO.DAO;
 import com.epam.internetshop.DAO.impl.UserDAO;
 import com.epam.internetshop.domain.Payment;
 import com.epam.internetshop.domain.Product;
@@ -36,36 +37,12 @@ public class DBTest extends HttpServlet {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 
-        createUser();
-
-        User usr = new User();
-        usr.setLogin("log");
-        usr.setPassword("passpass");
-
-        usr = userService.login(usr);
-
-        out.print(usr.getLogin() + "    " + usr.getPassword()+" <br> ");
-
-        usr = new User();
-        usr.setLogin("lag");
-        usr.setPassword("passpass");
-
-        usr = userService.login(usr);
-
-        out.print(usr.getLogin() + "    " + usr.getPassword()+" <br> ");
-
-        usr = new User();
-        usr.setLogin("");
-        usr.setPassword("");
-
-        usr = userService.login(usr);
-
-        out.print(usr.getLogin() + "    " + usr.getPassword()+" <br> ");
-
+        DAO<User> dao = new UserDAO();
     }
 
+
+
     private void checkWrongValue(PrintWriter out) {
-        try {
             User usr = new User();
             usr.setPassword("p1");
             usr.setLogin("u1");
@@ -79,14 +56,10 @@ public class DBTest extends HttpServlet {
             usr.setAdmin(false);
             usr.setBlackListed(false);
             userService.create(usr);
-        } catch (PropertyValueException e) {
-            out.println("Wrong value.");
-        } catch (PropertyNotFoundException e) {
-            out.println("Not Fount Property.");
-        }
     }
 
-    private void testPayment(){        User user = createUser();
+    private void testPayment(PrintWriter out) {
+        User user = createUser();
         Product product = createProduct();
         createPayment(product, user);
         createPayment(product, user);
@@ -96,7 +69,7 @@ public class DBTest extends HttpServlet {
         List<Payment> list = paymentService.getAll();
 
         for (Payment payment1 : list) {
-            //out.println("<h1>" + payment1.getPaydate().toString() + "</h1>");
+            out.println("<h1>" + payment1.getPaydate().toString() + "</h1>");
             paymentService.delete(payment1);
         }
     }

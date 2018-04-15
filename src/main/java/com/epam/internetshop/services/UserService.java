@@ -13,15 +13,7 @@ public interface UserService {
 
     List<User> getAll();
 
-    User login(User user);
-
-    User getByLogin(User user);
-
-    @Deprecated
-    List<User> select(User user);
+    User getByLogin(String login);
 
     User getById(Long Id);
-
-    @Deprecated
-    List<User> selectSort();
 }

@@ -35,26 +35,11 @@ public class UserServiceImpl implements UserService {
         return userDAO.getAll();
     }
 
-    public User login(User user) {
-        if (user == null ||
-                !userValidator.validateLogin(user.getLogin()) ||
-                !userValidator.validatePassword(user.getPassword()) ||
-                user.getPassword().isEmpty() || user.getLogin().isEmpty())
+    public User getByLogin(String login) {
+        if (login == null || !userValidator.validateLogin(login))
             return null;
         try {
-            return ((UserDAO) userDAO).getByLoginAndPassword(user);
-        } catch (Throwable e) {
-            return null;
-        }
-    }
-
-    public User getByLogin(User user) {
-        if (user == null ||
-                !userValidator.validateLogin(user.getLogin()) ||
-                user.getLogin().isEmpty())
-            return null;
-        try {
-            return ((UserDAO) userDAO).getByLogin(user);
+            return ((UserDAO) userDAO).getByLogin(login);
         } catch (Throwable e) {
             return null;
         }
