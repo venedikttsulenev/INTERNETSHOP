@@ -1,4 +1,4 @@
-package com.epam.internetshop.controllers;
+package com.epam.internetshop.controllers.servlets;
 
 import com.epam.internetshop.controllers.manager.ConfigurationManager;
 
@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet("/register")
-public class RegisterPageController extends HttpServlet implements javax.servlet.Servlet {
+public class RegisterPageServlet extends HttpServlet implements javax.servlet.Servlet {
 
-    public RegisterPageController() {
+    public RegisterPageServlet() {
         super();
     }
 
