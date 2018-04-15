@@ -4,15 +4,24 @@ import com.epam.internetshop.domain.User;
 
 import java.util.List;
 
-/**
- * Created by 1 on 13.04.2018.
- */
 public interface UserService {
     User create(User user);
-    User update(User user);
-    void delete(User user);
-    List<User> select(User user);
-    User getById(Long Id);
-    List<User> selectSort();
 
+    User update(User user);
+
+    void delete(User user);
+
+    List<User> getAll();
+
+    User login(User user);
+
+    User getByLogin(User user);
+
+    @Deprecated
+    List<User> select(User user);
+
+    User getById(Long Id);
+
+    @Deprecated
+    List<User> selectSort();
 }

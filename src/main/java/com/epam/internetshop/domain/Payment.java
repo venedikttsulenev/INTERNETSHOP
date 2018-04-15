@@ -17,9 +17,11 @@ public class Payment {
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product productId;
+    @Column(nullable=false)
     private Long price;
     @Temporal(value = TemporalType.DATE)
     private Date paydate;
+    @Column(nullable=false)
     private Boolean isPayed;
 
     public Payment() {
