@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
   <session-factory>
-    <property name="connection.url">jdbc:h2:file:C:\Users\1\IdeaProjects\INTERNETSHOP\src\main\resources\dbfile\file.bd</property>
+    <property name="connection.url">jdbc:h2:mem:inetshop</property>
     <property name="connection.driver_class">org.h2.Driver</property>
     <property name="connection.username"/>
     <property name="connection.password"/>
@@ -15,7 +15,6 @@
     <!-- Echo all executed SQL to stdout -->
     <property name="show_sql">true</property>
 
-    <!-- Drop and re-create the database schema on startup -->
     <property name="hbm2ddl.auto">create</property>
 
     <mapping class="com.epam.internetshop.domain.User"/>
