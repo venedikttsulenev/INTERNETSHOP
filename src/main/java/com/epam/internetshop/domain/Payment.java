@@ -21,8 +21,6 @@ public class Payment {
     private Long price;
     @Temporal(value = TemporalType.DATE)
     private Date paydate;
-    @Column(nullable=false)
-    private Boolean isPayed;
 
     public Payment() {
     }
@@ -65,13 +63,5 @@ public class Payment {
 
     public void setPaydate(Date paydate) {
         this.paydate = paydate;
-    }
-
-    public Boolean isPayed() {
-        return isPayed;
-    }
-
-    public void setPayed(Boolean payed) {
-        isPayed = payed;
     }
 }

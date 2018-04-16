@@ -136,7 +136,6 @@ public class DBTest extends HttpServlet {
         payment.setUserId(user);
         payment.setPaydate(new Date());
         payment.setPrice(product.getPrice());
-        payment.setPayed(true);
         paymentService.create(payment);
         return payment;
     }
