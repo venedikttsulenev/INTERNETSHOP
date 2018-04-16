@@ -1,6 +1,8 @@
 package com.epam.internetshop.services;
 
 import com.epam.internetshop.domain.Payment;
+import com.epam.internetshop.domain.Product;
+import com.epam.internetshop.domain.User;
 
 import java.util.List;
 
@@ -13,6 +15,8 @@ public interface PaymentService {
     void delete(Payment payment);
 
     List<Payment> getAll();
+
+    List<Payment> performPayment(User user, List<Product> productList);
 
     Payment getById(Long Id);
 

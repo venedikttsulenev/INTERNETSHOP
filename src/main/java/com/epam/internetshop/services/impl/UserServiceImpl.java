@@ -1,6 +1,5 @@
 package com.epam.internetshop.services.impl;
 
-import com.epam.internetshop.DAO.DAO;
 import com.epam.internetshop.DAO.UserDAO;
 import com.epam.internetshop.DAO.impl.UserDAOImpl;
 import com.epam.internetshop.domain.User;
@@ -19,7 +18,11 @@ public class UserServiceImpl implements UserService {
     public User create(User user) {
         if (user == null || !userValidator.validateAll(user))
             return null;
-        return userDAO.create(user);
+        try {
+            return userDAO.create(user);
+        } catch (RuntimeException e) {
+        }
+        return null;
     }
 
     public User update(User user) {
@@ -36,6 +39,24 @@ public class UserServiceImpl implements UserService {
         return userDAO.getAll();
     }
 
+    public User createUser(String login, String password) {
+        if (login == null || password == null ||
+                userValidator.validateLogin(login) || userValidator.validatePassword(password))
+            return null;
+        if (getByLogin(login) != null)
+            return null;
+        User user = new User();
+        user.setLogin(login);
+        user.setPassword(password);
+        user.setBlackListed(false);
+        user.setAdmin(false);
+        try {
+            return userDAO.create(user);
+        } catch (RuntimeException e) {
+            return null;
+        }
+    }
+
     public User getByLogin(String login) {
         if (login == null || !userValidator.validateLogin(login))
             return null;
@@ -44,10 +65,6 @@ public class UserServiceImpl implements UserService {
         } catch (Throwable e) {
             return null;
         }
-    }
-
-    public List<User> select(User user) {
-        return null;
     }
 
     public User getById(Long Id) {
@@ -60,9 +77,5 @@ public class UserServiceImpl implements UserService {
             System.out.println("Not Fount Property.");
         }
         return user;
-    }
-
-    public List<User> selectSort() {
-        return null;
     }
 }

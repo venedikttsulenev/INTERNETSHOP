@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -34,9 +35,8 @@ public class DBTest extends HttpServlet {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 
-        DAO<User> dao = new UserDAOImpl();
-
-        checkUserservice(out);
+        //checkUserservice(out);
+        testPaymentList(out);
     }
 
 
@@ -107,6 +107,29 @@ public class DBTest extends HttpServlet {
         for (Payment payment1 : list) {
             out.println("<h1>" + payment1.getPaydate().toString() + "</h1>");
             paymentService.delete(payment1);
+        }
+    }
+
+    private void testPaymentList(PrintWriter out) {
+        User usr = new User();
+        usr.setPassword("12345678");
+        usr.setLogin("u1");
+        usr.setAdmin(false);
+        usr.setBlackListed(false);
+        userService.create(usr);
+
+        Product product = new Product();
+        product.setId(10l);
+        product.setPrice(100l);
+        product.setName("a");
+        product.setCount(2l);
+        List<Product> list = new ArrayList<Product>();
+        for (int i = 0; i < 5; i++)
+            list.add(product);
+        List<Payment> paymentList =
+                paymentService.performPayment(usr, list);
+        for (Payment payment : paymentList) {
+            out.println(payment.getProductId() + " " + payment.getUserId() + "<br>");
         }
     }
 

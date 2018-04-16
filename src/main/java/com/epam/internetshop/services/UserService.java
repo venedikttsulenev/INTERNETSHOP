@@ -13,6 +13,8 @@ public interface UserService {
 
     List<User> getAll();
 
+    User createUser(String login, String password);
+
     User getByLogin(String login);
 
     User getById(Long Id);

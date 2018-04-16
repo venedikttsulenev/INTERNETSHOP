@@ -34,16 +34,8 @@ public class ProductServiceImpl implements ProductService {
         return productDAO.getAll();
     }
 
-    public List<Product> select(Product product) {
-        return null;
-    }
 
     public Product getById(Long Id) {
         return productDAO.getById(Id);
     }
-
-    public List<Product> selectSort() {
-        return null;
-    }
-
 }
