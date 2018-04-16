@@ -32,11 +32,34 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
 
     public Product getById(Long id) {
         Session session = HibernateSessionFactory.getSession();
-        Product product;
+        Product product = null;
 
         Transaction transaction = session.beginTransaction();
         product = session.get(Product.class, id);
         transaction.commit();
+
+        session.close();
+        return product;
+    }
+
+    public Product decrementCount(Long id) {
+        Session session = HibernateSessionFactory.getSession();
+        Product product= null;
+
+        Transaction transaction = session.beginTransaction();
+        try {
+            product = session.get(Product.class, id);
+
+            Long count = product.getCount();
+            if (count == 0)
+                throw new RuntimeException();
+            product.setCount(count - 1);
+            session.update(product);
+            transaction.commit();
+        }
+        catch (RuntimeException e){
+            transaction.rollback();
+        }
 
         session.close();
         return product;

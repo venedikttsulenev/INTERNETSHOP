@@ -1,6 +1,8 @@
 package com.epam.internetshop.controllers;
 
 import com.epam.internetshop.DAO.DAO;
+import com.epam.internetshop.DAO.ProductDAO;
+import com.epam.internetshop.DAO.impl.ProductDAOImpl;
 import com.epam.internetshop.DAO.impl.UserDAOImpl;
 import com.epam.internetshop.domain.Payment;
 import com.epam.internetshop.domain.Product;
@@ -36,7 +38,8 @@ public class DBTest extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         //checkUserservice(out);
-        testPaymentList(out);
+        //testPaymentList(out);
+        testDecr(out);
     }
 
 
@@ -110,6 +113,35 @@ public class DBTest extends HttpServlet {
         }
     }
 
+    private void testDecr(PrintWriter out) {
+        ProductDAO productDAO = new ProductDAOImpl();
+        Product product = new Product();
+        product.setDescription("a");
+        product.setCount(5l);
+        product.setName("n");
+        product.setPrice(10l);
+        productDAO.create(product);
+        out.println(product.getCount()+"<br>");
+        product = productDAO.decrementCount(product.getId());
+        out.println(product.getCount()+"<br>");
+        product = productDAO.decrementCount(product.getId());
+        out.println(product.getCount()+"<br>");
+        product = productDAO.decrementCount(product.getId());
+        out.println(product.getCount()+"<br>");
+        product = productDAO.decrementCount(product.getId());
+        out.println(product.getCount()+"<br>");
+        product = productDAO.decrementCount(product.getId());
+        out.println(product.getCount()+"<br>");
+        product = productDAO.decrementCount(product.getId());
+        out.println(product.getCount()+"<br>");
+        product = productDAO.decrementCount(product.getId());
+        out.println(product.getCount()+"<br>");
+        product = productDAO.decrementCount(product.getId());
+        out.println(product.getCount()+"<br>");
+        product = productDAO.decrementCount(product.getId());
+        out.println(product.getCount()+"<br>");
+    }
+
     private void testPaymentList(PrintWriter out) {
         User usr = new User();
         usr.setPassword("12345678");
@@ -146,9 +178,9 @@ public class DBTest extends HttpServlet {
     private Product createProduct() {
         Product product = new Product();
         product.setDescription("a");
-        product.setCount((long) 5);
+        product.setCount( 5l);
         product.setName("n");
-        product.setPrice((long) 10);
+        product.setPrice(10l);
         productService.create(product);
         return product;
     }
