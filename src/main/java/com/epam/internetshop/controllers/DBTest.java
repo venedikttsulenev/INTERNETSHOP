@@ -35,24 +35,63 @@ public class DBTest extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         DAO<User> dao = new UserDAOImpl();
+
+        checkUserservice(out);
     }
 
 
+    private void checkUserservice(PrintWriter out) {
+        User usr = new User();
+        usr.setPassword("12345678");
+        usr.setLogin("u1");
+        usr.setAdmin(false);
+        usr.setBlackListed(false);
+        userService.create(usr);
 
-    private void checkWrongValue(PrintWriter out) {
-            User usr = new User();
-            usr.setPassword("p1");
-            usr.setLogin("u1");
-            usr.setAdmin(false);
-            usr.setBlackListed(false);
-            userService.create(usr);
+        usr = userService.getById(usr.getId());
+        out.println(usr.getId() + " " + usr.getPassword() + " <br>");
 
+        usr = userService.getByLogin(usr.getLogin());
+        out.println(usr.getId() + " " + usr.getPassword() + " <br>");
+
+        usr.setPassword("87654321");
+        userService.update(usr);
+        out.println(usr.getId() + " " + usr.getPassword() + " <br>");
+
+        try {
+            userService.delete(usr);
+            usr = userService.getByLogin(usr.getLogin());
+            out.println(usr.getId() + " " + usr.getPassword() + " <br>");
+        } catch (Throwable e) {
+            out.println(e.getMessage() + " <br>");
+        }
+
+        usr = new User();
+        usr.setPassword("12345678");
+        usr.setLogin("u2");
+        usr.setAdmin(false);
+        usr.setBlackListed(false);
+        userService.create(usr);
+
+        try {
             usr = new User();
-            usr.setPassword("p2");
+            usr.setPassword("12345678");
             usr.setLogin("u2");
             usr.setAdmin(false);
             usr.setBlackListed(false);
             userService.create(usr);
+        } catch (Throwable e) {
+            out.println(e.getMessage() + " <br>");
+        }
+
+        try {
+            List<User> list = userService.getAll();
+            for (User user : list) {
+                out.println(user.getId() + " " + user.getPassword() + " <br>");
+            }
+        } catch (Throwable e) {
+            out.println(e.getMessage() + " <br>");
+        }
     }
 
     private void testPayment(PrintWriter out) {
