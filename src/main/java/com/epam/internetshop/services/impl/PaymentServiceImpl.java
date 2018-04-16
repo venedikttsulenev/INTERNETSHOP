@@ -1,6 +1,5 @@
 package com.epam.internetshop.services.impl;
 
-import com.epam.internetshop.DAO.DAO;
 import com.epam.internetshop.DAO.PaymentDAO;
 import com.epam.internetshop.DAO.impl.PaymentDAOImpl;
 import com.epam.internetshop.domain.Payment;
@@ -25,21 +24,36 @@ public class PaymentServiceImpl implements PaymentService {
     public Payment create(Payment payment) {
         if (payment == null || !paymentValidator.validateAll(payment))
             return null;
-        return paymentDAO.create(payment);
+        try {
+            return paymentDAO.create(payment);
+        } catch (RuntimeException e) {
+            return null;
+        }
     }
 
     public Payment update(Payment payment) {
         if (payment == null || !paymentValidator.validateAll(payment))
             return null;
-        return paymentDAO.update(payment);
+        try {
+            return paymentDAO.update(payment);
+        } catch (RuntimeException e) {
+            return null;
+        }
     }
 
     public void delete(Payment payment) {
-        paymentDAO.delete(payment);
+        try {
+            paymentDAO.delete(payment);
+        } catch (RuntimeException e) {
+        }
     }
 
     public List<Payment> getAll() {
-        return paymentDAO.getAll();
+        try {
+            return paymentDAO.getAll();
+        } catch (RuntimeException e) {
+            return null;
+        }
     }
 
     public List<Payment> performPayment(User user, List<Product> productList) {
@@ -54,6 +68,10 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     public Payment getById(Long Id) {
-        return paymentDAO.getById(Id);
+        try {
+            return paymentDAO.getById(Id);
+        } catch (RuntimeException e) {
+            return null;
+        }
     }
 }

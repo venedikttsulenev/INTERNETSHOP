@@ -17,7 +17,11 @@ public class ProductServiceImpl implements ProductService {
     public Product create(Product product) {
         if (product == null || !productValidator.validateAll(product))
             return null;
-        return productDAO.create(product);
+        try {
+            return productDAO.create(product);
+        } catch (RuntimeException e) {
+            return null;
+        }
     }
 
     public Product update(Product product) {
@@ -33,7 +37,6 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getAll() {
         return productDAO.getAll();
     }
-
 
     public Product getById(Long Id) {
         return productDAO.getById(Id);
