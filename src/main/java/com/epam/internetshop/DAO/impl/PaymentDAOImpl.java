@@ -4,17 +4,20 @@ import com.epam.internetshop.DAO.DAO;
 import com.epam.internetshop.DAO.PaymentDAO;
 import com.epam.internetshop.DAO.util.HibernateSessionFactory;
 import com.epam.internetshop.domain.Payment;
+import com.epam.internetshop.domain.Product;
 import com.epam.internetshop.domain.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class PaymentDAOImpl extends DAO<Payment> implements PaymentDAO {
 
-    public List<Payment> getAll(){
+    public List<Payment> getAll() {
         Session session = HibernateSessionFactory.getSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
 
@@ -28,6 +31,10 @@ public class PaymentDAOImpl extends DAO<Payment> implements PaymentDAO {
 
         session.close();
         return list;
+    }
+
+    public List<Payment> createFromPaylist(User user, List<Product> productList) {
+        return null;
     }
 
     public Payment getById(Long id) {
