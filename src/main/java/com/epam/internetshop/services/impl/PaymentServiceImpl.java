@@ -1,7 +1,9 @@
 package com.epam.internetshop.services.impl;
 
 import com.epam.internetshop.DAO.PaymentDAO;
+import com.epam.internetshop.DAO.ProductDAO;
 import com.epam.internetshop.DAO.impl.PaymentDAOImpl;
+import com.epam.internetshop.DAO.impl.ProductDAOImpl;
 import com.epam.internetshop.domain.Payment;
 import com.epam.internetshop.domain.Product;
 import com.epam.internetshop.domain.User;
@@ -17,6 +19,7 @@ import java.util.List;
 
 public class PaymentServiceImpl implements PaymentService {
     private PaymentDAO paymentDAO = new PaymentDAOImpl();
+    private ProductDAO productDAO = new ProductDAOImpl();
     private ProductValidator productValidator = new ProductValidatorImpl();
     private UserValidator userValidator = new UserValidatorImpl();
     private PaymentValidator paymentValidator = new PaymentValidatorImpl();
@@ -56,14 +59,18 @@ public class PaymentServiceImpl implements PaymentService {
         }
     }
 
-    public List<Payment> performPayment(User user, List<Product> productList) {
-        if (user == null || productList == null) {
+    public List<Payment> performPayment(User user, List<Long> productIdList) {
+        if (user == null || productIdList == null) {
             return null;
         }
-        for (Product product : productList) {
-            if (product == null || !productValidator.validateAll(product))
+        for (Long id : productIdList) {
+            if (id == null)
                 return null;
         }
+
+        List<Product> productList = productDAO.decrementCount(productIdList);
+        if (productIdList == null) return null;
+
         return paymentDAO.createFromPaylist(user, productList);
     }
 

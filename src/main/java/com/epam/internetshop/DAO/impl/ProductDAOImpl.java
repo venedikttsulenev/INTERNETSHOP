@@ -10,6 +10,7 @@ import org.hibernate.Transaction;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
@@ -44,7 +45,7 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
 
     public Product decrementCount(Long id) {
         Session session = HibernateSessionFactory.getSession();
-        Product product= null;
+        Product product = null;
 
         Transaction transaction = session.beginTransaction();
         try {
@@ -56,13 +57,38 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
             product.setCount(count - 1);
             session.update(product);
             transaction.commit();
-        }
-        catch (RuntimeException e){
+        } catch (RuntimeException e) {
             transaction.rollback();
         }
 
         session.close();
         return product;
+    }
+
+    public List<Product> decrementCount(List<Long> id) {
+        Session session = HibernateSessionFactory.getSession();
+        List<Product> productList = new ArrayList<Product>();
+
+        Transaction transaction = session.beginTransaction();
+        try {
+            for (Long id1 : id) {
+                Product product = session.get(Product.class, id1);
+
+                Long count = product.getCount();
+                if (count == 0)
+                    throw new RuntimeException();
+                product.setCount(count - 1);
+                session.update(product);
+                productList.add(product);
+            }
+            transaction.commit();
+        } catch (RuntimeException e) {
+            transaction.rollback();
+            productList=null;
+        }
+
+        session.close();
+        return productList;
     }
 
 }
