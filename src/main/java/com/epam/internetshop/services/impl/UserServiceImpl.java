@@ -1,7 +1,8 @@
 package com.epam.internetshop.services.impl;
 
 import com.epam.internetshop.DAO.DAO;
-import com.epam.internetshop.DAO.impl.UserDAO;
+import com.epam.internetshop.DAO.UserDAO;
+import com.epam.internetshop.DAO.impl.UserDAOImpl;
 import com.epam.internetshop.domain.User;
 import com.epam.internetshop.services.UserService;
 import com.epam.internetshop.services.validator.UserValidator;
@@ -12,7 +13,7 @@ import org.hibernate.PropertyValueException;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
-    private DAO<User> userDAO = new UserDAO();
+    private UserDAO userDAO = new UserDAOImpl();
     private UserValidator userValidator = new UserValidatorImpl();
 
     public User create(User user) {
@@ -39,7 +40,7 @@ public class UserServiceImpl implements UserService {
         if (login == null || !userValidator.validateLogin(login))
             return null;
         try {
-            return ((UserDAO) userDAO).getByLogin(login);
+            return ((UserDAOImpl) userDAO).getByLogin(login);
         } catch (Throwable e) {
             return null;
         }

@@ -1,7 +1,7 @@
 package com.epam.internetshop.controllers;
 
 import com.epam.internetshop.DAO.DAO;
-import com.epam.internetshop.DAO.impl.UserDAO;
+import com.epam.internetshop.DAO.impl.UserDAOImpl;
 import com.epam.internetshop.domain.Payment;
 import com.epam.internetshop.domain.Product;
 import com.epam.internetshop.domain.User;
@@ -11,9 +11,6 @@ import com.epam.internetshop.services.UserService;
 import com.epam.internetshop.services.impl.PaymentServiceImpl;
 import com.epam.internetshop.services.impl.ProductServiceImpl;
 import com.epam.internetshop.services.impl.UserServiceImpl;
-import org.hibernate.Hibernate;
-import org.hibernate.PropertyNotFoundException;
-import org.hibernate.PropertyValueException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -37,7 +34,7 @@ public class DBTest extends HttpServlet {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 
-        DAO<User> dao = new UserDAO();
+        DAO<User> dao = new UserDAOImpl();
     }
 
 

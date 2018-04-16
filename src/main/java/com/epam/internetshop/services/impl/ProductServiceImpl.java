@@ -1,17 +1,17 @@
 package com.epam.internetshop.services.impl;
 
 import com.epam.internetshop.DAO.DAO;
-import com.epam.internetshop.DAO.impl.ProductDAO;
+import com.epam.internetshop.DAO.ProductDAO;
+import com.epam.internetshop.DAO.impl.ProductDAOImpl;
 import com.epam.internetshop.domain.Product;
 import com.epam.internetshop.services.ProductService;
 import com.epam.internetshop.services.validator.ProductValidator;
-import com.epam.internetshop.services.validator.UserValidator;
 import com.epam.internetshop.services.validator.impl.ProductValidatorImpl;
 
 import java.util.List;
 
 public class ProductServiceImpl implements ProductService {
-    private DAO<Product> productDAO = new ProductDAO();
+    private ProductDAO productDAO = new ProductDAOImpl();
     private ProductValidator productValidator = new ProductValidatorImpl();
 
     public Product create(Product product) {

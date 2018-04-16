@@ -1,6 +1,7 @@
 package com.epam.internetshop.DAO.impl;
 
 import com.epam.internetshop.DAO.DAO;
+import com.epam.internetshop.DAO.UserDAO;
 import com.epam.internetshop.domain.User;
 import org.hibernate.*;
 import com.epam.internetshop.DAO.util.HibernateSessionFactory;
@@ -10,7 +11,7 @@ import javax.persistence.criteria.CriteriaQuery;
 
 import java.util.List;
 
-public class UserDAO extends DAO<User> {
+public class UserDAOImpl extends DAO<User> implements UserDAO {
 
     public List<User> getAll() {
         Session session = HibernateSessionFactory.getSession();
@@ -78,5 +79,4 @@ public class UserDAO extends DAO<User> {
         session.close();
         return user;
     }
-
 }

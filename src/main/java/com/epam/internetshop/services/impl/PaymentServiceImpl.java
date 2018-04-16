@@ -1,7 +1,8 @@
 package com.epam.internetshop.services.impl;
 
 import com.epam.internetshop.DAO.DAO;
-import com.epam.internetshop.DAO.impl.PaymentDAO;
+import com.epam.internetshop.DAO.PaymentDAO;
+import com.epam.internetshop.DAO.impl.PaymentDAOImpl;
 import com.epam.internetshop.domain.Payment;
 import com.epam.internetshop.services.PaymentService;
 import com.epam.internetshop.services.validator.PaymentValidator;
@@ -10,7 +11,7 @@ import com.epam.internetshop.services.validator.impl.PaymentValidatorImpl;
 import java.util.List;
 
 public class PaymentServiceImpl implements PaymentService {
-    private DAO<Payment> paymentDAO = new PaymentDAO();
+    private PaymentDAO paymentDAO = new PaymentDAOImpl();
     private PaymentValidator paymentValidator = new PaymentValidatorImpl();
 
     public Payment create(Payment payment) {

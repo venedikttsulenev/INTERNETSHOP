@@ -1,8 +1,9 @@
 package com.epam.internetshop.DAO.impl;
 
 import com.epam.internetshop.DAO.DAO;
+import com.epam.internetshop.DAO.PaymentDAO;
 import com.epam.internetshop.DAO.util.HibernateSessionFactory;
-import com.epam.internetshop.domain.Product;
+import com.epam.internetshop.domain.Payment;
 import com.epam.internetshop.domain.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -11,17 +12,17 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 
-public class ProductDAO extends DAO<Product> {
+public class PaymentDAOImpl extends DAO<Payment> implements PaymentDAO {
 
-    public List<Product> getAll() {
+    public List<Payment> getAll(){
         Session session = HibernateSessionFactory.getSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
 
         Transaction transaction = session.beginTransaction();
 
-        CriteriaQuery<Product> criteria = builder.createQuery(Product.class);
-        criteria.from(Product.class);
-        List<Product> list = session.createQuery(criteria).getResultList();
+        CriteriaQuery<Payment> criteria = builder.createQuery(Payment.class);
+        criteria.from(Payment.class);
+        List<Payment> list = session.createQuery(criteria).getResultList();
 
         transaction.commit();
 
@@ -29,16 +30,17 @@ public class ProductDAO extends DAO<Product> {
         return list;
     }
 
-    public Product getById(Long id) {
+    public Payment getById(Long id) {
         Session session = HibernateSessionFactory.getSession();
-        Product product;
+        Payment payment = null;
 
         Transaction transaction = session.beginTransaction();
-        product = session.get(Product.class, id);
+        payment = session.get(Payment.class, id);
         transaction.commit();
 
         session.close();
-        return product;
+        return payment;
     }
+
 
 }

@@ -4,8 +4,6 @@ import com.epam.internetshop.DAO.util.HibernateSessionFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import java.util.List;
-
 public abstract class DAO<T> {
     public T create(T entity) {
         Session session = HibernateSessionFactory.getSession();
@@ -17,10 +15,6 @@ public abstract class DAO<T> {
         session.close();
         return entity;
     }
-
-    public abstract List<T> getAll();
-
-    public abstract T getById(Long id);
 
     public T update(T entity) {
         Session session = HibernateSessionFactory.getSession();
