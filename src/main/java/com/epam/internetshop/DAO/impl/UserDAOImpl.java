@@ -21,7 +21,6 @@ public class UserDAOImpl extends DAO<User> implements UserDAO {
 
         CriteriaQuery<User> criteria = builder.createQuery(User.class);
         criteria.from(User.class);
-
         List<User> list = session.createQuery(criteria).getResultList();
 
         transaction.commit();
@@ -53,25 +52,6 @@ public class UserDAOImpl extends DAO<User> implements UserDAO {
         Root<User> root = query.from(User.class);
         query.select(root).
                 where(builder.equal(root.get("login"), login));
-        user = (User) session.createQuery(query).getSingleResult();
-
-        transaction.commit();
-
-        session.close();
-        return user;
-    }
-
-    public User getByLoginAndPassword(User user) {
-        Session session = HibernateSessionFactory.getSession();
-        CriteriaBuilder builder = session.getCriteriaBuilder();
-
-        Transaction transaction = session.beginTransaction();
-
-        CriteriaQuery<User> query = builder.createQuery(User.class);
-        Root<User> root = query.from(User.class);
-        query.select(root).
-                where(builder.equal(root.get("login"), user.getLogin()),
-                        builder.equal(root.get("password"), user.getPassword()));
         user = (User) session.createQuery(query).getSingleResult();
 
         transaction.commit();

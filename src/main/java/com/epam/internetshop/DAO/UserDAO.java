@@ -14,4 +14,6 @@ public interface UserDAO {
     User update(User entity);
 
     void delete(User entity);
+
+    User getByLogin(String login);
 }
