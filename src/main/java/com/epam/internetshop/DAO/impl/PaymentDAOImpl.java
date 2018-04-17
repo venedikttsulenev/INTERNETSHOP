@@ -6,6 +6,7 @@ import com.epam.internetshop.DAO.util.HibernateSessionFactory;
 import com.epam.internetshop.domain.Payment;
 import com.epam.internetshop.domain.Product;
 import com.epam.internetshop.domain.User;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -46,12 +47,8 @@ public class PaymentDAOImpl extends DAO<Payment> implements PaymentDAO {
                 resultList.add(payment);
             }
             transaction.commit();
-        } catch (RuntimeException e) {
-            try {
-                transaction.rollback();
-            } catch (RuntimeException e1) {
-
-            }
+        } catch (HibernateException e) {
+            transaction.rollback();
             resultList = null;
         }
 

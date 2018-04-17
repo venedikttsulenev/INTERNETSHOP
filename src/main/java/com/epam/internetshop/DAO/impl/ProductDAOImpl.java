@@ -5,6 +5,7 @@ import com.epam.internetshop.DAO.ProductDAO;
 import com.epam.internetshop.DAO.util.HibernateSessionFactory;
 import com.epam.internetshop.domain.Product;
 import com.epam.internetshop.domain.User;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -47,11 +48,11 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
 
             Long count = product.getCount();
             if (count == 0)
-                throw new RuntimeException();
+                throw new HibernateException("Zero count");
             product.setCount(count - 1);
             session.update(product);
             transaction.commit();
-        } catch (RuntimeException e) {
+        } catch (HibernateException e) {
             transaction.rollback();
         }
 
@@ -70,15 +71,15 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
 
                 Long count = product.getCount();
                 if (count == 0)
-                    throw new RuntimeException();
+                    throw new HibernateException("Zero count");
                 product.setCount(count - 1);
                 session.update(product);
                 productList.add(product);
             }
             transaction.commit();
-        } catch (RuntimeException e) {
+        } catch (HibernateException e) {
             transaction.rollback();
-            productList=null;
+            productList = null;
         }
 
         session.close();
