@@ -1,10 +1,8 @@
 package com.epam.internetshop.controllers.logic;
 
 import com.epam.internetshop.domain.User;
-import com.epam.internetshop.services.Service;
 import com.epam.internetshop.services.UserService;
-
-import java.util.List;
+import com.epam.internetshop.services.manager.ServiceManager;
 
 public class RegisterLogic {
 
@@ -12,9 +10,8 @@ public class RegisterLogic {
         User user = new User();
         user.setLogin(login);
 
-        UserService service = new Service();
-        List<User> usersByThisLogin = service.select(user);
-        return (usersByThisLogin != null);
+        UserService userService = ServiceManager.newUserService();
+        return (userService.getByLogin(user) != null);
     }
 
     public static User registerUser(String login, String password) {
@@ -24,7 +21,7 @@ public class RegisterLogic {
         user.setAdmin(false);
         user.setBlackListed(false);
 
-        UserService service = new Service();
+        UserService service = ServiceManager.newUserService();
         return service.create(user);
     }
 }
