@@ -86,7 +86,7 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
                 Long count = product.getCount(),
                         buyingCount = productCount.getCount();
                 if (count < buyingCount)
-                    throw new ProductException("Not enough product.");
+                    throw new ProductException();
                 product.setCount(count - buyingCount);
 
                 session.update(product);
@@ -96,10 +96,9 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
             transaction.rollback();
         } catch (ProductException e) {
             transaction.rollback();
-            throw new ProductException("Not enough product.");
+            throw new ProductException("Not enough product available.");
         }
 
         session.close();
     }
-
 }

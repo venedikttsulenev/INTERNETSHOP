@@ -44,7 +44,10 @@ public class UserDAOImpl extends DAO<User> implements UserDAO {
         Root<User> root = query.from(User.class);
         query.select(root).
                 where(builder.equal(root.get("login"), login));
-        user = (User) session.createQuery(query).getSingleResult();
+
+        List result = session.createQuery(query).getResultList();
+        if (!result.isEmpty())
+            user = (User) result.get(0);
 
         session.close();
         return user;
