@@ -7,7 +7,7 @@ import com.epam.internetshop.services.impl.PaymentServiceImpl;
 import com.epam.internetshop.services.impl.ProductServiceImpl;
 import com.epam.internetshop.services.impl.UserServiceImpl;
 
-public class ServiceManger {
+public class ServiceManager {
 
     public static UserService newUserService() {
         return new UserServiceImpl();

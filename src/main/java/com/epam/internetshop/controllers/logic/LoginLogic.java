@@ -2,7 +2,7 @@ package com.epam.internetshop.controllers.logic;
 
 import com.epam.internetshop.domain.User;
 import com.epam.internetshop.services.UserService;
-import com.epam.internetshop.services.manager.ServiceManger;
+import com.epam.internetshop.services.manager.ServiceManager;
 
 public class LoginLogic {
 
@@ -11,7 +11,7 @@ public class LoginLogic {
         user.setLogin(login);
         user.setPassword(password);
 
-        UserService service = ServiceManger.newUserService();
+        UserService service = ServiceManager.newUserService();
         User userByLogin = service.getByLogin(user);
 
         return (userByLogin != null);
