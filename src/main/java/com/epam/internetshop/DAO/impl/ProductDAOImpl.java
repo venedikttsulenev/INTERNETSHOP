@@ -4,6 +4,7 @@ import com.epam.internetshop.DAO.DAO;
 import com.epam.internetshop.DAO.ProductDAO;
 import com.epam.internetshop.DAO.util.HibernateSessionFactory;
 import com.epam.internetshop.domain.Product;
+import com.epam.internetshop.domain.ProductCount;
 import com.epam.internetshop.domain.User;
 import com.epam.internetshop.services.exception.ProductException;
 import org.hibernate.HibernateException;
@@ -65,7 +66,7 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
             transaction.commit();
         } catch (HibernateException e) {
             transaction.rollback();
-        } catch (ProductException e){
+        } catch (ProductException e) {
             transaction.rollback();
             throw new ProductException("Not enough product.");
         }
@@ -74,33 +75,31 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
         return product;
     }
 
-    public List<Product> decrementCount(List<Long> id) {
+    public void decrementCount(List<ProductCount> productCountList) {
         Session session = HibernateSessionFactory.getSession();
-        List<Product> productList = new ArrayList<Product>();
 
         Transaction transaction = session.beginTransaction();
         try {
-            for (Long id1 : id) {
-                Product product = session.get(Product.class, id1);
+            for (ProductCount productCount : productCountList) {
+                Product product = session.get(Product.class, productCount.getProductId());
 
-                Long count = product.getCount();
-                if (count == 0)
+                Long count = product.getCount(),
+                        buyingCount = productCount.getCount();
+                if (count < buyingCount)
                     throw new ProductException("Not enough product.");
-                product.setCount(count - 1);
+                product.setCount(count - buyingCount);
+
                 session.update(product);
-                productList.add(product);
             }
             transaction.commit();
         } catch (HibernateException e) {
             transaction.rollback();
-            productList = null;
-        } catch (ProductException e){
+        } catch (ProductException e) {
             transaction.rollback();
             throw new ProductException("Not enough product.");
         }
 
         session.close();
-        return productList;
     }
 
 }

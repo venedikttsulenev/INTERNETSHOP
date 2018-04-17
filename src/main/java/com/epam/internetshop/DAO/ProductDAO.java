@@ -1,6 +1,7 @@
 package com.epam.internetshop.DAO;
 
 import com.epam.internetshop.domain.Product;
+import com.epam.internetshop.domain.ProductCount;
 
 import java.util.List;
 
@@ -17,7 +18,5 @@ public interface ProductDAO {
 
     Long getCount(Long id);
 
-    Product decrementCount(Long id);
-
-    List<Product> decrementCount(List<Long> id);
+    void decrementCount(List<ProductCount> id);
 }

@@ -3,7 +3,8 @@ package com.epam.internetshop.domain;
 public class ProductCount {
     private Product product;
     private Long count;
-    public ProductCount(Product product, Long count){
+
+    public ProductCount(Product product, Long count) {
         this.product = product;
         this.count = count;
     }
@@ -22,5 +23,13 @@ public class ProductCount {
 
     public void setCount(Long count) {
         this.count = count;
+    }
+
+    public Long getProductId()  {
+        return this.product.getId();
+    }
+
+    public Long getProductPrice()  {
+        return this.product.getPrice();
     }
 }

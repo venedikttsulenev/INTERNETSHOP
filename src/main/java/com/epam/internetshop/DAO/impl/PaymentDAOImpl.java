@@ -5,6 +5,7 @@ import com.epam.internetshop.DAO.PaymentDAO;
 import com.epam.internetshop.DAO.util.HibernateSessionFactory;
 import com.epam.internetshop.domain.Payment;
 import com.epam.internetshop.domain.Product;
+import com.epam.internetshop.domain.ProductCount;
 import com.epam.internetshop.domain.User;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -30,25 +31,21 @@ public class PaymentDAOImpl extends DAO<Payment> implements PaymentDAO {
         return list;
     }
 
-    public void createFromPaylist(User user, List<Product> productList) throws HibernateException {
+    public void createFromPaylist(User user, List<ProductCount> productList) throws HibernateException {
         Session session = HibernateSessionFactory.getSession();
-
         Transaction transaction = session.beginTransaction();
 
         try {
-            for (Product product : productList) {
-                Payment payment = new Payment();
-                payment.setUserId(user);
-                payment.setProductId(product);
-                payment.setPrice(product.getPrice());
-                payment.setPaydate(new Date());
+            for (ProductCount productCount : productList) {
+                Payment payment = new Payment(user, productCount.getProduct(),
+                        productCount.getProductPrice(), new Date(), productCount.getCount());
                 session.save(payment);
             }
             transaction.commit();
         } catch (HibernateException e) {
             transaction.rollback();
             session.close();
-            throw new HibernateException("Can't create payments. ");
+            throw new HibernateException("Can't create payments.");
         }
 
         session.close();
@@ -56,13 +53,11 @@ public class PaymentDAOImpl extends DAO<Payment> implements PaymentDAO {
 
     public Payment getById(Long id) {
         Session session = HibernateSessionFactory.getSession();
-        Payment payment = null;
+        Payment payment;
 
         payment = session.get(Payment.class, id);
 
         session.close();
         return payment;
     }
-
-
 }

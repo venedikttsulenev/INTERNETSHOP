@@ -6,6 +6,7 @@ import com.epam.internetshop.DAO.impl.PaymentDAOImpl;
 import com.epam.internetshop.DAO.impl.ProductDAOImpl;
 import com.epam.internetshop.domain.Payment;
 import com.epam.internetshop.domain.Product;
+import com.epam.internetshop.domain.ProductCount;
 import com.epam.internetshop.domain.User;
 import com.epam.internetshop.services.PaymentService;
 import com.epam.internetshop.services.exception.PaymentException;
@@ -46,21 +47,25 @@ public class PaymentServiceImpl implements PaymentService {
         return paymentDAO.getAll();
     }
 
-    public void performPayment(User user, List<Long> productIdList)
+    public void performPayment(User user, List<ProductCount> productCountList)
             throws ProductException, PaymentException, NullPointerException {
-        if (user == null || productIdList == null) {
+
+        if (user == null || productCountList == null) {
             throw new NullPointerException();
         }
-        for (Long id : productIdList) {
-            if (id == null)
+        for (ProductCount productCount : productCountList) {
+            if (productCount == null)
                 throw new NullPointerException();
+            if (productCount.getCount() < 1 ||
+                    productDAO.getCount(productCount.getProductId()) < productCount.getCount())
+                throw new ProductException("Not enough products.");
         }
 
-        List<Product> productList = productDAO.decrementCount(productIdList);
-        if (productIdList == null)
-            throw new PaymentException();
+        productDAO.decrementCount(productCountList);
+        if (productCountList == null)
+            throw new ProductException();
 
-        paymentDAO.createFromPaylist(user, productList);
+        paymentDAO.createFromPaylist(user, productCountList);
     }
 
     public Payment getById(Long Id) {
