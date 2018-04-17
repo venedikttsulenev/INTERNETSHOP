@@ -27,36 +27,21 @@ public class PaymentServiceImpl implements PaymentService {
     public Payment create(Payment payment) {
         if (payment == null || !paymentValidator.validateAll(payment))
             return null;
-        try {
-            return paymentDAO.create(payment);
-        } catch (RuntimeException e) {
-            return null;
-        }
+        return paymentDAO.create(payment);
     }
 
     public Payment update(Payment payment) {
         if (payment == null || !paymentValidator.validateAll(payment))
             return null;
-        try {
-            return paymentDAO.update(payment);
-        } catch (RuntimeException e) {
-            return null;
-        }
+        return paymentDAO.update(payment);
     }
 
     public void delete(Payment payment) {
-        try {
-            paymentDAO.delete(payment);
-        } catch (RuntimeException e) {
-        }
+        paymentDAO.delete(payment);
     }
 
     public List<Payment> getAll() {
-        try {
-            return paymentDAO.getAll();
-        } catch (RuntimeException e) {
-            return null;
-        }
+        return paymentDAO.getAll();
     }
 
     public List<Payment> performPayment(User user, List<Long> productIdList) {
@@ -75,10 +60,6 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     public Payment getById(Long Id) {
-        try {
-            return paymentDAO.getById(Id);
-        } catch (RuntimeException e) {
-            return null;
-        }
+        return paymentDAO.getById(Id);
     }
 }

@@ -40,7 +40,24 @@ public class DBTest extends HttpServlet {
         //checkUserservice(out);
         //testPaymentList(out);
         //testDecr(out);
-        testPaycheck(out);
+        //testPaycheck(out);
+        Payment payment = paymentService.create(new Payment());
+        if (payment == null)
+            out.println("1 null<br>");
+        else
+            out.println(payment.getPrice() + " 1 <br>");
+
+        payment = new Payment();
+        payment = paymentService.update(payment);
+        if (payment == null)
+            out.println("2 null<br>");
+        payment = new Payment();
+        paymentService.delete(payment);
+
+        Payment payment1 = paymentService.getById(10l);
+        if (payment1 == null)
+            out.println("3 null<br>");
+
     }
 
 
@@ -122,25 +139,25 @@ public class DBTest extends HttpServlet {
         product.setName("n");
         product.setPrice(10l);
         productDAO.create(product);
-        out.println(product.getCount()+"<br>");
+        out.println(product.getCount() + "<br>");
         product = productDAO.decrementCount(product.getId());
-        out.println(product.getCount()+"<br>");
+        out.println(product.getCount() + "<br>");
         product = productDAO.decrementCount(product.getId());
-        out.println(product.getCount()+"<br>");
+        out.println(product.getCount() + "<br>");
         product = productDAO.decrementCount(product.getId());
-        out.println(product.getCount()+"<br>");
+        out.println(product.getCount() + "<br>");
         product = productDAO.decrementCount(product.getId());
-        out.println(product.getCount()+"<br>");
+        out.println(product.getCount() + "<br>");
         product = productDAO.decrementCount(product.getId());
-        out.println(product.getCount()+"<br>");
+        out.println(product.getCount() + "<br>");
         product = productDAO.decrementCount(product.getId());
-        out.println(product.getCount()+"<br>");
+        out.println(product.getCount() + "<br>");
         product = productDAO.decrementCount(product.getId());
-        out.println(product.getCount()+"<br>");
+        out.println(product.getCount() + "<br>");
         product = productDAO.decrementCount(product.getId());
-        out.println(product.getCount()+"<br>");
+        out.println(product.getCount() + "<br>");
         product = productDAO.decrementCount(product.getId());
-        out.println(product.getCount()+"<br>");
+        out.println(product.getCount() + "<br>");
     }
 
     private void testPaycheck(PrintWriter out) {
@@ -162,8 +179,8 @@ public class DBTest extends HttpServlet {
         idList.add(product.getId());
         idList.add(product.getId());
         List<Payment> paymentList = paymentService.performPayment(user, idList);
-        for (Payment payment:paymentList){
-            out.println(payment.getPrice()+"<br>");
+        for (Payment payment : paymentList) {
+            out.println(payment.getPrice() + "<br>");
         }
     }
 
@@ -203,7 +220,7 @@ public class DBTest extends HttpServlet {
     private Product createProduct() {
         Product product = new Product();
         product.setDescription("a");
-        product.setCount( 5l);
+        product.setCount(5l);
         product.setName("n");
         product.setPrice(10l);
         productService.create(product);
