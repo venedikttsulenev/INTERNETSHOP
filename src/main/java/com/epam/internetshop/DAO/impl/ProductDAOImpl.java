@@ -71,13 +71,17 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
 
                 Long count = product.getCount();
                 if (count == 0)
-                    throw new HibernateException("Zero count");
+                    throw new RuntimeException("Zero count");
                 product.setCount(count - 1);
                 session.update(product);
                 productList.add(product);
             }
             transaction.commit();
-        } catch (HibernateException e) {
+        }catch (HibernateException e){
+            transaction.rollback();
+            productList = null;
+        }
+        catch (RuntimeException e) {
             transaction.rollback();
             productList = null;
         }
