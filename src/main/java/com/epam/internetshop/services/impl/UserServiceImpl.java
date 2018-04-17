@@ -22,26 +22,15 @@ public class UserServiceImpl implements UserService {
     public User update(User user) {
         if (user == null || !userValidator.validateAll(user))
             return null;
-        try {
-            return userDAO.update(user);
-        } catch (RuntimeException e) {
-            return null;
-        }
+        return userDAO.update(user);
     }
 
     public void delete(User user) {
-        try {
-            userDAO.delete(user);
-        } catch (RuntimeException e) {
-        }
+        userDAO.delete(user);
     }
 
     public List<User> getAll() {
-        try {
-            return userDAO.getAll();
-        } catch (RuntimeException e) {
-            return null;
-        }
+        return userDAO.getAll();
     }
 
     public User createUser(String login, String password) {
@@ -50,34 +39,19 @@ public class UserServiceImpl implements UserService {
             return null;
         if (getByLogin(login) != null)
             return null;
-        User user = new User();
-        user.setLogin(login);
-        user.setPassword(password);
-        user.setBlackListed(false);
-        user.setAdmin(false);
-        try {
-            return userDAO.create(user);
-        } catch (RuntimeException e) {
-            return null;
-        }
+        User user = new User(login, password);
+        return userDAO.create(user);
     }
 
     public User getByLogin(String login) {
         if (login == null || !userValidator.validateLogin(login))
             return null;
-        try {
-            return ((UserDAOImpl) userDAO).getByLogin(login);
-        } catch (Throwable e) {
-            return null;
-        }
+        return userDAO.getByLogin(login);
     }
 
     public User getById(Long Id) {
-        User user = null;
-        try {
-            user = userDAO.getById(Id);
-        } catch (RuntimeException e) {
-        }
-        return user;
+        if (Id == null)
+            return null;
+        return userDAO.getById(Id);
     }
 }

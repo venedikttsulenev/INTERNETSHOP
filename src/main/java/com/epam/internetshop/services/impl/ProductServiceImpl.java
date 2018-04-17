@@ -18,11 +18,7 @@ public class ProductServiceImpl implements ProductService {
     public Product create(Product product) {
         if (product == null || !productValidator.validateAll(product))
             return null;
-        try {
             return productDAO.create(product);
-        } catch (RuntimeException e) {
-            return null;
-        }
     }
 
     public Product update(Product product) {
