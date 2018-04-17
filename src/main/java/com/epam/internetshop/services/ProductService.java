@@ -15,4 +15,6 @@ public interface ProductService {
     List<Product> getAll();
 
     Product getById(Long Id);
+
+    boolean isEnoughProduct(Long productId, Long productQuantity);
 }

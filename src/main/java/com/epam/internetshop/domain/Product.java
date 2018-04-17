@@ -3,7 +3,6 @@ package com.epam.internetshop.domain;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "product")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,6 +17,13 @@ public class Product {
 
     public Product() {
 
+    }
+
+    public Product(String name, String description, Long count, Long price) {
+        this.name = name;
+        this.description = description;
+        this.count = count;
+        this.price = price;
     }
 
     public void setId(Long id) {

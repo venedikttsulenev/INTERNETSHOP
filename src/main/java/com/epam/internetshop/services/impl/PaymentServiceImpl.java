@@ -8,6 +8,8 @@ import com.epam.internetshop.domain.Payment;
 import com.epam.internetshop.domain.Product;
 import com.epam.internetshop.domain.User;
 import com.epam.internetshop.services.PaymentService;
+import com.epam.internetshop.services.exception.PaymentException;
+import com.epam.internetshop.services.exception.ProductException;
 import com.epam.internetshop.services.validator.PaymentValidator;
 import com.epam.internetshop.services.validator.ProductValidator;
 import com.epam.internetshop.services.validator.UserValidator;
@@ -44,18 +46,19 @@ public class PaymentServiceImpl implements PaymentService {
         return paymentDAO.getAll();
     }
 
-    public void performPayment(User user, List<Long> productIdList) {
+    public void performPayment(User user, List<Long> productIdList)
+            throws ProductException, PaymentException, NullPointerException {
         if (user == null || productIdList == null) {
-            return;
+            throw new NullPointerException();
         }
         for (Long id : productIdList) {
             if (id == null)
-                return;
+                throw new NullPointerException();
         }
 
         List<Product> productList = productDAO.decrementCount(productIdList);
         if (productIdList == null)
-            return;
+            throw new PaymentException();
 
         paymentDAO.createFromPaylist(user, productList);
     }

@@ -16,11 +16,7 @@ public class UserServiceImpl implements UserService {
     public User create(User user) {
         if (user == null || !userValidator.validateAll(user))
             return null;
-        try {
-            return userDAO.create(user);
-        } catch (RuntimeException e) {
-        }
-        return null;
+        return userDAO.create(user);
     }
 
     public User update(User user) {

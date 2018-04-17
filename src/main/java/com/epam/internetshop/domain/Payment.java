@@ -21,8 +21,16 @@ public class Payment {
     private Long price;
     @Temporal(value = TemporalType.DATE)
     private Date paydate;
+    private Long count;
 
     public Payment() {
+    }
+    public Payment(User userId, Product productId, Long price, Date paydate, Long count){
+        this.userId = userId;
+        this.productId = productId;
+        this.price = price;
+        this.paydate = paydate;
+        this.count = count;
     }
 
     public Long getId() {
@@ -63,5 +71,13 @@ public class Payment {
 
     public void setPaydate(Date paydate) {
         this.paydate = paydate;
+    }
+
+    public Long getCount() {
+        return count;
+    }
+
+    public void setCount(Long count) {
+        this.count = count;
     }
 }

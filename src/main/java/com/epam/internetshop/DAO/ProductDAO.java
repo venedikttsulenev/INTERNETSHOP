@@ -15,6 +15,8 @@ public interface ProductDAO {
 
     void delete(Product entity);
 
+    Long getCount(Long id);
+
     Product decrementCount(Long id);
 
     List<Product> decrementCount(List<Long> id);

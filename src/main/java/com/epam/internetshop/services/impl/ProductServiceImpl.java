@@ -5,6 +5,7 @@ import com.epam.internetshop.DAO.ProductDAO;
 import com.epam.internetshop.DAO.impl.ProductDAOImpl;
 import com.epam.internetshop.domain.Product;
 import com.epam.internetshop.services.ProductService;
+import com.epam.internetshop.services.exception.ProductException;
 import com.epam.internetshop.services.validator.ProductValidator;
 import com.epam.internetshop.services.validator.impl.ProductValidatorImpl;
 
@@ -40,5 +41,12 @@ public class ProductServiceImpl implements ProductService {
 
     public Product getById(Long Id) {
         return productDAO.getById(Id);
+    }
+
+    public boolean isEnoughProduct(Long productId, Long productQuantity) {
+        Long count = productDAO.getCount(productId);
+        if (count == null)
+            throw new ProductException("Not enough product.");
+        return count >= productQuantity;
     }
 }
