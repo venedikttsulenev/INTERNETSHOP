@@ -166,9 +166,9 @@ public class DBTest extends HttpServlet {
         ProductDAO productDAO = new ProductDAOImpl();
         Product product = new Product();
         product.setDescription("a");
-        product.setCount(5l);
+        product.setCount(5L);
         product.setName("n");
-        product.setPrice(10l);
+        product.setPrice(10L);
         productService.create(product);
 
         List<Long> idList = new ArrayList<Long>();
@@ -178,10 +178,7 @@ public class DBTest extends HttpServlet {
         idList.add(product.getId());
         idList.add(product.getId());
         idList.add(product.getId());
-        List<Payment> paymentList = paymentService.performPayment(user, idList);
-        for (Payment payment : paymentList) {
-            out.println(payment.getPrice() + "<br>");
-        }
+        paymentService.performPayment(user, idList);
     }
 
     private void testPaymentList(PrintWriter out) {
@@ -193,18 +190,14 @@ public class DBTest extends HttpServlet {
         userService.create(usr);
 
         Product product = new Product();
-        product.setId(10l);
-        product.setPrice(100l);
+        product.setId(10L);
+        product.setPrice(100L);
         product.setName("a");
-        product.setCount(2l);
+        product.setCount(2L);
         List<Long> list = new ArrayList<Long>();
         for (int i = 0; i < 5; i++)
             list.add(10l);
-        List<Payment> paymentList =
-                paymentService.performPayment(usr, list);
-        for (Payment payment : paymentList) {
-            out.println(payment.getProductId() + " " + payment.getUserId() + "<br>");
-        }
+        paymentService.performPayment(usr, list);
     }
 
     private User createUser() {

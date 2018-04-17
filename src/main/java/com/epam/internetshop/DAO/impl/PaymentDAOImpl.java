@@ -30,9 +30,8 @@ public class PaymentDAOImpl extends DAO<Payment> implements PaymentDAO {
         return list;
     }
 
-    public List<Payment> createFromPaylist(User user, List<Product> productList) {
+    public void createFromPaylist(User user, List<Product> productList) throws HibernateException {
         Session session = HibernateSessionFactory.getSession();
-        List<Payment> resultList = new ArrayList<Payment>();
 
         Transaction transaction = session.beginTransaction();
 
@@ -44,16 +43,15 @@ public class PaymentDAOImpl extends DAO<Payment> implements PaymentDAO {
                 payment.setPrice(product.getPrice());
                 payment.setPaydate(new Date());
                 session.save(payment);
-                resultList.add(payment);
             }
             transaction.commit();
         } catch (HibernateException e) {
             transaction.rollback();
-            resultList = null;
+            session.close();
+            throw new HibernateException("Can't create payments.");
         }
 
         session.close();
-        return resultList;
     }
 
     public Payment getById(Long id) {

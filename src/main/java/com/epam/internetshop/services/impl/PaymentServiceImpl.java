@@ -44,19 +44,20 @@ public class PaymentServiceImpl implements PaymentService {
         return paymentDAO.getAll();
     }
 
-    public List<Payment> performPayment(User user, List<Long> productIdList) {
+    public void performPayment(User user, List<Long> productIdList) {
         if (user == null || productIdList == null) {
-            return null;
+            return;
         }
         for (Long id : productIdList) {
             if (id == null)
-                return null;
+                return;
         }
 
         List<Product> productList = productDAO.decrementCount(productIdList);
-        if (productIdList == null) return null;
+        if (productIdList == null)
+            return;
 
-        return paymentDAO.createFromPaylist(user, productList);
+        paymentDAO.createFromPaylist(user, productList);
     }
 
     public Payment getById(Long Id) {

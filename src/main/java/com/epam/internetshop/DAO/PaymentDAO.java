@@ -11,7 +11,7 @@ public interface PaymentDAO {
 
     List<Payment> getAll();
 
-    List<Payment> createFromPaylist(User user, List<Product> productList);
+    void createFromPaylist(User user, List<Product> productList);
 
     Payment getById(Long id);
 

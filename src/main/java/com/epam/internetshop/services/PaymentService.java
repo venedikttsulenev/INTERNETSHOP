@@ -16,7 +16,7 @@ public interface PaymentService {
 
     List<Payment> getAll();
 
-    List<Payment> performPayment(User user, List<Long> productIdList);
+    void performPayment(User user, List<Long> productIdList);
 
     Payment getById(Long Id);
 
