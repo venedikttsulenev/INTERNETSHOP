@@ -19,13 +19,9 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
         Session session = HibernateSessionFactory.getSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
 
-        Transaction transaction = session.beginTransaction();
-
         CriteriaQuery<Product> criteria = builder.createQuery(Product.class);
         criteria.from(Product.class);
         List<Product> list = session.createQuery(criteria).getResultList();
-
-        transaction.commit();
 
         session.close();
         return list;
@@ -35,9 +31,7 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
         Session session = HibernateSessionFactory.getSession();
         Product product = null;
 
-        Transaction transaction = session.beginTransaction();
         product = session.get(Product.class, id);
-        transaction.commit();
 
         session.close();
         return product;
