@@ -64,10 +64,8 @@ public class PaymentServiceImpl implements PaymentService {
 
             if (productCount == null)
                 throw new ProductException("Null product value.");
-
             if (productQuantity < 1)
                 throw new ProductException("Not enough products in cart.");
-
             if (productDAO.getCount(productId) < productQuantity)
                 throw new ProductException("Not enough products available.");
 
@@ -76,7 +74,7 @@ public class PaymentServiceImpl implements PaymentService {
         if (userDAO.getAccount(user.getId()) < currencyAmount)
             throw new UserException("Not enough cash.");
 
-        userDAO.withdraw(user.getId(), productCountList);
+        userDAO.withdraw(user.getId(), currencyAmount);
         productDAO.decrementCount(productCountList);
         paymentDAO.createFromPaylist(user, productCountList);
 

@@ -20,7 +20,7 @@ public interface UserDAO {
 
     Long getAccount(Long userId);
 
-    void withdraw(Long userId, List<ProductCount> productCountList);
+    void withdraw(Long userId, Long withdrawAmount);
 
     void incrementAccount(Long userId, Long amount);
 }

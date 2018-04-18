@@ -58,32 +58,24 @@ public class UserDAOImpl extends DAO<User> implements UserDAO {
 
     public Long getAccount(Long userId) {
         Session session = HibernateSessionFactory.getSession();
-        User user = null;
 
-        user = session.get(User.class, userId);
+        User user= session.get(User.class, userId);
 
         session.close();
         return (user == null) ? null : user.getAccount();
     }
 
-    public void withdraw(Long userId, List<ProductCount> productCountList) {
+    public void withdraw(Long userId, Long withdrawAmount) {
         Session session = HibernateSessionFactory.getSession();
 
         Transaction transaction = session.beginTransaction();
         try {
             User user = session.get(User.class, userId);
-            Long account = user.getAccount(),
-                    currencyAmount = 0L;
+            Long account = user.getAccount();
 
-            for (ProductCount productCount : productCountList) {
-                Product product = session.get(Product.class, productCount.getProductId());
-                Long price = product.getPrice(),
-                        buyingCount = productCount.getCount();
-                currencyAmount += buyingCount * price;
-            }
-            if (account < currencyAmount)
-                throw new UserException("Not enough cash.");
-            user.setAccount(account - currencyAmount);
+            if (account < withdrawAmount)
+                throw new UserException();
+            user.setAccount(account - withdrawAmount);
             session.update(user);
 
             transaction.commit();
@@ -107,7 +99,6 @@ public class UserDAOImpl extends DAO<User> implements UserDAO {
 
             User user = session.get(User.class, userId);
             Long account = user.getAccount();
-
             user.setAccount(account + amount);
             session.update(user);
 
