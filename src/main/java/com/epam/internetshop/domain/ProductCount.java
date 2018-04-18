@@ -1,20 +1,20 @@
 package com.epam.internetshop.domain;
 
 public class ProductCount {
-    private Product product;
+    private Long productId;
     private Long count;
 
-    public ProductCount(Product product, Long count) {
-        this.product = product;
+    public ProductCount(Long productId, Long count) {
+        this.productId = productId;
         this.count = count;
     }
 
-    public Product getProduct() {
-        return product;
+    public Long getProductId() {
+        return productId;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
     public Long getCount() {
@@ -23,13 +23,5 @@ public class ProductCount {
 
     public void setCount(Long count) {
         this.count = count;
-    }
-
-    public Long getProductId()  {
-        return this.product.getId();
-    }
-
-    public Long getProductPrice()  {
-        return this.product.getPrice();
     }
 }
