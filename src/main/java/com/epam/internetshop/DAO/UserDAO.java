@@ -18,6 +18,10 @@ public interface UserDAO {
 
     User getByLogin(String login);
 
+    Boolean isBlackListed(String login);
+
+    Boolean isAdmin(String login);
+
     Long getAccount(Long userId);
 
     void withdraw(Long userId, Long withdrawAmount);

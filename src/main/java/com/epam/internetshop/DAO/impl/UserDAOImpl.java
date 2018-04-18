@@ -48,17 +48,55 @@ public class UserDAOImpl extends DAO<User> implements UserDAO {
                 where(builder.equal(root.get("login"), login));
 
         List result = session.createQuery(query).getResultList();
-        if (!result.isEmpty())
+        if (!result.isEmpty()) {
             user = (User) result.get(0);
+        }
 
         session.close();
         return user;
     }
 
+    public Boolean isBlackListed(String login) {
+        Session session = HibernateSessionFactory.getSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        Boolean isBlackListed = null;
+
+        CriteriaQuery<User> query = builder.createQuery(User.class);
+        Root<User> root = query.from(User.class);
+        query.select(root).
+                where(builder.equal(root.get("login"), login));
+
+        List result = session.createQuery(query).getResultList();
+        if (!result.isEmpty()) {
+            isBlackListed = ((User) result.get(0)).isBlackListed();
+        }
+
+        session.close();
+        return isBlackListed;
+    }
+
+    public Boolean isAdmin(String login) {
+        Session session = HibernateSessionFactory.getSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        Boolean isAdmin = null;
+
+        CriteriaQuery<User> query = builder.createQuery(User.class);
+        Root<User> root = query.from(User.class);
+        query.select(root).
+                where(builder.equal(root.get("login"), login));
+
+        List result = session.createQuery(query).getResultList();
+        if (!result.isEmpty()) {
+            isAdmin = ((User) result.get(0)).isAdmin();
+        }
+
+        session.close();
+        return isAdmin;    }
+
     public Long getAccount(Long userId) {
         Session session = HibernateSessionFactory.getSession();
 
-        User user= session.get(User.class, userId);
+        User user = session.get(User.class, userId);
 
         session.close();
         return (user == null) ? null : user.getAccount();

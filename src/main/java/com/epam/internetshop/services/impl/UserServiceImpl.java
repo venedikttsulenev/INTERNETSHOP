@@ -71,4 +71,12 @@ public class UserServiceImpl implements UserService {
             throw new UserException("Can't increase on zero or less.");
         userDAO.incrementAccount(userId, currencyAmount);
     }
+
+    public Boolean isAdmin(String login) {
+        return userDAO.isAdmin(login);
+    }
+
+    public Boolean isBlackListed(String login) {
+        return userDAO.isBlackListed(login);
+    }
 }
