@@ -13,9 +13,7 @@ public class RegisterLogic {
     }
 
     public static User registerUser(String login, String password) {
-        User user = new User(login, password, false, false);
-
         UserService service = ServiceManager.newUserService();
-        return service.create(user);
+        return service.createUser(login, password);
     }
 }
