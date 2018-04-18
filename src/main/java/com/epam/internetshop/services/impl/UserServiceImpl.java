@@ -1,18 +1,16 @@
 package com.epam.internetshop.services.impl;
 
-import com.epam.internetshop.DAO.DAO;
-import com.epam.internetshop.DAO.impl.UserDAO;
+import com.epam.internetshop.DAO.UserDAO;
+import com.epam.internetshop.DAO.impl.UserDAOImpl;
 import com.epam.internetshop.domain.User;
 import com.epam.internetshop.services.UserService;
 import com.epam.internetshop.services.validator.UserValidator;
 import com.epam.internetshop.services.validator.impl.UserValidatorImpl;
-import org.hibernate.PropertyNotFoundException;
-import org.hibernate.PropertyValueException;
 
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
-    private DAO<User> userDAO = new UserDAO();
+    private UserDAO userDAO = new UserDAOImpl();
     private UserValidator userValidator = new UserValidatorImpl();
 
     public User create(User user) {
@@ -35,48 +33,25 @@ public class UserServiceImpl implements UserService {
         return userDAO.getAll();
     }
 
-    public User login(User user) {
-        if (user == null ||
-                !userValidator.validateLogin(user.getLogin()) ||
-                !userValidator.validatePassword(user.getPassword()) ||
-                user.getPassword().isEmpty() || user.getLogin().isEmpty())
+    public User createUser(String login, String password) {
+        if (login == null || password == null ||
+                !userValidator.validateLogin(login) || !userValidator.validatePassword(password))
             return null;
-        try {
-            return ((UserDAO) userDAO).getByLoginAndPassword(user);
-        } catch (Throwable e) {
+        if (getByLogin(login) != null)
             return null;
-        }
+        User user = new User(login, password);
+        return userDAO.create(user);
     }
 
-    public User getByLogin(User user) {
-        if (user == null ||
-                !userValidator.validateLogin(user.getLogin()) ||
-                user.getLogin().isEmpty())
+    public User getByLogin(String login) {
+        if (login == null || !userValidator.validateLogin(login))
             return null;
-        try {
-            return ((UserDAO) userDAO).getByLogin(user);
-        } catch (Throwable e) {
-            return null;
-        }
-    }
-
-    public List<User> select(User user) {
-        return null;
+        return userDAO.getByLogin(login);
     }
 
     public User getById(Long Id) {
-        User user = null;
-        try {
-            user = userDAO.getById(Id);
-        } catch (PropertyValueException e) {
-            System.out.println("Wrong value.");
-        } catch (PropertyNotFoundException e) {
-            System.out.println("Not Fount Property.");
-        }
-        return user;
-    }
-
-    public List<User> selectSort() {
-        return null;
+        if (Id == null)
+            return null;
+        return userDAO.getById(Id);
     }
 }

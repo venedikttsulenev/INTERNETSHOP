@@ -3,7 +3,6 @@ package com.epam.internetshop.domain;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,6 +18,20 @@ public class User {
 
     public User() {
 
+    }
+
+    public User(String login, String password, Boolean isBlackListed, Boolean isAdmin){
+        this.login = login;
+        this.password = password;
+        this.isBlackListed = isBlackListed;
+        this.isAdmin = isAdmin;
+    }
+
+    public User(String login, String password){
+        this.login = login;
+        this.password = password;
+        this.isBlackListed = false;
+        this.isAdmin = false;
     }
 
     public Long getId() {

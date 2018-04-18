@@ -1,23 +1,24 @@
 package com.epam.internetshop.services.impl;
 
 import com.epam.internetshop.DAO.DAO;
-import com.epam.internetshop.DAO.impl.ProductDAO;
+import com.epam.internetshop.DAO.ProductDAO;
+import com.epam.internetshop.DAO.impl.ProductDAOImpl;
 import com.epam.internetshop.domain.Product;
 import com.epam.internetshop.services.ProductService;
+import com.epam.internetshop.services.exception.ProductException;
 import com.epam.internetshop.services.validator.ProductValidator;
-import com.epam.internetshop.services.validator.UserValidator;
 import com.epam.internetshop.services.validator.impl.ProductValidatorImpl;
 
 import java.util.List;
 
 public class ProductServiceImpl implements ProductService {
-    private DAO<Product> productDAO = new ProductDAO();
+    private ProductDAO productDAO = new ProductDAOImpl();
     private ProductValidator productValidator = new ProductValidatorImpl();
 
     public Product create(Product product) {
         if (product == null || !productValidator.validateAll(product))
             return null;
-        return productDAO.create(product);
+            return productDAO.create(product);
     }
 
     public Product update(Product product) {
@@ -34,16 +35,14 @@ public class ProductServiceImpl implements ProductService {
         return productDAO.getAll();
     }
 
-    public List<Product> select(Product product) {
-        return null;
-    }
-
     public Product getById(Long Id) {
         return productDAO.getById(Id);
     }
 
-    public List<Product> selectSort() {
-        return null;
+    public boolean isEnoughProduct(Long productId, Long productQuantity) {
+        Long count = productDAO.getCount(productId);
+        if (count == null)
+            throw new ProductException("Not enough product.");
+        return count >= productQuantity;
     }
-
 }
