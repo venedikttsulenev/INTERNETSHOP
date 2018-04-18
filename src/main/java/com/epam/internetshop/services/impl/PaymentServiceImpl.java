@@ -51,9 +51,10 @@ public class PaymentServiceImpl implements PaymentService {
         return paymentDAO.getAll();
     }
 
-    public void performPayment(User user, List<ProductCount> productCountList)
+    public void performPayment(String userLogin, List<ProductCount> productCountList)
             throws ProductException, PaymentException {
         Long currencyAmount = 0L;
+        User user = userDAO.getByLogin(userLogin);
 
         if (user == null || productCountList == null) {
             throw new NullPointerException();
@@ -76,8 +77,7 @@ public class PaymentServiceImpl implements PaymentService {
 
         userDAO.withdraw(user.getId(), currencyAmount);
         productDAO.decrementCount(productCountList);
-        paymentDAO.createFromPaylist(user, productCountList);
-
+        paymentDAO.createFromPaylist(user.getId(), productCountList);
     }
 
     public Payment getById(Long Id) {

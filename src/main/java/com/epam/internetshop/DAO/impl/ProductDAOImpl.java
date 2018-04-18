@@ -33,9 +33,8 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
 
     public Product getById(Long id) {
         Session session = HibernateSessionFactory.getSession();
-        Product product = null;
 
-        product = session.get(Product.class, id);
+        Product product = session.get(Product.class, id);
 
         session.close();
         return product;
@@ -43,9 +42,8 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
 
     public Long getCount(Long id) {
         Session session = HibernateSessionFactory.getSession();
-        Product product = null;
 
-        product = session.get(Product.class, id);
+        Product product = session.get(Product.class, id);
 
         session.close();
         return (product == null) ? null : product.getCount();
@@ -58,9 +56,9 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
         try {
             for (ProductCount productCount : productCountList) {
                 Product product = session.get(Product.class, productCount.getProductId());
+                Long count = product.getCount();
+                Long buyingCount = productCount.getCount();
 
-                Long count = product.getCount(),
-                        buyingCount = productCount.getCount();
                 if (count < buyingCount)
                     throw new ProductException();
                 product.setCount(count - buyingCount);

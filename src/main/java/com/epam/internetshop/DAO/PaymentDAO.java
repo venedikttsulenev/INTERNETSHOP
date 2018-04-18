@@ -12,7 +12,7 @@ public interface PaymentDAO {
 
     List<Payment> getAll();
 
-    void createFromPaylist(User user, List<ProductCount> productCountList);
+    void createFromPaylist(Long userId, List<ProductCount> productCountList);
 
     Payment getById(Long id);
 

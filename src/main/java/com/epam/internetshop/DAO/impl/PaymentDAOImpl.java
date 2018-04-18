@@ -30,15 +30,16 @@ public class PaymentDAOImpl extends DAO<Payment> implements PaymentDAO {
         return list;
     }
 
-    public void createFromPaylist(User user, List<ProductCount> productList) throws HibernateException {
+    public void createFromPaylist(Long userId, List<ProductCount> productList) throws HibernateException {
         Session session = HibernateSessionFactory.getSession();
         Transaction transaction = session.beginTransaction();
 
         try {
             for (ProductCount productCount : productList) {
                 Product product = session.get(Product.class, productCount.getProductId());
-                Payment payment = new Payment(user, product, product.getPrice(),
-                        new Date(), productCount.getCount());
+                User user = session.get(User.class, userId);
+                Payment payment = new Payment(user, product,
+                        product.getPrice(), productCount.getCount(), new Date());
                 session.save(payment);
             }
             transaction.commit();
