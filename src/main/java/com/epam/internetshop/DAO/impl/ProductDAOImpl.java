@@ -93,6 +93,7 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
             }
             transaction.commit();
         } catch (HibernateException e) {
+            e.printStackTrace();
             transaction.rollback();
         } catch (ProductException e) {
             transaction.rollback();

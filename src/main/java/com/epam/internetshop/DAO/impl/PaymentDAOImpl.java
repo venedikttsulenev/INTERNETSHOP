@@ -43,6 +43,7 @@ public class PaymentDAOImpl extends DAO<Payment> implements PaymentDAO {
             }
             transaction.commit();
         } catch (HibernateException e) {
+            e.printStackTrace();
             transaction.rollback();
             session.close();
             throw new HibernateException("Can't create payments.");

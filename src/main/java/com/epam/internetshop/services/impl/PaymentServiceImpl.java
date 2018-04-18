@@ -55,7 +55,7 @@ public class PaymentServiceImpl implements PaymentService {
         }
         for (ProductCount productCount : productCountList) {
             if (productCount == null)
-                throw new NullPointerException();
+                throw new ProductException("Null product value.");
             if (productCount.getCount() < 1)
                 throw new ProductException("Not enough products in cart.");
             if (productDAO.getCount(productCount.getProductId()) < productCount.getCount())
