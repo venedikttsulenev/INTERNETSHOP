@@ -30,9 +30,8 @@ public class UserDAOImpl extends DAO<User> implements UserDAO {
 
     public User getById(Long id) {
         Session session = HibernateSessionFactory.getSession();
-        User user = null;
 
-        user = session.get(User.class, id);
+        User user = session.get(User.class, id);
 
         session.close();
         return user;
