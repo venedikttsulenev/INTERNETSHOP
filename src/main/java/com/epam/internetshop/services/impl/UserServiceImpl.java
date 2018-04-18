@@ -64,12 +64,13 @@ public class UserServiceImpl implements UserService {
         return userDAO.getAccount(userId) >= currencyAmount;
     }
 
-    public void increaseAccount(Long userId, Long currencyAmount) {
-        if (userId == null || currencyAmount == null)
+    public void increaseAccount(String login, Long currencyAmount) {
+        if (login == null || currencyAmount == null)
             throw new UserException("Null values.");
         if (currencyAmount <= 0)
             throw new UserException("Can't increase on zero or less.");
-        userDAO.incrementAccount(userId, currencyAmount);
+        User user = userDAO.getByLogin(login);
+        userDAO.incrementAccount(user.getId(), currencyAmount);
     }
 
     public Boolean isAdmin(String login) {
