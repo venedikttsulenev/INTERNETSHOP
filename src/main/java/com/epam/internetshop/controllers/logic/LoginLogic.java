@@ -6,14 +6,11 @@ import com.epam.internetshop.services.manager.ServiceManager;
 
 public class LoginLogic {
 
-    public static boolean userExists(String login, String password) {
-        User user = new User();
-        user.setLogin(login);
-        user.setPassword(password);
-
+    public static boolean login(String login, String password) {
         UserService service = ServiceManager.newUserService();
-        User userByLogin = service.getByLogin(user);
+        User userByLogin = service.getByLogin(login);
 
-        return (userByLogin != null);
+        return (userByLogin != null && password.equals(userByLogin.getPassword()));
+        /* TODO: Secure authentication */
     }
 }
