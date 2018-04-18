@@ -1,5 +1,6 @@
 package com.epam.internetshop.DAO;
 
+import com.epam.internetshop.domain.ProductCount;
 import com.epam.internetshop.domain.User;
 
 import java.util.List;
@@ -16,4 +17,10 @@ public interface UserDAO {
     void delete(User entity);
 
     User getByLogin(String login);
+
+    Long getAccount(Long userId);
+
+    void withdraw(Long userId, List<ProductCount> productCountList);
+
+    void incrementAccount(Long userId, Long amount);
 }

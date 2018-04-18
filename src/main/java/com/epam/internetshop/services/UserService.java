@@ -18,4 +18,8 @@ public interface UserService {
     User getByLogin(String login);
 
     User getById(Long Id);
+
+    boolean isEnoughCurrency(Long productId, Long currencyAmount);
+
+    void increaseAccount(Long userId, Long currencyAmount);
 }

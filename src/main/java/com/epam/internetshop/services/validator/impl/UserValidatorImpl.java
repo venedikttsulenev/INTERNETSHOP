@@ -10,6 +10,8 @@ public class UserValidatorImpl implements UserValidator {
             return false;
         if (!validatePassword(user.getPassword()))
             return false;
+        if (!validateAccount(user.getAccount()))
+            return false;
         return true;
     }
 
@@ -31,6 +33,18 @@ public class UserValidatorImpl implements UserValidator {
         if (!isRightSymbols(password))
             return false;
         return true;
+    }
+
+    public boolean validateAccount(Long account) {
+        if (account == null)
+            return false;
+        if (!isRightAccountAmount(account))
+            return false;
+        return true;
+    }
+
+    private boolean isRightAccountAmount(Long account) {
+        return account >= 0;
     }
 
     private boolean isSuitable(String string) {

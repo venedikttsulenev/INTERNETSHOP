@@ -43,7 +43,7 @@ public class ProductServiceImpl implements ProductService {
     public boolean isEnoughProduct(Long productId, Long productQuantity) {
         Long count = productDAO.getCount(productId);
         if (count == null)
-            throw new ProductException("Not enough product.");
+            throw new ProductException("Not enough product available.");
         return count >= productQuantity;
     }
 

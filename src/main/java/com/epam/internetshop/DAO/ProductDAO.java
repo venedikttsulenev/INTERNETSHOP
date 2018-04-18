@@ -18,7 +18,7 @@ public interface ProductDAO {
 
     Long getCount(Long id);
 
-    void decrementCount(List<ProductCount> id);
+    void decrementCount(List<ProductCount> productCountList);
 
     List<Product> getAllSorted(String columnName, boolean isAsc);
 

@@ -51,31 +51,6 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
         return (product == null) ? null : product.getCount();
     }
 
-    public Product decrementCount(Long id) {
-        Session session = HibernateSessionFactory.getSession();
-        Product product = null;
-
-        Transaction transaction = session.beginTransaction();
-        try {
-            product = session.get(Product.class, id);
-
-            Long count = product.getCount();
-            if (count == 0)
-                throw new ProductException("Not enough product.");
-            product.setCount(count - 1);
-            session.update(product);
-            transaction.commit();
-        } catch (HibernateException e) {
-            transaction.rollback();
-        } catch (ProductException e) {
-            transaction.rollback();
-            throw new ProductException("Not enough product.");
-        }
-
-        session.close();
-        return product;
-    }
-
     public void decrementCount(List<ProductCount> productCountList) {
         Session session = HibernateSessionFactory.getSession();
 
@@ -96,6 +71,7 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
         } catch (HibernateException e) {
             e.printStackTrace();
             transaction.rollback();
+            throw new ProductException("Can't perform decrement.");
         } catch (ProductException e) {
             transaction.rollback();
             throw new ProductException("Not enough product available.");
@@ -111,12 +87,13 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
         CriteriaQuery<Product> query = builder.createQuery(Product.class);
         Root<Product> root = query.from(Product.class);
 
-        if (isAsc)
+        if (isAsc) {
             query.select(root).
                     orderBy(builder.asc(root.get(columnName)));
-        else
+        } else {
             query.select(root).
                     orderBy(builder.desc(root.get(columnName)));
+        }
 
         List result = session.createQuery(query).getResultList();
 
