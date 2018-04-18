@@ -9,6 +9,7 @@ import com.epam.internetshop.services.exception.ProductException;
 import com.epam.internetshop.services.validator.ProductValidator;
 import com.epam.internetshop.services.validator.impl.ProductValidatorImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductServiceImpl implements ProductService {
@@ -18,7 +19,7 @@ public class ProductServiceImpl implements ProductService {
     public Product create(Product product) {
         if (product == null || !productValidator.validateAll(product))
             return null;
-            return productDAO.create(product);
+        return productDAO.create(product);
     }
 
     public Product update(Product product) {
@@ -44,5 +45,17 @@ public class ProductServiceImpl implements ProductService {
         if (count == null)
             throw new ProductException("Not enough product.");
         return count >= productQuantity;
+    }
+
+    public List<Product> getAllNameSorted(boolean isAsc) {
+        return productDAO.getAllSorted("name", isAsc);
+    }
+
+    public List<Product> getAllPriceSorted(boolean isAsc) {
+        return productDAO.getAllSorted("price", isAsc);
+    }
+
+    public List<Product> getAllCountSorted(boolean isAsc) {
+        return productDAO.getAllSorted("count", isAsc);
     }
 }

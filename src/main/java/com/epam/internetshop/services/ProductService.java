@@ -14,6 +14,12 @@ public interface ProductService {
 
     List<Product> getAll();
 
+    List<Product> getAllNameSorted(boolean isAsc);
+
+    List<Product> getAllPriceSorted(boolean isAsc);
+
+    List<Product> getAllCountSorted(boolean isAsc);
+
     Product getById(Long Id);
 
     boolean isEnoughProduct(Long productId, Long productQuantity);

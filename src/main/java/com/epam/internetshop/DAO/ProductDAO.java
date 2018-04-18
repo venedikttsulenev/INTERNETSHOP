@@ -19,4 +19,7 @@ public interface ProductDAO {
     Long getCount(Long id);
 
     void decrementCount(List<ProductCount> id);
-}
+
+    List<Product> getAllSorted(String columnName, boolean isAsc);
+
+    }

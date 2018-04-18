@@ -13,6 +13,7 @@ import org.hibernate.Transaction;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,5 +102,25 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
         }
 
         session.close();
+    }
+
+    public List<Product> getAllSorted(String columnName, boolean isAsc) {
+        Session session = HibernateSessionFactory.getSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+
+        CriteriaQuery<Product> query = builder.createQuery(Product.class);
+        Root<Product> root = query.from(Product.class);
+
+        if (isAsc)
+            query.select(root).
+                    orderBy(builder.asc(root.get(columnName)));
+        else
+            query.select(root).
+                    orderBy(builder.desc(root.get(columnName)));
+
+        List result = session.createQuery(query).getResultList();
+
+        session.close();
+        return result;
     }
 }

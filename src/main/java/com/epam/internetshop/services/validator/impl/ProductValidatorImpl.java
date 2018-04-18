@@ -32,7 +32,7 @@ public class ProductValidatorImpl implements ProductValidator {
     @Override
     public boolean validateDescription(String description) {
         if (description == null)
-            return false;
+            return true;
         if (!isSuitable(description))
             return false;
         if (!isRightDescriptionLength(description))
