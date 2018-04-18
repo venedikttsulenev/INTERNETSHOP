@@ -18,4 +18,12 @@ public interface UserService {
     User getByLogin(String login);
 
     User getById(Long Id);
+
+    boolean isEnoughCurrency(Long productId, Long currencyAmount);
+
+    void increaseAccount(String login, Long currencyAmount);
+
+    Boolean isAdmin(String login);
+
+    Boolean isBlackListed(String login);
 }

@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table
 public class Payment {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -25,12 +25,12 @@ public class Payment {
 
     public Payment() {
     }
-    public Payment(User userId, Product productId, Long price, Date paydate, Long count){
+    public Payment(User userId, Product productId, Long price, Long count, Date paydate){
         this.userId = userId;
         this.productId = productId;
         this.price = price;
-        this.paydate = paydate;
         this.count = count;
+        this.paydate = paydate;
     }
 
     public Long getId() {

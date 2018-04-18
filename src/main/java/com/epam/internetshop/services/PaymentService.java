@@ -17,7 +17,7 @@ public interface PaymentService {
 
     List<Payment> getAll();
 
-    void performPayment(User user, List<ProductCount> productCountList);
+    void performPayment(String userLogin, List<ProductCount> productCountList);
 
     Payment getById(Long Id);
 

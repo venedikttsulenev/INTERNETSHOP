@@ -13,7 +13,6 @@ import org.hibernate.Transaction;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,14 +30,16 @@ public class PaymentDAOImpl extends DAO<Payment> implements PaymentDAO {
         return list;
     }
 
-    public void createFromPaylist(User user, List<ProductCount> productList) throws HibernateException {
+    public void createFromPaylist(Long userId, List<ProductCount> productList) throws HibernateException {
         Session session = HibernateSessionFactory.getSession();
         Transaction transaction = session.beginTransaction();
 
         try {
             for (ProductCount productCount : productList) {
-                Payment payment = new Payment(user, productCount.getProduct(),
-                        productCount.getProductPrice(), new Date(), productCount.getCount());
+                Product product = session.get(Product.class, productCount.getProductId());
+                User user = session.get(User.class, userId);
+                Payment payment = new Payment(user, product,
+                        product.getPrice(), productCount.getCount(), new Date());
                 session.save(payment);
             }
             transaction.commit();
@@ -48,7 +49,6 @@ public class PaymentDAOImpl extends DAO<Payment> implements PaymentDAO {
             session.close();
             throw new HibernateException("Can't create payments.");
         }
-
         session.close();
     }
 
