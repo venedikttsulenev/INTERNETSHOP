@@ -1,20 +1,21 @@
 package com.epam.internetshop.services.impl;
 
-import com.epam.internetshop.DAO.DAO;
+import com.epam.internetshop.DAO.DAOFactory;
 import com.epam.internetshop.DAO.ProductDAO;
-import com.epam.internetshop.DAO.impl.ProductDAOImpl;
+import com.epam.internetshop.DAO.impl.HibernateDAOFactory;
 import com.epam.internetshop.domain.Product;
 import com.epam.internetshop.services.ProductService;
 import com.epam.internetshop.services.exception.ProductException;
+import com.epam.internetshop.services.manager.ServiceFactory;
 import com.epam.internetshop.services.validator.ProductValidator;
-import com.epam.internetshop.services.validator.impl.ProductValidatorImpl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProductServiceImpl implements ProductService {
-    private ProductDAO productDAO = new ProductDAOImpl();
-    private ProductValidator productValidator = new ProductValidatorImpl();
+    private static final DAOFactory daoFactory = new HibernateDAOFactory();
+
+    private ProductDAO productDAO = daoFactory.newProductDAO();
+    private ProductValidator productValidator = ServiceFactory.newProductValidator();
 
     public Product create(Product product) {
         if (product == null || !productValidator.validateAll(product))

@@ -13,7 +13,7 @@ import com.epam.internetshop.services.validator.impl.PaymentValidatorImpl;
 import com.epam.internetshop.services.validator.impl.ProductValidatorImpl;
 import com.epam.internetshop.services.validator.impl.UserValidatorImpl;
 
-public class ServiceManager {
+public class ServiceFactory {
 
     public static UserService newUserService() {
         return new UserServiceImpl();
