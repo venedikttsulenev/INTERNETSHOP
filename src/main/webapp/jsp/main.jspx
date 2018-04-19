@@ -16,9 +16,6 @@ charset=Utf-8"/>
     <body><h3>Welcome</h3>
     <hr/>
     <c:out value="${username}, Hello!"/>
-    <jsp:scriptlet>
-        out.println(request.getRequestURI());
-    </jsp:scriptlet>
     <hr/>
     <jsp:scriptlet>
         request.setAttribute("productsList", ServiceManager.newProductService().getAll());
