@@ -1,18 +1,31 @@
 package com.epam.internetshop.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false)
+    @Pattern(regexp = "^[a-zA-Z0-9_.,!? ;:-]*$")
+    @Size(min = 3,max = 50)
     private String name;
+
+    @Pattern(regexp = "^[a-zA-Z0-9_.,!? ;:-]*$")
+    @Size(min = 0,max = 200)
     private String description;
+
     @Column(nullable = false)
+    @Min(0)
     private Long count;
+
     @Column(nullable = false)
+    @Min(0)
     private Long price;
 
     public Product() {

@@ -4,6 +4,7 @@ import java.awt.*;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 
 @Entity
 @Table
@@ -11,16 +12,24 @@ public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User userId;
+
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product productId;
+
     @Column(nullable=false)
+    @Min(0)
     private Long price;
+
     @Temporal(value = TemporalType.DATE)
     private Date paydate;
+
+    @Column(nullable=false)
+    @Min(1)
     private Long count;
 
     public Payment() {

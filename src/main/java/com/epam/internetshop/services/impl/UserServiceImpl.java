@@ -17,6 +17,8 @@ public class UserServiceImpl implements UserService {
     public User create(User user) {
         if (user == null || !userValidator.validateAll(user))
             return null;
+        if (getByLogin(user.getLogin()) != null)
+            return null;
         return userDAO.create(user);
     }
 
