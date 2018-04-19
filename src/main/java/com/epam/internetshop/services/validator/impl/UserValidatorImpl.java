@@ -3,7 +3,12 @@ package com.epam.internetshop.services.validator.impl;
 import com.epam.internetshop.domain.User;
 import com.epam.internetshop.services.validator.UserValidator;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class UserValidatorImpl implements UserValidator {
+
+    private Pattern symbolsPattern = Pattern.compile("^[a-zA-Z0-9_.-]*$");
 
     public boolean validateAll(User user) {
         if (!validateLogin(user.getLogin()))
@@ -18,9 +23,11 @@ public class UserValidatorImpl implements UserValidator {
     public boolean validateLogin(String login) {
         if (login == null)
             return false;
+        if (!isRightLoginLength(login))
+            return false;
         if (!isSuitable(login))
             return false;
-        if (!isRightFormat(login))
+        if (!isRightSymbols(login))
             return false;
         return true;
     }
@@ -59,7 +66,12 @@ public class UserValidatorImpl implements UserValidator {
         return string.length() >= 8 && string.length() <= 30;
     }
 
+    private boolean isRightLoginLength(String string) {
+        return string.length() >= 3 && string.length() <= 50;
+    }
+
     private boolean isRightSymbols(String string) {
-        return true;
+        Matcher matcher = symbolsPattern.matcher(string);
+        return matcher.matches();
     }
 }
