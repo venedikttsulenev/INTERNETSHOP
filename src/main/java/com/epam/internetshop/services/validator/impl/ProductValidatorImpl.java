@@ -62,9 +62,13 @@ public class ProductValidatorImpl implements ProductValidator {
         return true;
     }
 
-    private boolean isRightCount(Long count){return count >=0;}
+    private boolean isRightCount(Long count) {
+        return count >= 0;
+    }
 
-    private boolean isRightPrice(Long price){return price >=0;}
+    private boolean isRightPrice(Long price) {
+        return price >= 0;
+    }
 
     private boolean isRightLength(String string) {
         return string.length() >= 3 && string.length() <= 40;

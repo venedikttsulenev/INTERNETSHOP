@@ -1,18 +1,25 @@
 package com.epam.internetshop.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false)
     private String name;
     private String description;
+
     @Column(nullable = false)
+    @Min(0)
     private Long count;
+
     @Column(nullable = false)
+    @Min(0)
     private Long price;
 
     public Product() {

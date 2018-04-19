@@ -1,20 +1,33 @@
 package com.epam.internetshop.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(unique = true, nullable = false)
+    @Pattern(regexp = "^[a-zA-Z0-9_.-]*$")
+    @Size(min = 3, max = 50)
     private String login;
+
     @Column(nullable = false)
+    @Pattern(regexp = "^[a-zA-Z0-9_.-]*$")
+    @Size(min = 8, max = 30)
     private String password;
+
     @Column(nullable = false)
+    @Min(0)
     private Long account;
+
     @Column(nullable = false)
     private Boolean isBlackListed;
+
     @Column(nullable = false)
     private Boolean isAdmin;
 
@@ -23,7 +36,7 @@ public class User {
     }
 
     public User(String login, String password, Long account,
-                Boolean isBlackListed, Boolean isAdmin){
+                Boolean isBlackListed, Boolean isAdmin) {
         this.login = login;
         this.password = password;
         this.account = account;
@@ -31,7 +44,7 @@ public class User {
         this.isAdmin = isAdmin;
     }
 
-    public User(String login, String password){
+    public User(String login, String password) {
         this.login = login;
         this.password = password;
         this.account = 0L;
