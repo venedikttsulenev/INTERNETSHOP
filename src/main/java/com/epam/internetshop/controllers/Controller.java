@@ -12,7 +12,7 @@ import com.epam.internetshop.controllers.commands.Command;
 import com.epam.internetshop.controllers.manager.MessageManager;
 import com.epam.internetshop.controllers.manager.ConfigurationManager;
 
-@WebServlet({"/", "/login"})
+@WebServlet({ "/login"})
 public class Controller extends HttpServlet implements javax.servlet.Servlet {
 
     private RequestHelper requestHelper = RequestHelper.getInstance();
