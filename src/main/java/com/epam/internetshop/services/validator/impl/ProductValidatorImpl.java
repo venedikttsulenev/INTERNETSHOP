@@ -3,7 +3,12 @@ package com.epam.internetshop.services.validator.impl;
 import com.epam.internetshop.domain.Product;
 import com.epam.internetshop.services.validator.ProductValidator;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class ProductValidatorImpl implements ProductValidator {
+
+    private Pattern textPattern = Pattern.compile("^[a-zA-Z0-9_.,!? ;:-]*$");
 
     @Override
     public boolean validateAll(Product product) {
@@ -24,6 +29,10 @@ public class ProductValidatorImpl implements ProductValidator {
     public boolean validateName(String name) {
         if (name == null)
             return false;
+        if (!isRightLength(name))
+            return false;
+        if (!isRightText(name))
+            return false;
         if (!isSuitable(name))
             return false;
         return true;
@@ -33,6 +42,8 @@ public class ProductValidatorImpl implements ProductValidator {
     public boolean validateDescription(String description) {
         if (description == null)
             return true;
+        if (!isRightText(description))
+            return false;
         if (!isSuitable(description))
             return false;
         if (!isRightDescriptionLength(description))
@@ -71,10 +82,15 @@ public class ProductValidatorImpl implements ProductValidator {
     }
 
     private boolean isRightLength(String string) {
-        return string.length() >= 3 && string.length() <= 40;
+        return string.length() >= 3 && string.length() <= 50;
     }
 
     private boolean isRightDescriptionLength(String string) {
         return string.length() >= 0 && string.length() <= 200;
+    }
+
+    private boolean isRightText(String string) {
+        Matcher matcher = textPattern.matcher(string);
+        return matcher.matches();
     }
 }
