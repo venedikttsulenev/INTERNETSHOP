@@ -14,6 +14,8 @@ public class RequestHelper {
         supportedCommands.put("login", new LoginCommand());
         supportedCommands.put("register", new RegisterCommand());
         supportedCommands.put("addToCart", new AddToCartCommand());
+        supportedCommands.put("removeFromCart", new RemoveFromCartCommand());
+        supportedCommands.put("buy", new BuyCommand());
     }
 
     public Command getCommand(HttpServletRequest request) {
