@@ -49,19 +49,36 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
         return (product == null) ? null : product.getCount();
     }
 
-    public void decrementCount(List<ProductCount> productCountList) {
-        Session session = HibernateSessionFactory.getSession();
+    public void increaseCount(Long productId, Long additionalCount) {
+        if (additionalCount < 0)
+            throw new ProductException();
 
+        Session session = HibernateSessionFactory.getSession();
         Transaction transaction = session.beginTransaction();
+        Product product = session.get(Product.class, productId);
+        Long count = product.getCount();
+
+        product.setCount(count + additionalCount);
+
+        session.update(product);
+        transaction.commit();
+
+        session.close();
+    }
+
+    public void increaseCount(List<ProductCount> productCountList) {
+        Session session = HibernateSessionFactory.getSession();
+        Transaction transaction = session.beginTransaction();
+
         try {
             for (ProductCount productCount : productCountList) {
                 Product product = session.get(Product.class, productCount.getProductId());
                 Long count = product.getCount();
-                Long buyingCount = productCount.getCount();
+                Long additionalCount = productCount.getCount();
 
-                if (count < buyingCount)
+                if (additionalCount < 1)
                     throw new ProductException();
-                product.setCount(count - buyingCount);
+                product.setCount(count + additionalCount);
 
                 session.update(product);
             }
@@ -74,7 +91,51 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
             transaction.rollback();
             throw new ProductException("Not enough product available.");
         }
+        session.close();
 
+    }
+
+    public void decrementCount(Long productId, Long decrementCount) {
+        Session session = HibernateSessionFactory.getSession();
+        Transaction transaction = session.beginTransaction();
+
+        Product product = session.get(Product.class, productId);
+        Long count = product.getCount();
+
+        if (count < decrementCount || decrementCount < 1)
+            throw new ProductException();
+        product.setCount(count - decrementCount);
+
+        session.update(product);
+        transaction.commit();
+        session.close();
+    }
+
+    public void decrementCount(List<ProductCount> productCountList) {
+        Session session = HibernateSessionFactory.getSession();
+        Transaction transaction = session.beginTransaction();
+
+        try {
+            for (ProductCount productCount : productCountList) {
+                Product product = session.get(Product.class, productCount.getProductId());
+                Long count = product.getCount();
+                Long decrementCount = productCount.getCount();
+
+                if (count < decrementCount || decrementCount < 1)
+                    throw new ProductException();
+                product.setCount(count - decrementCount);
+
+                session.update(product);
+            }
+            transaction.commit();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            transaction.rollback();
+            throw new ProductException("Can't perform decrement.");
+        } catch (ProductException e) {
+            transaction.rollback();
+            throw new ProductException("Not enough product available.");
+        }
         session.close();
     }
 
