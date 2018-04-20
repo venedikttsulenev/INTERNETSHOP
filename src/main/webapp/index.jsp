@@ -1,5 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html;
-charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+charset=ISO-8859-1" pageEncoding="ISO-8859-1" import="com.epam.internetshop.services.manager.ServiceFactory" import="com.epam.internetshop.domain.Product"%>
 <html lang="en">
 <head>
 <title>Electronic Store a Ecommerce Online Shopping Category Bootstrap Responsive Website Template | Home :: w3layouts</title>
@@ -17,7 +18,10 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
 <link href="css/fasthover.css" rel="stylesheet" type="text/css" media="all" />
 <link href="css/popuo-box.css" rel="stylesheet" type="text/css" media="all" />
-<!-- //Custom Theme files -->
+<link href="css/table.css" rel="stylesheet" type="text/css" media="all" />
+
+
+	<!-- //Custom Theme files -->
 <!-- font-awesome icons -->
 <link href="css/font-awesome.css" rel="stylesheet">
 <!-- //font-awesome icons -->
@@ -66,9 +70,10 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 									<div class="tab-1 resp-tab-content" aria-labelledby="tab_item-0">
 										<div class="facts">
 											<div class="register">
-												<form action="#" method="post">			
-													<input name="Email" placeholder="Email Address" type="text" required="">						
-													<input name="Password" placeholder="Password" type="password" required="">										
+												<form action="login" method="post">
+													<input type="hidden" name="command" value="login"/>
+													<input name="login" placeholder="Login" type="text" required="required">
+													<input name="password" placeholder="Password" type="password" required="required">
 													<div class="sign-up">
 														<input type="submit" value="Sign in"/>
 													</div>
@@ -80,10 +85,9 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 										<div class="facts">
 											<div class="register">
 												<form action="#" method="post">			
-													<input placeholder="Name" name="Name" type="text" required="">
-													<input placeholder="Email Address" name="Email" type="email" required="">	
-													<input placeholder="Password" name="Password" type="password" required="">	
-													<input placeholder="Confirm Password" name="Password" type="password" required="">
+													<input placeholder="Name" name="Name" type="text" required="required">
+													<input placeholder="Password" name="Password" type="password" required="required">
+													<input placeholder="Confirm Password" name="Password" type="password" required="required">
 													<div class="sign-up">
 														<input type="submit" value="Create Account"/>
 													</div>
@@ -97,7 +101,7 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 							<script type="text/javascript">
 								$(document).ready(function () {
 									$('#horizontalTab').easyResponsiveTabs({
-										type: 'default', //Types: default, vertical, accordion           
+										type: 'default', //Types: default, vertical, accordion
 										width: 'auto', //auto or any width like 600px
 										fit: true   // 100% fit in a container
 									});
@@ -133,13 +137,7 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 					</form>
 				</div>
 			</div>
-			<div class="cart cart box_1"> 
-				<form action="#" method="post" class="last"> 
-					<input type="hidden" name="cmd" value="_cart" />
-					<input type="hidden" name="display" value="1" />
-					<button class="w3view-cart" type="submit" name="submit" value=""><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></button>
-				</form>   
-			</div>  
+
 		</div>
 	</div>
 	<!-- //header -->
@@ -149,7 +147,55 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 			<h3>Electronic Store, <span>Special Offers</span></h3>
 		</div>
 	</div>
-	<!-- //banner --> 
+	<!-- //banner -->
+	<jsp:scriptlet>
+        request.setAttribute("productsList", ServiceFactory.newProductService().getAll());
+    </jsp:scriptlet>
+
+	<div class="container mb-4">
+		<div class="row">
+			<div class="col-12">
+				<div class="table-responsive">
+					<table class="table table-striped">
+						<thead>
+						<tr>
+							<th scope="col" style="color: black">Name</th>
+							<th scope="col" style="color: black">Descritption</th>
+							<th scope="col" style="color: black">Available</th>
+							<th scope="col" style="color: black">Price</th>
+							<th scope="col" style="color: black"></th>
+						</tr>
+						</thead>
+						<tbody>
+
+						<c:forEach items="${productsList}" var="prod">
+						<jsp:scriptlet>
+						Product product = (Product) pageContext.getAttribute("prod");
+						</jsp:scriptlet>
+						<tr>
+							<td>
+								<jsp:expression>product.getName()</jsp:expression>
+							</td>
+							<td>
+								<jsp:expression>product.getDescription()</jsp:expression>
+							</td>
+							<td>
+								<jsp:expression>product.getCount()</jsp:expression>
+							</td>
+							<td>
+								<jsp:expression>product.getPrice()</jsp:expression>
+							</td>
+							<td class="text-right">
+								<a href="#" data-toggle="modal" data-target="#myModal88"/>
+								<button class="btn btn-sm btn-danger">Add to cart </button>
+							</td>
+						</tr>
+						</c:forEach>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 	<!-- footer -->
 	<div class="footer">
 
@@ -178,6 +224,8 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
         	}
         });
     </script>  
-	<!-- //cart-js -->   
+	<!-- //cart-js -->
+
+
 </body>
 </html>

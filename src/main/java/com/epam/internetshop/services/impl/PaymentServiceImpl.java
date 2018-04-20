@@ -1,34 +1,34 @@
 package com.epam.internetshop.services.impl;
 
+import com.epam.internetshop.DAO.DAOFactory;
 import com.epam.internetshop.DAO.PaymentDAO;
 import com.epam.internetshop.DAO.ProductDAO;
 import com.epam.internetshop.DAO.UserDAO;
-import com.epam.internetshop.DAO.impl.PaymentDAOImpl;
-import com.epam.internetshop.DAO.impl.ProductDAOImpl;
-import com.epam.internetshop.DAO.impl.UserDAOImpl;
+import com.epam.internetshop.DAO.impl.HibernateDAOFactory;
 import com.epam.internetshop.domain.Payment;
 import com.epam.internetshop.domain.User;
 import com.epam.internetshop.services.PaymentService;
 import com.epam.internetshop.services.exception.PaymentException;
 import com.epam.internetshop.services.exception.ProductException;
 import com.epam.internetshop.services.exception.UserException;
+import com.epam.internetshop.services.manager.ServiceFactory;
 import com.epam.internetshop.services.validator.PaymentValidator;
 import com.epam.internetshop.services.validator.ProductValidator;
 import com.epam.internetshop.services.validator.UserValidator;
-import com.epam.internetshop.services.validator.impl.PaymentValidatorImpl;
-import com.epam.internetshop.services.validator.impl.ProductValidatorImpl;
-import com.epam.internetshop.services.validator.impl.UserValidatorImpl;
 
 import java.util.HashMap;
 import java.util.List;
 
 public class PaymentServiceImpl implements PaymentService {
-    private PaymentDAO paymentDAO = new PaymentDAOImpl();
-    private ProductDAO productDAO = new ProductDAOImpl();
-    private UserDAO userDAO = new UserDAOImpl();
-    private ProductValidator productValidator = new ProductValidatorImpl();
-    private UserValidator userValidator = new UserValidatorImpl();
-    private PaymentValidator paymentValidator = new PaymentValidatorImpl();
+    private static final DAOFactory daoFactory = new HibernateDAOFactory();
+
+    private PaymentDAO paymentDAO = daoFactory.newPaymentDAO();
+    private ProductDAO productDAO = daoFactory.newProductDAO();
+    private UserDAO userDAO = daoFactory.newUserDAO();
+
+    private ProductValidator productValidator = ServiceFactory.newProductValidator();
+    private UserValidator userValidator = ServiceFactory.newUserValidator();
+    private PaymentValidator paymentValidator = ServiceFactory.newPaymentValidator();
 
     public Payment create(Payment payment) {
         if (payment == null || !paymentValidator.validateAll(payment))
