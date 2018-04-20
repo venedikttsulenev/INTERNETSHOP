@@ -40,6 +40,11 @@ public class ProductServiceImpl implements ProductService {
         productDAO.increaseCount(productId, additionCount);
     }
 
+    @Override
+    public void dereaseCount(Long productId, Long additionCount) {
+
+    }
+
     public List<Product> getAll() {
         return productDAO.getAll();
     }
