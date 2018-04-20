@@ -10,6 +10,8 @@ public interface UserDAO {
 
     List<User> getAll();
 
+    List<User> getAllUsers();
+
     User getById(Long id);
 
     User update(User entity);

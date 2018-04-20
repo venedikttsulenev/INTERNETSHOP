@@ -28,6 +28,21 @@ public class UserDAOImpl extends DAO<User> implements UserDAO {
         return list;
     }
 
+    public List<User> getAllUsers() {
+        Session session = HibernateSessionFactory.getSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+
+        CriteriaQuery<User> query = builder.createQuery(User.class);
+        Root<User> root = query.from(User.class);
+        query.select(root).
+                where(builder.equal(root.get("isAdmin"), Boolean.FALSE));
+
+        List<User> list = session.createQuery(query).getResultList();
+
+        session.close();
+        return list;
+    }
+
     public User getById(Long id) {
         Session session = HibernateSessionFactory.getSession();
 
@@ -91,7 +106,8 @@ public class UserDAOImpl extends DAO<User> implements UserDAO {
         }
 
         session.close();
-        return isAdmin;    }
+        return isAdmin;
+    }
 
     public Long getAccount(Long userId) {
         Session session = HibernateSessionFactory.getSession();
