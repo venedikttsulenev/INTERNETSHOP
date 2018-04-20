@@ -6,7 +6,6 @@ import com.epam.internetshop.DAO.ProductDAO;
 import com.epam.internetshop.DAO.UserDAO;
 import com.epam.internetshop.DAO.impl.HibernateDAOFactory;
 import com.epam.internetshop.domain.Payment;
-import com.epam.internetshop.domain.ProductCount;
 import com.epam.internetshop.domain.User;
 import com.epam.internetshop.services.PaymentService;
 import com.epam.internetshop.services.exception.PaymentException;
@@ -17,6 +16,7 @@ import com.epam.internetshop.services.validator.PaymentValidator;
 import com.epam.internetshop.services.validator.ProductValidator;
 import com.epam.internetshop.services.validator.UserValidator;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class PaymentServiceImpl implements PaymentService {
@@ -50,20 +50,20 @@ public class PaymentServiceImpl implements PaymentService {
         return paymentDAO.getAll();
     }
 
-    public void performPayment(String userLogin, List<ProductCount> productCountList)
+    public void performPayment(String userLogin, HashMap<Long,Long> productCountList)
             throws ProductException, PaymentException {
+        if (userDAO.isBlackListed(userLogin))
+            throw new UserException("User is in black list");
         Long currencyAmount = 0L;
         User user = userDAO.getByLogin(userLogin);
-
         if (user == null || productCountList == null) {
             throw new NullPointerException();
         }
-        for (ProductCount productCount : productCountList) {
-            Long productQuantity = productCount.getCount();
-            Long productId = productCount.getProductId();
 
-            if (productCount == null)
-                throw new ProductException("Null product value.");
+        for (HashMap.Entry<Long,Long> entry: productCountList.entrySet()){
+            Long productId = entry.getKey();
+            Long productQuantity = entry.getValue();
+
             if (productQuantity < 1)
                 throw new ProductException("Not enough products in cart.");
             if (productDAO.getCount(productId) < productQuantity)
@@ -71,6 +71,7 @@ public class PaymentServiceImpl implements PaymentService {
 
             currencyAmount += productDAO.getById(productId).getPrice() * productQuantity;
         }
+
         if (userDAO.getAccount(user.getId()) < currencyAmount)
             throw new UserException("Not enough cash.");
 

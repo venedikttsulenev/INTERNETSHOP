@@ -33,6 +33,12 @@ public class ProductServiceImpl implements ProductService {
         productDAO.delete(product);
     }
 
+    public void increaseCount(Long productId, Long additionCount) {
+        if (productId == null || additionCount == null || additionCount < 1)
+            throw new ProductException();
+        productDAO.increaseCount(productId, additionCount);
+    }
+
     public List<Product> getAll() {
         return productDAO.getAll();
     }

@@ -1,6 +1,5 @@
 package com.epam.internetshop.DAO;
 
-import com.epam.internetshop.domain.ProductCount;
 import com.epam.internetshop.domain.User;
 
 import java.util.List;
@@ -9,6 +8,8 @@ public interface UserDAO {
     User create(User entity);
 
     List<User> getAll();
+
+    List<User> getAllUsers();
 
     User getById(Long id);
 

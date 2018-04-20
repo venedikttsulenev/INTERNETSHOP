@@ -5,8 +5,9 @@ import com.epam.internetshop.DAO.PaymentDAO;
 import com.epam.internetshop.DAO.util.HibernateSessionFactory;
 import com.epam.internetshop.domain.Payment;
 import com.epam.internetshop.domain.Product;
-import com.epam.internetshop.domain.ProductCount;
 import com.epam.internetshop.domain.User;
+import com.epam.internetshop.services.exception.ProductException;
+import com.epam.internetshop.services.exception.UserException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -14,6 +15,7 @@ import org.hibernate.Transaction;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 public class PaymentDAOImpl extends DAO<Payment> implements PaymentDAO {
@@ -30,18 +32,22 @@ public class PaymentDAOImpl extends DAO<Payment> implements PaymentDAO {
         return list;
     }
 
-    public void createFromPaylist(Long userId, List<ProductCount> productList) throws HibernateException {
+    public void createFromPaylist(Long userId, HashMap<Long, Long> productCountList) throws HibernateException {
         Session session = HibernateSessionFactory.getSession();
         Transaction transaction = session.beginTransaction();
 
+        User user = session.get(User.class, userId);
         try {
-            for (ProductCount productCount : productList) {
-                Product product = session.get(Product.class, productCount.getProductId());
-                User user = session.get(User.class, userId);
+            for (HashMap.Entry<Long,Long> entry: productCountList.entrySet()){
+                Long productId = entry.getKey();
+                Long productQuantity = entry.getValue();
+
+                Product product = session.get(Product.class, productId);
                 Payment payment = new Payment(user, product,
-                        product.getPrice(), productCount.getCount(), new Date());
+                        product.getPrice(), productQuantity, new Date());
                 session.save(payment);
             }
+
             transaction.commit();
         } catch (HibernateException e) {
             e.printStackTrace();

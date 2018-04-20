@@ -39,6 +39,10 @@ public class UserServiceImpl implements UserService {
         return userDAO.getAll();
     }
 
+    public List<User> getAllUsers() {
+        return  userDAO.getAllUsers();
+    }
+
     public User createUser(String login, String password) {
         if (login == null || password == null ||
                 !userValidator.validateLogin(login) || !userValidator.validatePassword(password))

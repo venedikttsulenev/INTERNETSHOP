@@ -12,6 +12,8 @@ public interface ProductService {
 
     void delete(Product product);
 
+    void increaseCount(Long productId, Long additionCount);
+
     List<Product> getAll();
 
     List<Product> getAllNameSorted(boolean isAsc);
