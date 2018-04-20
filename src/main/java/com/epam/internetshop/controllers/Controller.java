@@ -12,7 +12,7 @@ import com.epam.internetshop.controllers.commands.Command;
 import com.epam.internetshop.controllers.manager.MessageManager;
 import com.epam.internetshop.controllers.manager.ConfigurationManager;
 
-@WebServlet({ "/login"})
+@WebServlet("/process")
 public class Controller extends HttpServlet implements javax.servlet.Servlet {
 
     private RequestHelper requestHelper = RequestHelper.getInstance();
@@ -22,17 +22,17 @@ public class Controller extends HttpServlet implements javax.servlet.Servlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws IOException {
         processRequest(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws IOException {
         processRequest(request, response);
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws IOException {
         ConfigurationManager configurationManager = ConfigurationManager.getInstance();
         MessageManager messageManager = MessageManager.getInstance();
         String page = null;
@@ -54,7 +54,8 @@ public class Controller extends HttpServlet implements javax.servlet.Servlet {
             );
             page = configurationManager.getProperty(ConfigurationManager.ERROR_PAGE_PATH);
         }
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
-        dispatcher.forward(request, response);
+//        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
+//        dispatcher.forward(request, response);
+        response.sendRedirect(page);
     }
 }
