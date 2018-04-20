@@ -1,7 +1,5 @@
 package com.epam.internetshop.controllers.commands;
 
-import java.io.IOException;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,8 +9,7 @@ import com.epam.internetshop.controllers.manager.MessageManager;
 
 public class LoginCommand implements Command {
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) {
         ConfigurationManager configurationManager = ConfigurationManager.getInstance();
         MessageManager messageManager = MessageManager.getInstance();
 
