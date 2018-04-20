@@ -10,6 +10,8 @@ public interface ProductDAO {
 
     List<Product> getAll();
 
+    List<Product> getPage(int pageSize, int page);
+
     Product getById(Long id);
 
     Product update(Product entity);

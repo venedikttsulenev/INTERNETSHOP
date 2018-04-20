@@ -32,6 +32,21 @@ public class PaymentDAOImpl extends DAO<Payment> implements PaymentDAO {
         return list;
     }
 
+    public List<Payment> getPage(int pageSize, int page) {
+        Session session = HibernateSessionFactory.getSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+
+        CriteriaQuery<Payment> criteria = builder.createQuery(Payment.class);
+        criteria.from(Payment.class);
+        List<Payment> list = session.createQuery(criteria)
+                .setFirstResult(pageSize * (page - 1))
+                .setMaxResults(pageSize)
+                .getResultList();
+
+        session.close();
+        return list;
+    }
+
     public void createFromPaylist(Long userId, HashMap<Long, Long> productCountList) throws HibernateException {
         Session session = HibernateSessionFactory.getSession();
         Transaction transaction = session.beginTransaction();
@@ -89,7 +104,7 @@ public class PaymentDAOImpl extends DAO<Payment> implements PaymentDAO {
                 session.save(payment);
             }
             transaction.commit();
-        } catch (HibernateException | UserException | ProductException e ) {
+        } catch (HibernateException | UserException | ProductException e) {
             e.printStackTrace();
             transaction.rollback();
             session.close();

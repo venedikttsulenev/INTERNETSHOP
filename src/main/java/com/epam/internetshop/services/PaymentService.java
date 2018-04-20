@@ -19,7 +19,5 @@ public interface PaymentService {
 
     void performPurchase(String userLogin, HashMap<Long, Long> productCountList);
 
-
     Payment getById(Long Id);
-
 }

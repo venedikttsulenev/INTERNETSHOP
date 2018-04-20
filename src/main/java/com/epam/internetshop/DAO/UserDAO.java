@@ -9,7 +9,11 @@ public interface UserDAO {
 
     List<User> getAll();
 
+    List<User> getPage(int pageSize, int page);
+
     List<User> getAllUsers();
+
+    List<User> getPageUsers(int pageSize, int page);
 
     User getById(Long id);
 

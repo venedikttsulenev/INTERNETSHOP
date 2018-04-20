@@ -2,6 +2,7 @@ package com.epam.internetshop.DAO.impl;
 
 import com.epam.internetshop.DAO.DAO;
 import com.epam.internetshop.DAO.UserDAO;
+import com.epam.internetshop.domain.Payment;
 import com.epam.internetshop.domain.User;
 import com.epam.internetshop.services.exception.UserException;
 import org.hibernate.*;
@@ -26,6 +27,21 @@ public class UserDAOImpl extends DAO<User> implements UserDAO {
         return list;
     }
 
+    public List<User> getPage(int pageSize, int page) {
+        Session session = HibernateSessionFactory.getSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+
+        CriteriaQuery<User> criteria = builder.createQuery(User.class);
+        criteria.from(User.class);
+        List<User> list = session.createQuery(criteria)
+                .setFirstResult(pageSize * (page - 1))
+                .setMaxResults(pageSize)
+                .getResultList();
+
+        session.close();
+        return list;
+    }
+
     public List<User> getAllUsers() {
         Session session = HibernateSessionFactory.getSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
@@ -36,6 +52,24 @@ public class UserDAOImpl extends DAO<User> implements UserDAO {
                 where(builder.equal(root.get("isAdmin"), Boolean.FALSE));
 
         List<User> list = session.createQuery(query).getResultList();
+
+        session.close();
+        return list;
+    }
+
+    public List<User> getPageUsers(int pageSize, int page) {
+        Session session = HibernateSessionFactory.getSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+
+        CriteriaQuery<User> query = builder.createQuery(User.class);
+        Root<User> root = query.from(User.class);
+        query.select(root).
+                where(builder.equal(root.get("isAdmin"), Boolean.FALSE));
+
+        List<User> list = session.createQuery(query)
+                .setFirstResult(pageSize * (page - 1))
+                .setMaxResults(pageSize)
+                .getResultList();
 
         session.close();
         return list;

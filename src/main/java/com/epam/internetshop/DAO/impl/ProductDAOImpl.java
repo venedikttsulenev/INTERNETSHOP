@@ -29,6 +29,21 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
         return list;
     }
 
+    public List<Product> getPage(int pageSize, int page) {
+        Session session = HibernateSessionFactory.getSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+
+        CriteriaQuery<Product> criteria = builder.createQuery(Product.class);
+        criteria.from(Product.class);
+        List<Product> list = session.createQuery(criteria)
+                .setFirstResult(pageSize * (page - 1))
+                .setMaxResults(pageSize)
+                .getResultList();
+
+        session.close();
+        return list;
+    }
+
     public Product getById(Long id) {
         Session session = HibernateSessionFactory.getSession();
 
@@ -57,7 +72,6 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
         Long count = product.getCount();
 
         product.setCount(count + additionalCount);
-
         session.update(product);
         transaction.commit();
 
@@ -75,22 +89,19 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
                 Long count = product.getCount();
 
                 if (count < productQuantity || productQuantity < 1)
-                    throw new ProductException();
+                    throw new ProductException("Not enough product available.");
                 product.setCount(count - productQuantity);
 
                 session.update(product);
             }
             transaction.commit();
-        } catch (HibernateException e) {
+        } catch (HibernateException | ProductException e) {
             e.printStackTrace();
             transaction.rollback();
-            throw new ProductException("Can't perform decrement.");
-        } catch (ProductException e) {
-            transaction.rollback();
-            throw new ProductException("Not enough product available.");
+            session.close();
+            throw e;
         }
         session.close();
-
     }
 
     public void decrementCount(Long productId, Long decrementCount) {
