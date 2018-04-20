@@ -26,6 +26,7 @@ public interface ProductDAO {
 
     void decrementCount(HashMap<Long, Long> productCountList);
 
-    List<Product> getAllSorted(String columnName, boolean isAsc);
+    void changePrice(Long productId, Long price);
 
+    List<Product> getAllSorted(String columnName, boolean isAsc);
 }

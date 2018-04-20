@@ -104,6 +104,21 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
         session.close();
     }
 
+    public void changePrice(Long productId, Long price) {
+        if (price < 0)
+            throw new ProductException();
+
+        Session session = HibernateSessionFactory.getSession();
+        Transaction transaction = session.beginTransaction();
+        Product product = session.get(Product.class, productId);
+
+        product.setPrice(price);
+        session.update(product);
+        transaction.commit();
+
+        session.close();
+    }
+
     public void decrementCount(Long productId, Long decrementCount) {
         Session session = HibernateSessionFactory.getSession();
         Transaction transaction = session.beginTransaction();

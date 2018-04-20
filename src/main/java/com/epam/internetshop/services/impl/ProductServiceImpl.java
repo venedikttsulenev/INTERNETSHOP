@@ -40,9 +40,16 @@ public class ProductServiceImpl implements ProductService {
         productDAO.increaseCount(productId, additionCount);
     }
 
-    @Override
     public void dereaseCount(Long productId, Long additionCount) {
+        if (productId == null || additionCount == null || additionCount < 1)
+            throw new ProductException();
+        productDAO.decrementCount(productId, additionCount);
+    }
 
+    public void changePrice(Long productId, Long price) {
+        if (productId == null || price == null || price < 0)
+            throw new ProductException();
+        productDAO.changePrice(productId, price);
     }
 
     public List<Product> getAll() {

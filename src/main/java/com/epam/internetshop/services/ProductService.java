@@ -16,6 +16,8 @@ public interface ProductService {
 
     void dereaseCount(Long productId, Long additionCount);
 
+    void changePrice(Long productId, Long price);
+
     List<Product> getAll();
 
     List<Product> getPage(int pageSize, int page);
