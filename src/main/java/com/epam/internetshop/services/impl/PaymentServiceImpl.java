@@ -53,6 +53,9 @@ public class PaymentServiceImpl implements PaymentService {
 
     public void performPayment(String userLogin, List<ProductCount> productCountList)
             throws ProductException, PaymentException {
+        if (userDAO.isBlackListed(userLogin))
+            throw new UserException("User is in black liat");
+
         Long currencyAmount = 0L;
         User user = userDAO.getByLogin(userLogin);
 
