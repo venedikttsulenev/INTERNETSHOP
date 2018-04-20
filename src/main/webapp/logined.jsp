@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html;
-charset=ISO-8859-1" pageEncoding="ISO-8859-1" import="com.epam.internetshop.services.manager.ServiceManager" import="com.epam.internetshop.domain.Product"%>
+charset=ISO-8859-1" pageEncoding="ISO-8859-1" import="com.epam.internetshop.services.manager.ServiceFactory" import="com.epam.internetshop.domain.Product"%>
 <html lang="en">
 <head>
     <title>Electronic Store a Ecommerce Online Shopping Category Bootstrap Responsive Website Template</title>
@@ -59,7 +59,7 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1" import="com.epam.internetshop.serv
             </div>
         </div>
         <div class="cart cart box_1">
-            <form action="cart.jsp" method="post" class="last">
+            <form action="bucket.jsp" method="post" class="last">
                 <button class="w3view-cart" type="submit" name="submit" value=""><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></button>
             </form>
         </div>
@@ -74,7 +74,7 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1" import="com.epam.internetshop.serv
 </div>
 <!-- //banner -->
 <jsp:scriptlet>
-        request.setAttribute("productsList", ServiceManager.newProductService().getAll());
+        request.setAttribute("productsList", ServiceFactory.newProductService().getAll());
     </jsp:scriptlet>
 
 <div class="container mb-4">
@@ -111,8 +111,23 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1" import="com.epam.internetshop.serv
                             <jsp:expression>product.getPrice()</jsp:expression>
                         </td>
                         <td class="text-right">
-                            <a href="#" data-toggle="modal" data-target="#myModal88"/>
-                            <button class="btn btn-sm btn-danger">Add to cart </button>
+                            <form action="process" method="post">
+                                <input type="hidden" name="command" value="addToCart">
+                                <jsp:element name="input">
+                                    <jsp:attribute name="type">hidden</jsp:attribute>
+                                    <jsp:attribute name="name">productId</jsp:attribute>
+                                    <jsp:attribute name="value">
+                                        <jsp:expression>product.getId()</jsp:expression>
+                                    </jsp:attribute>
+                                </jsp:element>
+                                <jsp:element name="input">
+                                    <jsp:attribute name="type">hidden</jsp:attribute>
+                                    <jsp:attribute name="name">productCount</jsp:attribute>
+                                    <jsp:attribute name="value">1</jsp:attribute>
+                                </jsp:element>
+                                <%--<a href="#" data-toggle="modal" data-target="#myModal88"/>--%>
+                                <button class="btn btn-sm btn-danger">Add to cart </button>
+                            </form>
                         </td>
                     </tr>
                     </c:forEach>
