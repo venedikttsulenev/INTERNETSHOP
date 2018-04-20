@@ -13,7 +13,11 @@ public interface UserService {
 
     List<User> getAll();
 
+    List<User> getPage(int pageSize, int page);
+
     List<User> getAllUsers();
+
+    List<User> getPageUsers(int pageSize, int page);
 
     User createUser(String login, String password);
 

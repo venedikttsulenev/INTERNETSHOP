@@ -9,6 +9,7 @@ import com.epam.internetshop.services.exception.UserException;
 import com.epam.internetshop.services.manager.ServiceFactory;
 import com.epam.internetshop.services.validator.UserValidator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
@@ -39,9 +40,20 @@ public class UserServiceImpl implements UserService {
         return userDAO.getAll();
     }
 
+    public List<User> getPage(int pageSize, int page) {
+        if (pageSize < 1 || page < 1)
+            return new ArrayList<>();
+        return userDAO.getPage(pageSize, page);
+    }
+
     public List<User> getAllUsers() {
         return  userDAO.getAllUsers();
     }
+
+    public List<User> getPageUsers(int pageSize, int page) {
+        if (pageSize < 1 || page < 1)
+            return new ArrayList<>();
+        return userDAO.getPageUsers(pageSize, page);    }
 
     public User createUser(String login, String password) {
         if (login == null || password == null ||

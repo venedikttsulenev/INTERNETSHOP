@@ -9,6 +9,7 @@ import com.epam.internetshop.services.exception.ProductException;
 import com.epam.internetshop.services.manager.ServiceFactory;
 import com.epam.internetshop.services.validator.ProductValidator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductServiceImpl implements ProductService {
@@ -41,6 +42,12 @@ public class ProductServiceImpl implements ProductService {
 
     public List<Product> getAll() {
         return productDAO.getAll();
+    }
+
+    public List<Product> getPage(int pageSize, int page) {
+        if (pageSize < 1 || page < 1)
+            return new ArrayList<>();
+        return productDAO.getPage(pageSize, page);
     }
 
     public Product getById(Long Id) {

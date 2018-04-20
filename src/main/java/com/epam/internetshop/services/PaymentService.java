@@ -15,6 +15,8 @@ public interface PaymentService {
 
     List<Payment> getAll();
 
+    List<Payment> getPage(int pageSize, int page);
+
     void performPayment(String userLogin, HashMap<Long, Long> productCountList);
 
     void performPurchase(String userLogin, HashMap<Long, Long> productCountList);

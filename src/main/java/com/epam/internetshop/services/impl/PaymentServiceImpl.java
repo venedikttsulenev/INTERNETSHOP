@@ -16,6 +16,7 @@ import com.epam.internetshop.services.validator.PaymentValidator;
 import com.epam.internetshop.services.validator.ProductValidator;
 import com.epam.internetshop.services.validator.UserValidator;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -50,7 +51,13 @@ public class PaymentServiceImpl implements PaymentService {
         return paymentDAO.getAll();
     }
 
-    public void performPayment(String userLogin, HashMap<Long,Long> productCountList)
+    public List<Payment> getPage(int pageSize, int page) {
+        if (pageSize < 1 || page < 1)
+            return new ArrayList<>();
+        return paymentDAO.getPage(pageSize, page);
+    }
+
+    public void performPayment(String userLogin, HashMap<Long, Long> productCountList)
             throws ProductException, PaymentException {
         if (userDAO.isBlackListed(userLogin))
             throw new UserException("User is in black list");
@@ -60,7 +67,7 @@ public class PaymentServiceImpl implements PaymentService {
             throw new NullPointerException();
         }
 
-        for (HashMap.Entry<Long,Long> entry: productCountList.entrySet()){
+        for (HashMap.Entry<Long, Long> entry : productCountList.entrySet()) {
             Long productId = entry.getKey();
             Long productQuantity = entry.getValue();
 
@@ -90,7 +97,7 @@ public class PaymentServiceImpl implements PaymentService {
             throw new NullPointerException();
         }
 
-        for (HashMap.Entry<Long,Long> entry: productCountList.entrySet()){
+        for (HashMap.Entry<Long, Long> entry : productCountList.entrySet()) {
             Long productId = entry.getKey();
             Long productQuantity = entry.getValue();
 

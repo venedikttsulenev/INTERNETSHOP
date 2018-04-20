@@ -16,6 +16,8 @@ public interface ProductService {
 
     List<Product> getAll();
 
+    List<Product> getPage(int pageSize, int page);
+
     List<Product> getAllNameSorted(boolean isAsc);
 
     List<Product> getAllPriceSorted(boolean isAsc);
