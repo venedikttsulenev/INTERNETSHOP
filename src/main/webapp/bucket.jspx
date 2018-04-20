@@ -22,11 +22,14 @@
         </tr>
         <c:forEach items="${bucketList}" var="ent"> <!-- bucketList comes as session attribte -->
             <jsp:scriptlet>
-                HashMap.Entry&lt;Long, Integer&gt; entry =
-                        (HashMap.Entry&lt;Long, Integer&gt;) pageContext.getAttribute("ent");
+                HashMap.Entry&lt;Long, Long&gt; entry =
+                        (HashMap.Entry&lt;Long, Long&gt;) pageContext.getAttribute("ent");
                 Long productID = entry.getKey();
-                Product product = productService.getById(entry.getKey());
+                Product product = productService.getById(productID);
             </jsp:scriptlet>
+            <h>
+            <jsp:expression>productID</jsp:expression>
+            </h>
             <tr>
                 <td>
                     <jsp:expression>product.getName()</jsp:expression>

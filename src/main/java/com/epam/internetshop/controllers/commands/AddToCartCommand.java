@@ -15,6 +15,7 @@ public class AddToCartCommand implements Command {
         Long productId = (Long) request.getAttribute("productId");
         Long productCount = (Long) request.getAttribute("productCount");
         bucketList.put(productId, productCount);
+//        session.setAttribute("bucketList", bucketList);
         return ConfigurationManager.getInstance().getProperty(ConfigurationManager.MAIN_PAGE_PATH);
     }
 }
