@@ -14,6 +14,8 @@ public interface PaymentDAO {
 
     void createFromPaylist(Long userId, List<ProductCount> productCountList);
 
+    void performPayOperation(Long userId, List<ProductCount> productCountList, Long withdrawAmount);
+
     Payment getById(Long id);
 
     Payment update(Payment entity);
