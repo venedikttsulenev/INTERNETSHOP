@@ -9,6 +9,18 @@ import java.io.IOException;
 
 @WebFilter("/auth")
 public class AuthenticationFilter implements Filter {
+    private static boolean requiresAuth(String uri) {
+        return !(uri.equals("/index.jsp")
+                || uri.startsWith("/db")
+                || uri.equals("/login")
+                || uri.equals("/register")
+                || uri.startsWith("/css")
+                || uri.startsWith("/js")
+                || uri.startsWith("/images")
+                || uri.startsWith("/fonts")
+        );
+    }
+
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
@@ -16,7 +28,7 @@ public class AuthenticationFilter implements Filter {
 
         HttpSession session = req.getSession();
         if ((session == null || session.getAttribute("login") == null)
-                && (!req.getRequestURI().endsWith("index.jsp")))
+                && requiresAuth(req.getRequestURI()))
             resp.sendRedirect("/index.jsp");
         else
             filterChain.doFilter(req, resp);

@@ -18,9 +18,10 @@ public class RegisterCommand implements Command {
 
         String login = request.getParameter("login");
         String pass = request.getParameter("password");
+        String pass2 = request.getParameter("password2");
 
         String page = null;
-        if (!RegisterLogic.loginIsAlreadyTaken(login)) {
+        if (pass.equals(pass2) && !RegisterLogic.loginIsAlreadyTaken(login)) {
             if (null != RegisterLogic.registerUser(login, pass)) {
                 request.setAttribute("username", login);
                 page = configurationManager.getProperty(ConfigurationManager.MAIN_PAGE_PATH);

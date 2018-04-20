@@ -48,20 +48,26 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1" import="com.epam.internetshop.serv
         <div class="w3l_logo">
             <h1><a href="logined.jsp">Electronic Store<span>Your stores. Your place.</span></a></h1>
         </div>
-        <div class="search">
-            <input class="search_box" type="checkbox" id="search_box">
-            <label class="icon-search" for="search_box"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></label>
-            <div class="search_form">
-                <form action="#" method="post">
-                    <input type="text" name="Search" placeholder="Search...">
-                    <input type="submit" value="Send">
-                </form>
+        <%--<div class="search">--%>
+            <%--<input class="search_box" type="checkbox" id="search_box">--%>
+            <%--<label class="icon-search" for="search_box"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></label>--%>
+            <%--<div class="search_form">--%>
+                <%--<form action="#" method="post">--%>
+                    <%--<input type="text" name="Search" placeholder="Search...">--%>
+                    <%--<input type="submit" value="Send">--%>
+                <%--</form>--%>
+            <%--</div>--%>
+        <%--</div>--%>
+        <form action="process" method="post">
+            <input type="hidden" name="command" value="logout"/>
+            <div class="sign-up">
+                <input type="submit" value="Log out"/>
             </div>
-        </div>
+        </form>
         <div class="cart cart box_1">
-            <form action="bucket.jsp" method="post" class="last">
+            <form action="bucket.jspx" method="post" class="last">
                 <button class="w3view-cart" type="submit" name="submit" value=""><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></button>
-            </form>
+            </form>s
         </div>
     </div>
 </div>

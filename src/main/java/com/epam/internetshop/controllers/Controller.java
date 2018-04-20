@@ -1,7 +1,6 @@
 package com.epam.internetshop.controllers;
 
 import java.io.IOException;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +11,7 @@ import com.epam.internetshop.controllers.commands.Command;
 import com.epam.internetshop.controllers.manager.MessageManager;
 import com.epam.internetshop.controllers.manager.ConfigurationManager;
 
-@WebServlet("/process")
+@WebServlet({"/login", "/register", "/process"})
 public class Controller extends HttpServlet implements javax.servlet.Servlet {
 
     private RequestHelper requestHelper = RequestHelper.getInstance();

@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html;
-charset=ISO-8859-1" pageEncoding="ISO-8859-1" import="com.epam.internetshop.services.manager.ServiceFactory" import="com.epam.internetshop.domain.Product"%>
+charset=UTF-8" pageEncoding="UTF-8" import="com.epam.internetshop.services.manager.ServiceFactory" import="com.epam.internetshop.domain.Product"%>
 <html lang="en">
 <head>
 <title>Electronic Store a Ecommerce Online Shopping Category Bootstrap Responsive Website Template | Home :: w3layouts</title>
@@ -71,7 +71,7 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1" import="com.epam.internetshop.serv
 										<div class="facts">
 											<div class="register">
 												<form action="login" method="post">
-													<input type="hidden" name="command" value="login"/>
+													<input type="hidden" name="command" value="login">
 													<input name="login" placeholder="Login" type="text" required="required">
 													<input name="password" placeholder="Password" type="password" required="required">
 													<div class="sign-up">
@@ -84,10 +84,11 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1" import="com.epam.internetshop.serv
 									<div class="tab-2 resp-tab-content" aria-labelledby="tab_item-1">
 										<div class="facts">
 											<div class="register">
-												<form action="#" method="post">			
-													<input placeholder="Name" name="Name" type="text" required="required">
-													<input placeholder="Password" name="Password" type="password" required="required">
-													<input placeholder="Confirm Password" name="Password" type="password" required="required">
+												<form action="register" method="post">
+                                                    <input type="hidden" name="command" value="register">
+													<input placeholder="Login" name="login" type="text" required="required">
+													<input placeholder="Password" name="password" type="password" required="required">
+													<input placeholder="Confirm Password" name="password2" type="password" required="required">
 													<div class="sign-up">
 														<input type="submit" value="Create Account"/>
 													</div>

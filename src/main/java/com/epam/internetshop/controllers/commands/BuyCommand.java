@@ -11,7 +11,7 @@ public class BuyCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-        HashMap<Long, Integer> bucketList = (HashMap<Long, Integer>) session.getAttribute("bucketList");
+        HashMap<Long, Long> bucketList = (HashMap<Long, Long>) session.getAttribute("bucketList");
         /* TODO: Perform payment */
         bucketList.clear();
         return ConfigurationManager.getInstance().getProperty(ConfigurationManager.MAIN_PAGE_PATH);
