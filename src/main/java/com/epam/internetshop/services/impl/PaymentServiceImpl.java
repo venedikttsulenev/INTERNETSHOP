@@ -80,6 +80,34 @@ public class PaymentServiceImpl implements PaymentService {
         paymentDAO.createFromPaylist(user.getId(), productCountList);
     }
 
+    public void performPurchase(String userLogin, HashMap<Long, Long> productCountList)
+            throws ProductException, PaymentException {
+        if (userDAO.isBlackListed(userLogin))
+            throw new UserException("User is in black list");
+        Long currencyAmount = 0L;
+        User user = userDAO.getByLogin(userLogin);
+        if (user == null || productCountList == null) {
+            throw new NullPointerException();
+        }
+
+        for (HashMap.Entry<Long,Long> entry: productCountList.entrySet()){
+            Long productId = entry.getKey();
+            Long productQuantity = entry.getValue();
+
+            if (productQuantity < 1)
+                throw new ProductException("Not enough products in cart.");
+            if (productDAO.getCount(productId) < productQuantity)
+                throw new ProductException("Not enough products available.");
+
+            currencyAmount += productDAO.getById(productId).getPrice() * productQuantity;
+        }
+
+        if (userDAO.getAccount(user.getId()) < currencyAmount)
+            throw new UserException("Not enough cash.");
+
+        paymentDAO.performPurchase(user.getId(), productCountList, currencyAmount);
+    }
+
     public Payment getById(Long Id) {
         return paymentDAO.getById(Id);
     }

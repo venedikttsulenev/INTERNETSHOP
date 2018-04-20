@@ -12,6 +12,8 @@ public interface PaymentDAO {
 
     void createFromPaylist(Long userId, HashMap<Long, Long> productCountList);
 
+    void performPurchase(Long userId, HashMap<Long, Long> productCountList, Long withdrawAmount);
+
     Payment getById(Long id);
 
     Payment update(Payment entity);

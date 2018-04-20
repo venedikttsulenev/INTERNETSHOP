@@ -124,7 +124,7 @@ public class UserDAOImpl extends DAO<User> implements UserDAO {
             User user = session.get(User.class, userId);
             Long account = user.getAccount();
 
-            if (account < withdrawAmount)
+            if (account < withdrawAmount || withdrawAmount < 0)
                 throw new UserException();
             user.setAccount(account - withdrawAmount);
             session.update(user);

@@ -38,7 +38,7 @@ public class PaymentDAOImpl extends DAO<Payment> implements PaymentDAO {
 
         User user = session.get(User.class, userId);
         try {
-            for (HashMap.Entry<Long,Long> entry: productCountList.entrySet()){
+            for (HashMap.Entry<Long, Long> entry : productCountList.entrySet()) {
                 Long productId = entry.getKey();
                 Long productQuantity = entry.getValue();
 
@@ -54,6 +54,46 @@ public class PaymentDAOImpl extends DAO<Payment> implements PaymentDAO {
             transaction.rollback();
             session.close();
             throw new HibernateException("Can't create payments.");
+        }
+        session.close();
+    }
+
+    public void performPurchase(Long userId, HashMap<Long, Long> productCountList, Long withdrawAmount) {
+        Session session = HibernateSessionFactory.getSession();
+        Transaction transaction = session.beginTransaction();
+
+        try {
+            User user = session.get(User.class, userId);
+            Long account = user.getAccount();
+            if (account < withdrawAmount || withdrawAmount < 0)
+                throw new UserException();
+            user.setAccount(account - withdrawAmount);
+            session.update(user);
+
+            for (HashMap.Entry<Long, Long> entry : productCountList.entrySet()) {
+                Long productId = entry.getKey();
+                Long productQuantity = entry.getValue();
+                Product product = session.get(Product.class, productId);
+                Long count = product.getCount();
+
+                if (productQuantity < 1)
+                    throw new ProductException("Not enough products in cart.");
+                if (count < productQuantity)
+                    throw new ProductException("Not enough products available.");
+
+                product.setCount(count - productQuantity);
+                session.update(product);
+
+                Payment payment = new Payment(user, product,
+                        product.getPrice(), productQuantity, new Date());
+                session.save(payment);
+            }
+            transaction.commit();
+        } catch (HibernateException | UserException | ProductException e ) {
+            e.printStackTrace();
+            transaction.rollback();
+            session.close();
+            throw e;
         }
         session.close();
     }
