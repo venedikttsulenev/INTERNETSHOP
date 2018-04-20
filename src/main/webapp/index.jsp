@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html;
-charset=ISO-8859-1" pageEncoding="ISO-8859-1" import="com.epam.internetshop.services.manager.ServiceManager" import="com.epam.internetshop.domain.Product"%>
+charset=ISO-8859-1" pageEncoding="ISO-8859-1" import="com.epam.internetshop.services.manager.ServiceFactory" import="com.epam.internetshop.domain.Product"%>
 <html lang="en">
 <head>
 <title>Electronic Store a Ecommerce Online Shopping Category Bootstrap Responsive Website Template | Home :: w3layouts</title>
@@ -149,7 +149,7 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1" import="com.epam.internetshop.serv
 	</div>
 	<!-- //banner -->
 	<jsp:scriptlet>
-        request.setAttribute("productsList", ServiceManager.newProductService().getAll());
+        request.setAttribute("productsList", ServiceFactory.newProductService().getAll());
     </jsp:scriptlet>
 
 	<div class="container mb-4">
