@@ -21,7 +21,6 @@ public class LoginCommand implements Command {
 
         String page = null;
         if (LoginLogic.login(login, pass)) {
-            request.setAttribute("username", login);
             request.getSession().setAttribute("login", login);
             page = configurationManager.getProperty(ConfigurationManager.MAIN_PAGE_PATH);
         } else {
