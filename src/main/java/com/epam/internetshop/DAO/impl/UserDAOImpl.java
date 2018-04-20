@@ -2,8 +2,6 @@ package com.epam.internetshop.DAO.impl;
 
 import com.epam.internetshop.DAO.DAO;
 import com.epam.internetshop.DAO.UserDAO;
-import com.epam.internetshop.domain.Product;
-import com.epam.internetshop.domain.ProductCount;
 import com.epam.internetshop.domain.User;
 import com.epam.internetshop.services.exception.UserException;
 import org.hibernate.*;

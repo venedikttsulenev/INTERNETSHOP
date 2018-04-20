@@ -1,8 +1,8 @@
 package com.epam.internetshop.DAO;
 
 import com.epam.internetshop.domain.Product;
-import com.epam.internetshop.domain.ProductCount;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface ProductDAO {
@@ -20,12 +20,10 @@ public interface ProductDAO {
 
     void increaseCount(Long productId, Long additionalCount);
 
-    void increaseCount(List<ProductCount> productCountList);
-
     void decrementCount(Long productId, Long decrementCount);
 
-    void decrementCount(List<ProductCount> productCountList);
+    void decrementCount(HashMap<Long, Long> productCountList);
 
     List<Product> getAllSorted(String columnName, boolean isAsc);
 
-    }
+}

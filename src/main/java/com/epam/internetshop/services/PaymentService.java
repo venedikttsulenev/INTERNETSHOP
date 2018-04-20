@@ -1,10 +1,8 @@
 package com.epam.internetshop.services;
 
 import com.epam.internetshop.domain.Payment;
-import com.epam.internetshop.domain.Product;
-import com.epam.internetshop.domain.ProductCount;
-import com.epam.internetshop.domain.User;
 
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -17,7 +15,7 @@ public interface PaymentService {
 
     List<Payment> getAll();
 
-    void performPayment(String userLogin, List<ProductCount> productCountList);
+    void performPayment(String userLogin, HashMap<Long, Long> productCountList);
 
     Payment getById(Long Id);
 

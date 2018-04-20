@@ -1,6 +1,5 @@
 package com.epam.internetshop.DAO;
 
-import com.epam.internetshop.domain.ProductCount;
 import com.epam.internetshop.domain.User;
 
 import java.util.List;

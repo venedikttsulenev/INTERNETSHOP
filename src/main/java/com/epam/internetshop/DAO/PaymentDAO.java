@@ -1,10 +1,8 @@
 package com.epam.internetshop.DAO;
 
 import com.epam.internetshop.domain.Payment;
-import com.epam.internetshop.domain.Product;
-import com.epam.internetshop.domain.ProductCount;
-import com.epam.internetshop.domain.User;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface PaymentDAO {
@@ -12,9 +10,7 @@ public interface PaymentDAO {
 
     List<Payment> getAll();
 
-    void createFromPaylist(Long userId, List<ProductCount> productCountList);
-
-    void performPayOperation(Long userId, List<ProductCount> productCountList, Long withdrawAmount);
+    void createFromPaylist(Long userId, HashMap<Long, Long> productCountList);
 
     Payment getById(Long id);
 
