@@ -1,21 +1,26 @@
 package com.epam.internetshop.services.impl;
 
+import com.epam.internetshop.DAO.DAOFactory;
 import com.epam.internetshop.DAO.UserDAO;
-import com.epam.internetshop.DAO.impl.UserDAOImpl;
+import com.epam.internetshop.DAO.impl.HibernateDAOFactory;
 import com.epam.internetshop.domain.User;
 import com.epam.internetshop.services.UserService;
 import com.epam.internetshop.services.exception.UserException;
+import com.epam.internetshop.services.manager.ServiceFactory;
 import com.epam.internetshop.services.validator.UserValidator;
-import com.epam.internetshop.services.validator.impl.UserValidatorImpl;
 
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
-    private UserDAO userDAO = new UserDAOImpl();
-    private UserValidator userValidator = new UserValidatorImpl();
+    private final static DAOFactory daoFactory = new HibernateDAOFactory();
+
+    private UserDAO userDAO = daoFactory.newUserDAO();
+    private UserValidator userValidator = ServiceFactory.newUserValidator();
 
     public User create(User user) {
         if (user == null || !userValidator.validateAll(user))
+            return null;
+        if (getByLogin(user.getLogin()) != null)
             return null;
         return userDAO.create(user);
     }
