@@ -11,6 +11,7 @@ public class ConfigurationManager {
     public static final String LOGIN_PAGE_PATH = "LOGIN_PAGE_PATH";
     public static final String MAIN_PAGE_PATH = "MAIN_PAGE_PATH";
     public static final String REGISTER_PAGE_PATH = "REGISTER_PAGE_PATH";
+    public static final String BUCKET_PAGE_PATH = "BUCKET_PAGE_PATH";
 
     private ConfigurationManager() {
         resourceBundle = ResourceBundle.getBundle(BUNDLE_NAME);
