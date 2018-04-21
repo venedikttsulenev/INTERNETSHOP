@@ -49,6 +49,7 @@ charset=UTF-8" pageEncoding="UTF-8" import="com.epam.internetshop.services.manag
 	<script type="text/javascript" src="js/bootstrap-3.1.1.min.js"></script>
 	<!-- //for bootstrap working -->
 	<!-- header modal -->
+
 	<div class="modal fade" id="myModal88" tabindex="-1" role="dialog" aria-labelledby="myModal88"
 		aria-hidden="true">
 		<div class="modal-dialog modal-lg">
@@ -128,16 +129,6 @@ charset=UTF-8" pageEncoding="UTF-8" import="com.epam.internetshop.services.manag
 			<div class="w3l_logo">
 				<h1><a href="index.jsp">Electronic Store<span>Your stores. Your place.</span></a></h1>
 			</div>
-			<div class="search">
-				<input class="search_box" type="checkbox" id="search_box">
-				<label class="icon-search" for="search_box"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></label>
-				<div class="search_form">
-					<form action="#" method="post">
-						<input type="text" name="Search" placeholder="Search...">
-						<input type="submit" value="Send">
-					</form>
-				</div>
-			</div>
 
 		</div>
 	</div>
@@ -149,6 +140,9 @@ charset=UTF-8" pageEncoding="UTF-8" import="com.epam.internetshop.services.manag
 		</div>
 	</div>
 	<!-- //banner -->
+	<br/>
+	<br/>
+	<br/>
 	<jsp:scriptlet>
         request.setAttribute("productsList", ServiceFactory.newProductService().getAll());
     </jsp:scriptlet>
