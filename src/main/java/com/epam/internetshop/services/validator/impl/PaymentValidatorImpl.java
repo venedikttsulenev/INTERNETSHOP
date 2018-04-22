@@ -14,11 +14,11 @@ public class PaymentValidatorImpl implements PaymentValidator {
             return false;
         if (!validateUser(payment.getUserId()))
             return false;
-        if (validateProduct(payment.getProductId()))
+        if (!validateProduct(payment.getProductId()))
             return false;
-        if (validatePaydate(payment.getPaydate()))
+        if (!validatePaydate(payment.getPaydate()))
             return false;
-        if (validatePrice(payment.getPrice()))
+        if (!validatePrice(payment.getPrice()))
             return false;
         return true;
     }
