@@ -27,8 +27,6 @@ public class BuyCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-        HashMap<Product, Long> bucketList = (HashMap<Product, Long>) session.getAttribute("bucketList");
-        bucketList.clear();
 
         HashMap<Product, Long> finalBucketList = new HashMap<>();
         PaymentService paymentService = ServiceFactory.newPaymentService();
@@ -48,6 +46,8 @@ public class BuyCommand implements Command {
         String login = (String) session.getAttribute("login");
         try {
             paymentService.performPayment(login, finalBucketList);
+            HashMap<Product, Long> bucketList = (HashMap<Product, Long>) session.getAttribute("bucketList");
+            bucketList.clear();
         } catch (UserException | ProductException e) {
             session.setAttribute("message", e.getMessage());
         }
