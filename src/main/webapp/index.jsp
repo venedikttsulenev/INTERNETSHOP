@@ -13,7 +13,7 @@ charset=UTF-8" pageEncoding="UTF-8" import="com.epam.internetshop.services.manag
 <script src="js/jquery.min.js"></script>
 <!-- //js -->
 
-<!-- web fonts --> 
+<!-- web fonts -->
 <link href='//fonts.googleapis.com/css?family=Glegoo:400,700' rel='stylesheet' type='text/css'>
 <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
 <!-- //web fonts -->
@@ -27,8 +27,8 @@ charset=UTF-8" pageEncoding="UTF-8" import="com.epam.internetshop.services.manag
 		});
 	});
 </script>
-<!-- //end-smooth-scrolling --> 
-</head> 
+<!-- //end-smooth-scrolling -->
+</head>
 <body>
 	<!-- for bootstrap working -->
 	<script type="text/javascript" src="js/bootstrap-3.1.1.min.js"></script>
@@ -47,12 +47,12 @@ charset=UTF-8" pageEncoding="UTF-8" import="com.epam.internetshop.services.manag
 				<div class="modal-body modal-body-sub">
 					<div class="row">
 						<div class="col-md-8 modal_body_left modal_body_left1" style="border-right: 1px dotted #C2C2C2;padding-right:3em;">
-							<div class="sap_tabs">	
+							<div class="sap_tabs">
 								<div id="horizontalTab" style="display: block; width: 100%; margin: 0px;">
 									<ul>
 										<li class="resp-tab-item" aria-controls="tab_item-0"><span>Sign in</span></li>
 										<li class="resp-tab-item" aria-controls="tab_item-1"><span>Sign up</span></li>
-									</ul>		
+									</ul>
 									<div class="tab-1 resp-tab-content" aria-labelledby="tab_item-0">
 										<div class="facts">
 											<div class="register">
@@ -65,8 +65,8 @@ charset=UTF-8" pageEncoding="UTF-8" import="com.epam.internetshop.services.manag
 													</div>
 												</form>
 											</div>
-										</div> 
-									</div>	 
+										</div>
+									</div>
 									<div class="tab-2 resp-tab-content" aria-labelledby="tab_item-1">
 										<div class="facts">
 											<div class="register">
@@ -81,8 +81,8 @@ charset=UTF-8" pageEncoding="UTF-8" import="com.epam.internetshop.services.manag
 												</form>
 											</div>
 										</div>
-									</div> 			        					            	      
-								</div>	
+									</div>
+								</div>
 							</div>
 							<script src="js/easyResponsiveTabs.js" type="text/javascript"></script>
 							<script type="text/javascript">
@@ -103,7 +103,7 @@ charset=UTF-8" pageEncoding="UTF-8" import="com.epam.internetshop.services.manag
 	</div>
 	<script>
 		$('#myModal88').modal('show');
-	</script>  
+	</script>
 	<!-- header modal -->
 	<!-- header -->
 	<div class="header" id="home1">
@@ -166,8 +166,15 @@ charset=UTF-8" pageEncoding="UTF-8" import="com.epam.internetshop.services.manag
 								<jsp:expression>product.getPrice()</jsp:expression>
 							</td>
 							<td class="text-right">
-								<a href="#" data-toggle="modal" data-target="#myModal88"/>
-								<button class="btn btn-sm btn-danger">Add to cart </button>
+								<c:choose>
+                                    <c:when test="${prod.count > 0}">
+                                        <a href="" data-toggle="modal" data-target="#myModal88"/>
+                                        <button class="btn btn-sm btn-danger">Add to cart</button>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <button class="btn btn-sm btn-danger" disabled>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Out&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                                    </c:otherwise>
+                                </c:choose>
 							</td>
 						</tr>
 						</c:forEach>

@@ -26,7 +26,6 @@ public class AuthenticationFilter implements Filter {
                     configurationManager.getProperty(ConfigurationManager.LOGIN_ACTION),
                     configurationManager.getProperty(ConfigurationManager.REGISTER_ACTION),
                     configurationManager.getProperty(ConfigurationManager.PROCESS_ACTION)
-
             )
     );
 
@@ -70,7 +69,7 @@ public class AuthenticationFilter implements Filter {
 
         HttpSession session = req.getSession();
         String uri = req.getRequestURI();
-        boolean loggedIn = !(session == null || session.getAttribute("login") == null);
+        boolean loggedIn = !(session == null || session.getAttribute("user") == null);
         if (!loggedIn && (!isLegitUri(uri) || requiresAuth(uri)))
             resp.sendRedirect(
                     configurationManager.getProperty(ConfigurationManager.INDEX_PAGE_PATH)

@@ -24,7 +24,7 @@ public interface UserService {
 
     boolean isEnoughCurrency(Long productId, Long currencyAmount) throws UserException;
 
-    void increaseAccount(String login, Long currencyAmount) throws UserException;
+    User increaseAccount(String login, Long currencyAmount);
 
     Boolean isAdmin(String login);
 
