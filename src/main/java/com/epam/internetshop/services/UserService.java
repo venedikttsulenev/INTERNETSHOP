@@ -23,7 +23,7 @@ public interface UserService {
 
     boolean isEnoughCurrency(Long productId, Long currencyAmount);
 
-    void increaseAccount(String login, Long currencyAmount);
+    User increaseAccount(String login, Long currencyAmount);
 
     Boolean isAdmin(String login);
 

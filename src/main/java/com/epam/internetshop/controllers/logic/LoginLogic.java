@@ -7,18 +7,21 @@ import com.epam.internetshop.services.validator.UserValidator;
 
 public class LoginLogic {
 
-    public static boolean login(String login, String password) {
+    public static User login(String login, String password) {
 
         UserService service = ServiceFactory.newUserService();
         UserValidator userValidator = ServiceFactory.newUserValidator();
 
         if (!userValidator.validateLogin(login) || !userValidator.validatePassword(password)) {
-            return false;
+            return null;
         }
 
         User userByLogin = service.getByLogin(login);
 
-        return (userByLogin != null && !userByLogin.isBlackListed() && password.equals(userByLogin.getPassword()));
+        if (userByLogin == null || userByLogin.isBlackListed() || !password.equals(userByLogin.getPassword()))
+            return null;
+        else
+            return userByLogin;
         /* TODO: Secure authentication */
     }
 }
