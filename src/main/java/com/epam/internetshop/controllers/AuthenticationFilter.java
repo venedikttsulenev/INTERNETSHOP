@@ -27,9 +27,12 @@ public class AuthenticationFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
 
         HttpSession session = req.getSession();
-        if ((session == null || session.getAttribute("login") == null)
-                && requiresAuth(req.getRequestURI()))
+        String uri = req.getRequestURI();
+        boolean loggedIn = !(session == null || session.getAttribute("login") == null);
+        if (!loggedIn && requiresAuth(uri))
             resp.sendRedirect("/index.jsp");
+        else if (loggedIn && uri.equals("/index.jsp"))
+            resp.sendRedirect("/logined.jsp"); /* What a crutch! */
         else
             filterChain.doFilter(req, resp);
     }
