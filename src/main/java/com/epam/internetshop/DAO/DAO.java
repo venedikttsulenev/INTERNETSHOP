@@ -1,10 +1,15 @@
 package com.epam.internetshop.DAO;
 
 import com.epam.internetshop.DAO.util.HibernateSessionFactory;
+import com.epam.internetshop.controllers.DBTest;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 public abstract class DAO<T> {
+
+    final static Logger logger = Logger.getLogger(DAO.class);
+
     public T create(T entity) {
         Session session = HibernateSessionFactory.getSession();
 
@@ -13,6 +18,7 @@ public abstract class DAO<T> {
         transaction.commit();
 
         session.close();
+        logger.info("Entity created");
         return entity;
     }
 
@@ -24,6 +30,7 @@ public abstract class DAO<T> {
         transaction.commit();
 
         session.close();
+        logger.info("Entity updated");
         return entity;
     }
 
@@ -35,5 +42,6 @@ public abstract class DAO<T> {
         transaction.commit();
 
         session.close();
+        logger.info("Entity deleted");
     }
 }

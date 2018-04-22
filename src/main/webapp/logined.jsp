@@ -83,7 +83,7 @@
     <div class="row">
         <div class="col-12">
             <div class="table-responsive">
-                <table style="width: 92%; margin: auto" class="table table-striped">
+                <table style="width: 88%; margin: auto" class="table table-striped">
                     <thead>
                     <tr>
                         <th scope="col" style="color: black">Name</th>
