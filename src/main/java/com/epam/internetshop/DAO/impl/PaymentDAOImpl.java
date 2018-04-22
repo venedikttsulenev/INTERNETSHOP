@@ -33,7 +33,7 @@ public class PaymentDAOImpl extends DAO<Payment> implements PaymentDAO {
         return list;
     }
 
-    public void createFromPaylist(Long userId, HashMap<Product, Long> productCountList) throws HibernateException {
+    public void createFromPaylist(Long userId, HashMap<Product, Long> productCountList){
         Session session = HibernateSessionFactory.getSession();
         Transaction transaction = session.beginTransaction();
 

@@ -2,6 +2,7 @@ package com.epam.internetshop.DAO;
 
 import com.epam.internetshop.domain.Payment;
 import com.epam.internetshop.domain.Product;
+import org.hibernate.HibernateException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +12,7 @@ public interface PaymentDAO {
 
     List<Payment> getAll();
 
-    void createFromPaylist(Long userId, HashMap<Product, Long> productCountList);
+    void createFromPaylist(Long userId, HashMap<Product, Long> productCountList) throws HibernateException;
 
     Payment getById(Long id);
 
