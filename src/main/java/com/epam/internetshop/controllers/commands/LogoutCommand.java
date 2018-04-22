@@ -12,6 +12,6 @@ public class LogoutCommand implements Command {
         HttpSession session = request.getSession();
         session.removeAttribute("login");
         session.invalidate();
-        return ConfigurationManager.getInstance().getProperty(ConfigurationManager.ERROR_PAGE_PATH);
+        return ConfigurationManager.getInstance().getProperty(ConfigurationManager.INDEX_PAGE_PATH);
     }
 }
