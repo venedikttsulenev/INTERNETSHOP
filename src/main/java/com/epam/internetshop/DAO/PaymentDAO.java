@@ -2,6 +2,7 @@ package com.epam.internetshop.DAO;
 
 import com.epam.internetshop.domain.Payment;
 import com.epam.internetshop.domain.Product;
+import org.hibernate.HibernateException;
 
 import java.util.HashMap;
 import java.util.List;

@@ -8,6 +8,7 @@ import com.epam.internetshop.services.UserService;
 import com.epam.internetshop.services.exception.UserException;
 import com.epam.internetshop.services.manager.ServiceFactory;
 import com.epam.internetshop.services.validator.UserValidator;
+import org.apache.log4j.Logger;
 
 import java.util.List;
 
@@ -17,17 +18,25 @@ public class UserServiceImpl implements UserService {
     private UserDAO userDAO = daoFactory.newUserDAO();
     private UserValidator userValidator = ServiceFactory.newUserValidator();
 
+    final static Logger logger = Logger.getLogger(UserServiceImpl.class);
+
     public User create(User user) {
-        if (user == null || !userValidator.validateAll(user))
+        if (user == null || !userValidator.validateAll(user)) {
+            logger.error("Can't create user.");
             return null;
-        if (getByLogin(user.getLogin()) != null)
+        }
+        if (getByLogin(user.getLogin()) != null) {
+            logger.error("Can't create user.");
             return null;
+        }
         return userDAO.create(user);
     }
 
     public User update(User user) {
-        if (user == null || !userValidator.validateAll(user))
+        if (user == null || !userValidator.validateAll(user)) {
+            logger.error("Can't update user.");
             return null;
+        }
         return userDAO.update(user);
     }
 
@@ -45,10 +54,14 @@ public class UserServiceImpl implements UserService {
 
     public User createUser(String login, String password) {
         if (login == null || password == null ||
-                !userValidator.validateLogin(login) || !userValidator.validatePassword(password))
+                !userValidator.validateLogin(login) || !userValidator.validatePassword(password)) {
+            logger.error("Can't create user.");
             return null;
-        if (getByLogin(login) != null)
+        }
+        if (getByLogin(login) != null) {
+            logger.error("Can't create user.");
             return null;
+        }
         User user = new User(login, password);
         return userDAO.create(user);
     }
@@ -66,18 +79,25 @@ public class UserServiceImpl implements UserService {
     }
 
     public boolean isEnoughCurrency(Long userId, Long currencyAmount) {
-        if (userId == null || currencyAmount == null)
+        if (userId == null || currencyAmount == null) {
             throw new UserException("Null values.");
-        if (currencyAmount < 0)
+        }
+        if (currencyAmount < 0) {
+            logger.error("Can't withdraw. Can't withdraw less than zero.");
             throw new UserException("Can't withdraw less than zero.");
+        }
         return userDAO.getAccount(userId) >= currencyAmount;
     }
 
     public void increaseAccount(String login, Long currencyAmount) {
-        if (login == null || currencyAmount == null)
+        if (login == null || currencyAmount == null) {
+            logger.error("Can't increase account.");
             throw new UserException("Null values.");
-        if (currencyAmount <= 0)
+        }
+        if (currencyAmount <= 0) {
+            logger.error("Can't increase account. Can't increase on zero or less.");
             throw new UserException("Can't increase on zero or less.");
+        }
         User user = userDAO.getByLogin(login);
         userDAO.incrementAccount(user.getId(), currencyAmount);
     }

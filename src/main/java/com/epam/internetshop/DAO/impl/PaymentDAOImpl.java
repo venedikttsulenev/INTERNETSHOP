@@ -6,6 +6,7 @@ import com.epam.internetshop.DAO.util.HibernateSessionFactory;
 import com.epam.internetshop.domain.Payment;
 import com.epam.internetshop.domain.Product;
 import com.epam.internetshop.domain.User;
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -17,6 +18,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class PaymentDAOImpl extends DAO<Payment> implements PaymentDAO {
+
+    final static Logger logger = Logger.getLogger(PaymentDAOImpl.class);
 
     public List<Payment> getAll() {
         Session session = HibernateSessionFactory.getSession();
@@ -30,13 +33,14 @@ public class PaymentDAOImpl extends DAO<Payment> implements PaymentDAO {
         return list;
     }
 
-    public void createFromPaylist(Long userId, HashMap<Product, Long> productCountList) throws HibernateException {
+    public void createFromPaylist(Long userId, HashMap<Product, Long> productCountList){
         Session session = HibernateSessionFactory.getSession();
         Transaction transaction = session.beginTransaction();
 
         User user = session.get(User.class, userId);
         try {
-            for (HashMap.Entry<Product,Long> entry: productCountList.entrySet()){
+            logger.info("Payments creation began.");
+            for (HashMap.Entry<Product, Long> entry : productCountList.entrySet()) {
                 Long productId = entry.getKey().getId();
                 Long productQuantity = entry.getValue();
 
@@ -44,13 +48,16 @@ public class PaymentDAOImpl extends DAO<Payment> implements PaymentDAO {
                 Payment payment = new Payment(user, product,
                         product.getPrice(), productQuantity, new Date());
                 session.save(payment);
+                logger.info("Payment created.");
             }
 
             transaction.commit();
+            logger.info("Payments creation ended.");
         } catch (HibernateException e) {
             e.printStackTrace();
             transaction.rollback();
             session.close();
+            logger.error("Can't create payments.");
             throw new HibernateException("Can't create payments.");
         }
         session.close();
