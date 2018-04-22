@@ -24,11 +24,11 @@ public class RegisterCommand implements Command {
                 page = configurationManager.getProperty(ConfigurationManager.MAIN_PAGE_PATH);
             } else {
                 request.setAttribute("errorMessage", messageManager.getProperty(MessageManager.REGISTER_ERROR_MESSAGE));
-                page = configurationManager.getProperty(ConfigurationManager.ERROR_PAGE_PATH);
+                page = configurationManager.getProperty(ConfigurationManager.INDEX_PAGE_PATH);
             }
         } else {
             request.setAttribute("errorMessage", messageManager.getProperty(MessageManager.LOGIN_TAKEN_ERROR_MESSAGE));
-            page = configurationManager.getProperty(ConfigurationManager.ERROR_PAGE_PATH);
+            page = configurationManager.getProperty(ConfigurationManager.INDEX_PAGE_PATH);
         }
         return page;
     }
