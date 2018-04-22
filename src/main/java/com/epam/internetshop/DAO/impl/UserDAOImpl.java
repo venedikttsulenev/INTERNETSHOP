@@ -4,6 +4,7 @@ import com.epam.internetshop.DAO.DAO;
 import com.epam.internetshop.DAO.UserDAO;
 import com.epam.internetshop.domain.User;
 import com.epam.internetshop.services.exception.UserException;
+import org.apache.log4j.Logger;
 import org.hibernate.*;
 import com.epam.internetshop.DAO.util.HibernateSessionFactory;
 
@@ -13,6 +14,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 
 public class UserDAOImpl extends DAO<User> implements UserDAO {
+
+    final static Logger logger = Logger.getLogger(UserDAOImpl.class);
 
     public List<User> getAll() {
         Session session = HibernateSessionFactory.getSession();
@@ -124,18 +127,23 @@ public class UserDAOImpl extends DAO<User> implements UserDAO {
             User user = session.get(User.class, userId);
             Long account = user.getAccount();
 
-            if (account < withdrawAmount)
+            if (account < withdrawAmount) {
+                logger.error("Not enough cash.");
                 throw new UserException();
+            }
+
             user.setAccount(account - withdrawAmount);
             session.update(user);
-
             transaction.commit();
+            logger.info("Withdraw performed.");
         } catch (HibernateException e) {
             e.printStackTrace();
             transaction.rollback();
+            logger.error("Can't perform withdraw.");
             throw new UserException("Can't perform withdraw.");
         } catch (UserException e) {
             transaction.rollback();
+            logger.error("Not enough money.");
             throw new UserException("Not enough cash.");
         }
         session.close();
@@ -154,12 +162,15 @@ public class UserDAOImpl extends DAO<User> implements UserDAO {
             session.update(user);
 
             transaction.commit();
+            logger.info("Increment performed.");
         } catch (HibernateException e) {
             e.printStackTrace();
             transaction.rollback();
+            logger.error("Can't increment account.");
             throw new UserException("Can't increment account.");
         } catch (UserException e) {
             transaction.rollback();
+            logger.error("Can't increase on zero or less.");
             throw new UserException("Can't increase on zero or less.");
         }
         session.close();

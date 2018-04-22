@@ -5,6 +5,7 @@ import com.epam.internetshop.DAO.ProductDAO;
 import com.epam.internetshop.DAO.util.HibernateSessionFactory;
 import com.epam.internetshop.domain.Product;
 import com.epam.internetshop.services.exception.ProductException;
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -16,6 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
+
+    final static Logger logger = Logger.getLogger(ProductDAOImpl.class);
 
     public List<Product> getAll() {
         Session session = HibernateSessionFactory.getSession();
@@ -48,8 +51,10 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
     }
 
     public void increaseCount(Long productId, Long additionalCount) {
-        if (additionalCount < 0)
+        if (additionalCount < 1) {
+            logger.error("Can't increase.");
             throw new ProductException();
+        }
 
         Session session = HibernateSessionFactory.getSession();
         Transaction transaction = session.beginTransaction();
@@ -60,6 +65,7 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
 
         session.update(product);
         transaction.commit();
+        logger.info("Count increased.");
 
         session.close();
     }
@@ -68,29 +74,34 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
         Session session = HibernateSessionFactory.getSession();
         Transaction transaction = session.beginTransaction();
         try {
+            logger.info("Count decrease began.");
             for (HashMap.Entry<Product, Long> entry : productCountList.entrySet()) {
                 Long productId = entry.getKey().getId();
                 Long productQuantity = entry.getValue();
                 Product product = session.get(Product.class, productId);
                 Long count = product.getCount();
 
-                if (count < productQuantity || productQuantity < 1)
+                if (count < productQuantity || productQuantity < 1) {
+                    logger.error("Can't perform decrement.");
                     throw new ProductException();
+                }
                 product.setCount(count - productQuantity);
 
                 session.update(product);
+                logger.info("Count decreased.");
             }
             transaction.commit();
         } catch (HibernateException e) {
             e.printStackTrace();
             transaction.rollback();
+            logger.error("Can't perform decrement.");
             throw new ProductException("Can't perform decrement.");
         } catch (ProductException e) {
             transaction.rollback();
+            logger.error("Not enough product available.");
             throw new ProductException("Not enough product available.");
         }
         session.close();
-
     }
 
     public void decrementCount(Long productId, Long decrementCount) {
@@ -100,13 +111,16 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
         Product product = session.get(Product.class, productId);
         Long count = product.getCount();
 
-        if (count < decrementCount || decrementCount < 1)
+        if (decrementCount < 1 || count < decrementCount) {
+            logger.error("Not enough product available.");
             throw new ProductException();
+        }
         product.setCount(count - decrementCount);
 
         session.update(product);
         transaction.commit();
         session.close();
+        logger.info("Count decreased.");
     }
 
     public List<Product> getAllSorted(String columnName, boolean isAsc) {

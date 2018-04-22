@@ -3,29 +3,38 @@ package com.epam.internetshop.services.impl;
 import com.epam.internetshop.DAO.DAOFactory;
 import com.epam.internetshop.DAO.ProductDAO;
 import com.epam.internetshop.DAO.impl.HibernateDAOFactory;
+import com.epam.internetshop.DAO.impl.PaymentDAOImpl;
 import com.epam.internetshop.domain.Product;
 import com.epam.internetshop.services.ProductService;
 import com.epam.internetshop.services.exception.ProductException;
 import com.epam.internetshop.services.manager.ServiceFactory;
 import com.epam.internetshop.services.validator.ProductValidator;
+import org.apache.log4j.Logger;
 
 import java.util.List;
 
 public class ProductServiceImpl implements ProductService {
+
+    final static Logger logger = Logger.getLogger(ProductServiceImpl.class);
+
     private static final DAOFactory daoFactory = new HibernateDAOFactory();
 
     private ProductDAO productDAO = daoFactory.newProductDAO();
     private ProductValidator productValidator = ServiceFactory.newProductValidator();
 
     public Product create(Product product) {
-        if (product == null || !productValidator.validateAll(product))
+        if (product == null || !productValidator.validateAll(product)) {
+            logger.error("Can't create product.");
             return null;
+        }
         return productDAO.create(product);
     }
 
     public Product update(Product product) {
-        if (product == null || !productValidator.validateAll(product))
+        if (product == null || !productValidator.validateAll(product)) {
+            logger.error("Can't update product.");
             return null;
+        }
         return productDAO.update(product);
     }
 
@@ -34,8 +43,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public void increaseCount(Long productId, Long additionCount) {
-        if (productId == null || additionCount == null || additionCount < 1)
+        if (productId == null || additionCount == null || additionCount < 1) {
+            logger.error("Can't increase product count.");
             throw new ProductException();
+        }
         productDAO.increaseCount(productId, additionCount);
     }
 
@@ -47,10 +58,12 @@ public class ProductServiceImpl implements ProductService {
         return productDAO.getById(Id);
     }
 
-    public boolean isEnoughProduct(Long productId, Long productQuantity) {
+    public boolean isEnoughProduct(Long productId, Long productQuantity) throws ProductException {
         Long count = productDAO.getCount(productId);
-        if (count == null)
-            throw new ProductException("Not enough product available.");
+        if (count == null) {
+            logger.error("Null value");
+            throw new ProductException("Null value");
+        }
         return count >= productQuantity;
     }
 

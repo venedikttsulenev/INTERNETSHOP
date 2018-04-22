@@ -1,6 +1,8 @@
 package com.epam.internetshop.DAO;
 
 import com.epam.internetshop.domain.User;
+import com.epam.internetshop.services.exception.UserException;
+import org.hibernate.HibernateException;
 
 import java.util.List;
 
@@ -25,7 +27,7 @@ public interface UserDAO {
 
     Long getAccount(Long userId);
 
-    void withdraw(Long userId, Long withdrawAmount);
+    void withdraw(Long userId, Long withdrawAmount) throws UserException;
 
-    void incrementAccount(Long userId, Long amount);
+    void incrementAccount(Long userId, Long amount) throws UserException;
 }
