@@ -7,8 +7,8 @@
 <head>
     <title>Electronic Store. EPAM Lab</title>
     <!-- Custom Theme files -->
-    <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
-    <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
     <!-- //Custom Theme files -->
     <!-- font-awesome icons -->
     <link href="css/font-awesome.css" rel="stylesheet"/>
@@ -18,14 +18,15 @@
     <!-- //js -->
     <!-- web fonts -->
     <link href='//fonts.googleapis.com/css?family=Glegoo:400,700' rel='stylesheet' type='text/css'/>
-    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'/>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic'
+          rel='stylesheet' type='text/css'/>
     <!-- //web fonts -->
     <!-- start-smooth-scrolling -->
     <script type="text/javascript">
-        jQuery(document).ready(function($) {
-            $(".scroll").click(function(event){
+        jQuery(document).ready(function ($) {
+            $(".scroll").click(function (event) {
                 event.preventDefault();
-                $('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+                $('html,body').animate({scrollTop: $(this.hash).offset().top}, 1000);
             });
         });
     </script>
@@ -44,19 +45,20 @@
             <a href="profile.jsp"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
         </div>
         <div class="w3l_logo">
-            <h1 ><a href="logined.jsp">Electronic Store<span>Your stores. Your place.</span></a></h1>
+            <h1><a href="logined.jsp">Electronic Store<span>Your stores. Your place.</span></a></h1>
         </div>
         <form action="process" method="post">
             <input type="hidden" name="command" value="logout"/>
             <button class="w3view-cart" type="submit" name="submit" value="">
                 <i style="color: white" class="icons bs-glyphicons glyphicon glyphicon-log-out" aria-hidden="true"></i>
             </button>
-                <br/>
-                <br/>
+            <br/>
+            <br/>
         </form>
         <div class="cart cart box_1">
-            <form action="bucket.jsp" method="post" class="last">
-                <button class="w3view-cart" type="submit" name="submit" value=""><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></button>
+            <form action="bucket.jspx" method="post" class="last">
+                <button class="w3view-cart" type="submit" name="submit" value=""><i class="fa fa-cart-arrow-down"
+                                                                                    aria-hidden="true"></i></button>
             </form>
         </div>
     </div>
@@ -83,7 +85,7 @@
     <div class="row">
         <div class="col-12">
             <div class="table-responsive">
-                <table style="width: 92%; margin: auto" class="table table-striped">
+                <table style="width: 88%; margin: auto" class="table table-striped">
                     <thead>
                     <tr>
                         <th scope="col" style="color: black">Name</th>
@@ -96,21 +98,28 @@
                     <tbody>
 
                     <c:forEach items="${productsList}" var="prod">
-                    <tr>
-                        <td>${prod.name}</td>
-                        <td>${prod.description}</td>
-                        <td>${prod.count}</td>
-                        <td>${prod.price}</td>
-                        <td class="text-right">
-                            <form action="process" method="post">
-                                <input type="hidden" name="command" value="addToCart"/>
-                                <input type="hidden" name="productId" value="${prod.id}"/>
-                                <input type="hidden" name="productCount" value="1"/>
-                                <!--<a href="#" data-toggle="modal" data-target="#myModal88"/>-->
-                                <button class="btn btn-sm btn-danger">Add to cart</button>
-                            </form>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>${prod.name}</td>
+                            <td>${prod.description}</td>
+                            <td>${prod.count}</td>
+                            <td>${prod.price}</td>
+                            <td class="text-center">
+                                <form action="process" method="post">
+                                    <input type="hidden" name="command" value="addToCart"/>
+                                    <input type="hidden" name="productId" value="${prod.id}"/>
+                                    <input type="hidden" name="productCount" value="1"/>
+                                    <!--<a href="#" data-toggle="modal" data-target="#myModal88"/>-->
+                                    <c:choose>
+                                        <c:when test="${prod.count > 0}">
+                                            <button class="btn btn-sm btn-danger">Add to cart</button>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <button class="btn btn-sm btn-danger" disabled>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Out&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </form>
+                            </td>
+                        </tr>
                     </c:forEach>
                     </tbody>
                 </table>
@@ -124,7 +133,7 @@
     <div class="footer-copy">
         <div class="footer-copy1">
             <div class="footer-copy-pos">
-                <a href="#home1" class="scroll"><img src="images/arrow.png" alt=" " class="img-responsive" /></a>
+                <a href="#home1" class="scroll"><img src="images/arrow.png" alt=" " class="img-responsive"/></a>
             </div>
         </div>
         <div class="container">

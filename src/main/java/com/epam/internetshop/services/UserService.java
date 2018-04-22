@@ -1,6 +1,7 @@
 package com.epam.internetshop.services;
 
 import com.epam.internetshop.domain.User;
+import com.epam.internetshop.services.exception.UserException;
 
 import java.util.List;
 
@@ -21,9 +22,9 @@ public interface UserService {
 
     User getById(Long Id);
 
-    boolean isEnoughCurrency(Long productId, Long currencyAmount);
+    boolean isEnoughCurrency(Long productId, Long currencyAmount) throws UserException;
 
-    void increaseAccount(String login, Long currencyAmount);
+    User increaseAccount(String login, Long currencyAmount);
 
     Boolean isAdmin(String login);
 

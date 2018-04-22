@@ -44,14 +44,14 @@ public class Controller extends HttpServlet implements javax.servlet.Servlet {
                     "errorMessage",
                     messageManager.getProperty(MessageManager.SERVLET_EXCEPTION_ERROR_MESSAGE)
             );
-            page = configurationManager.getProperty(ConfigurationManager.ERROR_PAGE_PATH);
+            page = configurationManager.getProperty(ConfigurationManager.INDEX_PAGE_PATH);
         } catch (IOException e) {
             e.printStackTrace();
             request.setAttribute(
                     "errorMessage",
                     messageManager.getProperty(MessageManager.IO_EXCEPTION_ERROR_MESSAGE)
             );
-            page = configurationManager.getProperty(ConfigurationManager.ERROR_PAGE_PATH);
+            page = configurationManager.getProperty(ConfigurationManager.INDEX_PAGE_PATH);
         }
         response.sendRedirect(page);
     }
