@@ -1,22 +1,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html;
 charset=ISO-8859-1" pageEncoding="ISO-8859-1" import="com.epam.internetshop.services.manager.ServiceFactory" import="com.epam.internetshop.domain.Product" import="java.util.HashMap"%>
-<html lang="en">
+<html>
 <head>
-    <title>Electronic Store a Ecommerce Online Shopping Category Bootstrap Responsive Website Template</title>
+    <title>Electronic Store. EPAM Lab</title>
     <!-- Custom Theme files -->
     <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
-
     <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
-    <link href="css/fasthover.css" rel="stylesheet" type="text/css" media="all" />
-    <link href="css/popuo-box.css" rel="stylesheet" type="text/css" media="all" />
     <!-- //Custom Theme files -->
     <!-- font-awesome icons -->
     <link href="css/font-awesome.css" rel="stylesheet"/>
     <!-- //font-awesome icons -->
     <!-- js -->
     <script src="js/jquery.min.js"></script>
-    <link rel="stylesheet" href="css/jquery.countdown.css" /> <!-- countdown -->
     <!-- //js -->
     <!-- web fonts -->
     <link href='//fonts.googleapis.com/css?family=Glegoo:400,700' rel='stylesheet' type='text/css'/>
@@ -43,31 +39,23 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1" import="com.epam.internetshop.serv
 <div class="header" id="home1">
     <div class="container">
         <div class="w3l_login">
-            <a href="profile.jsp" data-toggle="modal" data-target="#myModal88"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+            <a href="profile.jsp"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
         </div>
         <div class="w3l_logo">
-            <h1><a href="logined.jsp">Electronic Store<span>Your stores. Your place.</span></a></h1>
+            <h1 ><a href="logined.jsp">Electronic Store<span>Your stores. Your place.</span></a></h1>
         </div>
-        <!--<div class="search">-->
-            <!--<input class="search_box" type="checkbox" id="search_box">-->
-            <!--<label class="icon-search" for="search_box"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></label>-->
-            <!--<div class="search_form">-->
-                <!--<form action="#" method="post">-->
-                    <!--<input type="text" name="Search" placeholder="Search...">-->
-                    <!--<input type="submit" value="Send">-->
-                <!--</form>-->
-            <!--</div>-->
-        <!--</div>-->
         <form action="process" method="post">
             <input type="hidden" name="command" value="logout"/>
-            <div class="sign-up">
-                <input type="submit" value="Log out"/>
-            </div>
+            <button class="w3view-cart" type="submit" name="submit" value="">
+                <i style="color: white" class="icons bs-glyphicons glyphicon glyphicon-log-out" aria-hidden="true"></i>
+            </button>
+                <br/>
+                <br/>
         </form>
         <div class="cart cart box_1">
             <form action="bucket.jspx" method="post" class="last">
                 <button class="w3view-cart" type="submit" name="submit" value=""><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></button>
-            </form>s
+            </form>
         </div>
     </div>
 </div>
@@ -86,12 +74,14 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1" import="com.epam.internetshop.serv
         bucketList = new HashMap<Long, Long>();
     session.setAttribute("bucketList", bucketList);
 %>
-
+<br/>
+<br/>
+<br/>
 <div class="container mb-4">
     <div class="row">
         <div class="col-12">
             <div class="table-responsive">
-                <table class="table table-striped">
+                <table style="width: 92%; margin: auto" class="table table-striped">
                     <thead>
                     <tr>
                         <th scope="col" style="color: black">Name</th>
@@ -156,6 +146,9 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1" import="com.epam.internetshop.serv
             <div class="footer-copy-pos">
                 <a href="#home1" class="scroll"><img src="images/arrow.png" alt=" " class="img-responsive" /></a>
             </div>
+        </div>
+        <div class="container">
+            <p>&copy; 2018 Electronic Store. EPAM Lab</p>
         </div>
     </div>
 </div>
