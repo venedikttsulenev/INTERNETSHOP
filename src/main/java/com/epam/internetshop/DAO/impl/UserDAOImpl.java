@@ -15,7 +15,7 @@ import java.util.List;
 
 public class UserDAOImpl extends DAO<User> implements UserDAO {
 
-    final static Logger logger = Logger.getLogger(PaymentDAOImpl.class);
+    final static Logger logger = Logger.getLogger(UserDAOImpl.class);
 
     public List<User> getAll() {
         Session session = HibernateSessionFactory.getSession();
