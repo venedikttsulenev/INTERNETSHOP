@@ -53,8 +53,6 @@ public class Controller extends HttpServlet implements javax.servlet.Servlet {
             );
             page = configurationManager.getProperty(ConfigurationManager.ERROR_PAGE_PATH);
         }
-//        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
-//        dispatcher.forward(request, response);
         response.sendRedirect(page);
     }
 }

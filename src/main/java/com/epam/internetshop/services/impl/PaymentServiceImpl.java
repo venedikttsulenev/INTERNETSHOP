@@ -6,9 +6,9 @@ import com.epam.internetshop.DAO.ProductDAO;
 import com.epam.internetshop.DAO.UserDAO;
 import com.epam.internetshop.DAO.impl.HibernateDAOFactory;
 import com.epam.internetshop.domain.Payment;
+import com.epam.internetshop.domain.Product;
 import com.epam.internetshop.domain.User;
 import com.epam.internetshop.services.PaymentService;
-import com.epam.internetshop.services.exception.PaymentException;
 import com.epam.internetshop.services.exception.ProductException;
 import com.epam.internetshop.services.exception.UserException;
 import com.epam.internetshop.services.manager.ServiceFactory;
@@ -50,8 +50,8 @@ public class PaymentServiceImpl implements PaymentService {
         return paymentDAO.getAll();
     }
 
-    public void performPayment(String userLogin, HashMap<Long,Long> productCountList)
-            throws ProductException, PaymentException {
+    public void performPayment(String userLogin, HashMap<Product,Long> productCountList)
+            throws UserException, ProductException {
         if (userDAO.isBlackListed(userLogin))
             throw new UserException("User is in black list");
         Long currencyAmount = 0L;
@@ -60,8 +60,8 @@ public class PaymentServiceImpl implements PaymentService {
             throw new NullPointerException();
         }
 
-        for (HashMap.Entry<Long,Long> entry: productCountList.entrySet()){
-            Long productId = entry.getKey();
+        for (HashMap.Entry<Product,Long> entry: productCountList.entrySet()){
+            Long productId = entry.getKey().getId();
             Long productQuantity = entry.getValue();
 
             if (productQuantity < 1)

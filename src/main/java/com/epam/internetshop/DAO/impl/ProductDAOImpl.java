@@ -64,12 +64,12 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
         session.close();
     }
 
-    public void decrementCount(HashMap<Long, Long> productCountList) {
+    public void decrementCount(HashMap<Product, Long> productCountList) {
         Session session = HibernateSessionFactory.getSession();
         Transaction transaction = session.beginTransaction();
         try {
-            for (HashMap.Entry<Long, Long> entry : productCountList.entrySet()) {
-                Long productId = entry.getKey();
+            for (HashMap.Entry<Product, Long> entry : productCountList.entrySet()) {
+                Long productId = entry.getKey().getId();
                 Long productQuantity = entry.getValue();
                 Product product = session.get(Product.class, productId);
                 Long count = product.getCount();

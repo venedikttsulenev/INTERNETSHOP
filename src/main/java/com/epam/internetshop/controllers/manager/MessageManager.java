@@ -12,6 +12,7 @@ public class MessageManager {
     public static final String REGISTER_ERROR_MESSAGE = "REGISTER_ERROR_MESSAGE";
     public static final String SERVLET_EXCEPTION_ERROR_MESSAGE = "SERVLET_EXCEPTION_ERROR_MESSAGE";
     public static final String IO_EXCEPTION_ERROR_MESSAGE = "IO_EXCEPTION_ERROR_MESSAGE";
+    public static final String BUY_SUCCESS_MESSAGE = "BUY_SUCCESS_MESSAGE";
 
     public static MessageManager getInstance() {
         if (instance == null) {

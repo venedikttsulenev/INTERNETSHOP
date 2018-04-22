@@ -14,7 +14,7 @@ public class RequestHelper {
         supportedCommands.put("login", new LoginCommand());
         supportedCommands.put("register", new RegisterCommand());
         supportedCommands.put("addToCart", new AddToCartCommand());
-        supportedCommands.put("removeFromCart", new RemoveFromCartCommand());
+        supportedCommands.put("clearCart", new ClearCartCommand());
         supportedCommands.put("buy", new BuyCommand());
         supportedCommands.put("logout", new LogoutCommand());
     }

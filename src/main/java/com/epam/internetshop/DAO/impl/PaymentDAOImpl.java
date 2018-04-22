@@ -6,8 +6,6 @@ import com.epam.internetshop.DAO.util.HibernateSessionFactory;
 import com.epam.internetshop.domain.Payment;
 import com.epam.internetshop.domain.Product;
 import com.epam.internetshop.domain.User;
-import com.epam.internetshop.services.exception.ProductException;
-import com.epam.internetshop.services.exception.UserException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -32,14 +30,14 @@ public class PaymentDAOImpl extends DAO<Payment> implements PaymentDAO {
         return list;
     }
 
-    public void createFromPaylist(Long userId, HashMap<Long, Long> productCountList) throws HibernateException {
+    public void createFromPaylist(Long userId, HashMap<Product, Long> productCountList) throws HibernateException {
         Session session = HibernateSessionFactory.getSession();
         Transaction transaction = session.beginTransaction();
 
         User user = session.get(User.class, userId);
         try {
-            for (HashMap.Entry<Long,Long> entry: productCountList.entrySet()){
-                Long productId = entry.getKey();
+            for (HashMap.Entry<Product,Long> entry: productCountList.entrySet()){
+                Long productId = entry.getKey().getId();
                 Long productQuantity = entry.getValue();
 
                 Product product = session.get(Product.class, productId);

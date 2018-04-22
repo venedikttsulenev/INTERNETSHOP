@@ -1,7 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page language="java" contentType="text/html;
-charset=ISO-8859-1" pageEncoding="ISO-8859-1" import="com.epam.internetshop.services.manager.ServiceFactory" import="com.epam.internetshop.domain.Product" import="java.util.HashMap"%>
-<html>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"
+         import="com.epam.internetshop.services.manager.ServiceFactory"
+         import="java.util.HashMap"
+         import="com.epam.internetshop.domain.Product" %>
+<html lang="en">
 <head>
     <title>Electronic Store. EPAM Lab</title>
     <!-- Custom Theme files -->
@@ -69,9 +71,9 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1" import="com.epam.internetshop.serv
 <!-- //banner -->
 <%
     request.setAttribute("productsList", ServiceFactory.newProductService().getAll());
-    HashMap<Long, Long> bucketList = (HashMap<Long, Long>) session.getAttribute("bucketList");
+    HashMap<Product, Long> bucketList = (HashMap<Product, Long>) session.getAttribute("bucketList");
     if (bucketList == null)
-        bucketList = new HashMap<Long, Long>();
+        bucketList = new HashMap<>();
     session.setAttribute("bucketList", bucketList);
 %>
 <br/>
@@ -94,40 +96,18 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1" import="com.epam.internetshop.serv
                     <tbody>
 
                     <c:forEach items="${productsList}" var="prod">
-                    <jsp:scriptlet>
-                    Product product = (Product) pageContext.getAttribute("prod");
-                    </jsp:scriptlet>
                     <tr>
-                        <td>
-                            <jsp:expression>product.getName()</jsp:expression>
-                        </td>
-                        <td>
-                            <jsp:expression>product.getDescription()</jsp:expression>
-                        </td>
-                        <td>
-                            <jsp:expression>product.getCount()</jsp:expression>
-                        </td>
-                        <td>
-                            <jsp:expression>product.getPrice()</jsp:expression>
-                        </td>
+                        <td>${prod.name}</td>
+                        <td>${prod.description}</td>
+                        <td>${prod.count}</td>
+                        <td>${prod.price}</td>
                         <td class="text-right">
                             <form action="process" method="post">
                                 <input type="hidden" name="command" value="addToCart"/>
-                                <input type="hidden" name="productId" value="${id}">
-                                <jsp:element name="input">
-                                    <jsp:attribute name="type">hidden</jsp:attribute>
-                                    <jsp:attribute name="name">productId</jsp:attribute>
-                                    <jsp:attribute name="value">
-                                        <jsp:expression>product.getId()</jsp:expression>
-                                    </jsp:attribute>
-                                </jsp:element>
-                                <jsp:element name="input">
-                                    <jsp:attribute name="type">hidden</jsp:attribute>
-                                    <jsp:attribute name="name">productCount</jsp:attribute>
-                                    <jsp:attribute name="value">1</jsp:attribute>
-                                </jsp:element>
+                                <input type="hidden" name="productId" value="${prod.id}"/>
+                                <input type="hidden" name="productCount" value="1"/>
                                 <!--<a href="#" data-toggle="modal" data-target="#myModal88"/>-->
-                                <button class="btn btn-sm btn-danger">Add to cart </button>
+                                <button class="btn btn-sm btn-danger">Add to cart</button>
                             </form>
                         </td>
                     </tr>

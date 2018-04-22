@@ -18,7 +18,7 @@ public class LoginLogic {
 
         User userByLogin = service.getByLogin(login);
 
-        return (userByLogin != null && password.equals(userByLogin.getPassword()));
+        return (userByLogin != null && !userByLogin.isBlackListed() && password.equals(userByLogin.getPassword()));
         /* TODO: Secure authentication */
     }
 }
