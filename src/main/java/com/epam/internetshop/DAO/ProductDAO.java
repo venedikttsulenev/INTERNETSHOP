@@ -22,7 +22,7 @@ public interface ProductDAO {
 
     void decrementCount(Long productId, Long decrementCount);
 
-    void decrementCount(HashMap<Long, Long> productCountList);
+    void decrementCount(HashMap<Product, Long> productCountList);
 
     List<Product> getAllSorted(String columnName, boolean isAsc);
 

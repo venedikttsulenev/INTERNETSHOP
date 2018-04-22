@@ -1,67 +1,60 @@
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
           xmlns:c="http://java.sun.com/jsp/jstl/core" version="2.0">
-    <jsp:directive.page import="com.epam.internetshop.domain.Product"/>
-    <jsp:directive.page import="java.util.HashMap"/>
-    <jsp:directive.page import="com.epam.internetshop.services.ProductService"/>
-    <jsp:directive.page import="com.epam.internetshop.services.manager.ServiceFactory"/>
     <jsp:directive.page contentType="text/html;charset=Utf-8"/>
     <html>
     <head>
         <title>Bucket</title>
     </head>
     <body>
-    <jsp:declaration>
-        private ProductService productService = ServiceFactory.newProductService();
-    </jsp:declaration>
-    <table align="center">
-        <tr>
-            <th>Name</th>
-            <th>Descritption</th>
-            <th>Price</th>
-            <th>Buy</th>
-        </tr>
-        <c:forEach items="${bucketList}" var="ent"> <!-- bucketList comes as session attribte -->
-            <jsp:scriptlet>
-                HashMap.Entry&lt;Long, Long&gt; entry =
-                        (HashMap.Entry&lt;Long, Long&gt;) pageContext.getAttribute("ent");
-                Long productID = entry.getKey();
-                Product product = productService.getById(productID);
-            </jsp:scriptlet>
-            <h>
-            <jsp:expression>productID</jsp:expression>
-            </h>
-            <tr>
-                <td>
-                    <jsp:expression>product.getName()</jsp:expression>
-                </td>
-                <td>
-                    <jsp:expression>product.getDescription()</jsp:expression>
-                </td>
-                <td>
-                    <jsp:expression>product.getPrice()</jsp:expression>
-                </td>
-                <td>
-                    <!-- Remove from cart button -->
-                    <form action="process" method="post">
-                        <input type="hidden" name="command" value="removeFromCart"/>
-                        <jsp:element name="input">
-                            <jsp:attribute name="type">hidden</jsp:attribute>
-                            <jsp:attribute name="name">productId</jsp:attribute>
-                            <jsp:attribute name="value">
-                                <jsp:expression>productID</jsp:expression>
-                            </jsp:attribute>
-                        </jsp:element>
-                        <!-- Sends id of product to be removed from cart -->
-                        <button type="submit">Remove from cart</button>
-                    </form>
-                </td>
-            </tr>
-        </c:forEach>
-        <form action="process" method="post">
-            <input type="hidden" name="command" value="buy"/>
-            <button type="submit">Buy</button>
-        </form>
-    </table>
+    <c:if test="${message != null}">
+        ${message}
+        <br/>
+        <c:remove var="message" scope="session"/>
+    </c:if>
+    <c:set var="name" value="bucketList"/>
+    <c:choose>
+        <c:when test="${empty sessionScope[name]}">
+            Your cart is empty
+            <br/>
+        </c:when>
+        <c:otherwise>
+            <form action="process" method="post">
+                <input type="hidden" name="command" value="buy"/>
+                <table align="center">
+                    <tr>
+                        <th>Name</th>
+                        <th>Descritption</th>
+                        <th>Include in order</th>
+                        <th>Price</th>
+                    </tr>
+                    <c:forEach items="${bucketList}" var="ent" varStatus="status">
+                        <!-- bucketList comes as session attribte -->
+                        <!-- bucketList is a HashMap <Product, Long>, where Long value is count -->
+                        <tr>
+                            <td>${ent.key.name}</td>
+                            <td>${ent.key.description}</td>
+                            <td>${ent.key.price}</td>
+                            <td>
+                                <input type="checkbox" name="productIncluded${status.index}" value="true"
+                                       checked="checked"/>
+                            </td>
+                            <td>
+                                <input type="number" min="1" max="${ent.key.count}" name="productCount${status.index}"
+                                       value="${ent.value}"/>
+                                <input type="hidden" name="productId${status.index}" value="${ent.key.id}"/>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </table>
+                <button type="submit">Place your order</button>
+            </form>
+            <form action="process" method="post">
+                <input type="hidden" name="command" value="clearCart"/>
+                <button type="submit">Clear cart</button>
+            </form>
+        </c:otherwise>
+    </c:choose>
+    <a href="logined.jsp">Return to main page</a>
     </body>
     </html>
 </jsp:root>
