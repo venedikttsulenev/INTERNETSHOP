@@ -1,6 +1,7 @@
 package com.epam.internetshop.services;
 
 import com.epam.internetshop.domain.Product;
+import com.epam.internetshop.services.exception.ProductException;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public interface ProductService {
 
     void delete(Product product);
 
-    void increaseCount(Long productId, Long additionCount);
+    void increaseCount(Long productId, Long additionCount) throws ProductException;
 
     List<Product> getAll();
 
@@ -24,5 +25,5 @@ public interface ProductService {
 
     Product getById(Long Id);
 
-    boolean isEnoughProduct(Long productId, Long productQuantity);
+    boolean isEnoughProduct(Long productId, Long productQuantity) throws ProductException;
 }

@@ -27,7 +27,7 @@ public interface UserDAO {
 
     Long getAccount(Long userId);
 
-    void withdraw(Long userId, Long withdrawAmount) throws UserException, HibernateException;
+    void withdraw(Long userId, Long withdrawAmount) throws UserException;
 
     void incrementAccount(Long userId, Long amount) throws UserException;
 }

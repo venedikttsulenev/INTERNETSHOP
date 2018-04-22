@@ -12,7 +12,7 @@ public interface PaymentDAO {
 
     List<Payment> getAll();
 
-    void createFromPaylist(Long userId, HashMap<Product, Long> productCountList) throws HibernateException;
+    void createFromPaylist(Long userId, HashMap<Product, Long> productCountList);
 
     Payment getById(Long id);
 
