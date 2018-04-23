@@ -50,6 +50,23 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
         return (product == null) ? null : product.getCount();
     }
 
+    public Product setCount(Long productId, Long productCount) {
+        if (productCount < 0) {
+            logger.error("Can't set count.");
+            throw new ProductException();
+        }
+        Session session = HibernateSessionFactory.getSession();
+        Product product = session.get(Product.class, productId);
+        product.setCount(productCount);
+        Transaction transaction = session.beginTransaction();
+
+        session.update(product);
+        transaction.commit();
+
+        session.close();
+        return product;
+    }
+
     public void increaseCount(Long productId, Long additionalCount) {
         if (additionalCount < 1) {
             logger.error("Can't increase.");

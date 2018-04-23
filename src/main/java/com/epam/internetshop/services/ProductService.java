@@ -25,5 +25,7 @@ public interface ProductService {
 
     Product getById(Long Id);
 
+    Product setCount(Long productId, Long productCount) throws ProductException;
+
     boolean isEnoughProduct(Long productId, Long productQuantity) throws ProductException;
 }

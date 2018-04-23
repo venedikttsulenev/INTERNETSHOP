@@ -57,6 +57,14 @@ public class ProductServiceImpl implements ProductService {
         return productDAO.getById(Id);
     }
 
+    public Product setCount(Long productId, Long productCount) {
+        if (productId == null || productCount == null || productCount < 0) {
+            logger.error("Can't set product count.");
+            throw new ProductException();
+        }
+        return productDAO.setCount(productId, productCount);
+    }
+
     public boolean isEnoughProduct(Long productId, Long productQuantity) throws ProductException {
         Long count = productDAO.getCount(productId);
         if (count == null) {
