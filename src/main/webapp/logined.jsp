@@ -55,12 +55,14 @@
             <br/>
             <br/>
         </form>
-        <div class="cart cart box_1">
-            <form action="bucket.jsp" method="post" class="last">
-                <button class="w3view-cart" type="submit" name="submit" value=""><i class="fa fa-cart-arrow-down"
-                                                                                    aria-hidden="true"></i></button>
-            </form>
-        </div>
+        <c:if test="${!user.isBlackListed()}">
+            <div class="cart cart box_1">
+                <form action="bucket.jsp" method="post" class="last">
+                    <button class="w3view-cart" type="submit" name="submit" value=""><i class="fa fa-cart-arrow-down"
+                                                                                        aria-hidden="true"></i></button>
+                </form>
+            </div>
+        </c:if>
     </div>
 </div>
 <!-- //header -->
@@ -73,10 +75,6 @@
 <!-- //banner -->
 <%
     request.setAttribute("productsList", ServiceFactory.newProductService().getAll());
-    HashMap<Product, Long> bucketList = (HashMap<Product, Long>) session.getAttribute("bucketList");
-    if (bucketList == null)
-        bucketList = new HashMap<>();
-    session.setAttribute("bucketList", bucketList);
 %>
 <br/>
 <br/>
@@ -111,10 +109,17 @@
                                     <!--<a href="#" data-toggle="modal" data-target="#myModal88"/>-->
                                     <c:choose>
                                         <c:when test="${prod.count > 0}">
-                                            <button class="btn btn-sm btn-danger">Add to cart</button>
+                                            <c:choose>
+                                                <c:when test="${!user.isBlackListed()}">
+                                                    <button class="btn btn-sm btn-danger">Add to cart</button>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <button class="btn btn-sm btn-danger" disabled>Add to cart</button>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </c:when>
                                         <c:otherwise>
-                                            <button class="btn btn-sm btn-danger" disabled>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Out&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                                            Out
                                         </c:otherwise>
                                     </c:choose>
                                 </form>

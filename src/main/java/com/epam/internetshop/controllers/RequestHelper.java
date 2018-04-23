@@ -19,6 +19,8 @@ public class RequestHelper {
         supportedCommands.put("logout", new LogoutCommand());
         supportedCommands.put("addMoney", new ReplenishBalanceCommand());
         supportedCommands.put("newProduct", new NewProductCommand());
+        supportedCommands.put("black", new BlacklistCommand());
+        supportedCommands.put("unblack", new UnBlacklistCommand());
     }
 
     public Command getCommand(HttpServletRequest request) {

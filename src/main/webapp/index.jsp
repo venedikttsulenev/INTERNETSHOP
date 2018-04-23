@@ -172,7 +172,7 @@ charset=UTF-8" pageEncoding="UTF-8" import="com.epam.internetshop.services.manag
                                         <button class="btn btn-sm btn-danger">Add to cart</button>
                                     </c:when>
                                     <c:otherwise>
-                                        <button class="btn btn-sm btn-danger" disabled>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Out&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                                        Out
                                     </c:otherwise>
                                 </c:choose>
 							</td>
