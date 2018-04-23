@@ -212,6 +212,49 @@
             </div>
         </div>
     </div>
+    <div class="container mb-4">
+        <div class="row">
+            <div class="col-12">
+                <h3 class="w3ls-hdg">Change item count</h3>
+                <div class="table-responsive">
+                    <table style="width: 88%; margin: auto" class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col" style="color: black">Name</th>
+                            <th scope="col" style="color: black">Description</th>
+                            <th scope="col" style="color: black">Available</th>
+                            <th scope="col" style="color: black"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <%
+                            request.setAttribute("productsList", ServiceFactory.newProductService().getAll());
+                        %>
+                        <c:forEach items="${productsList}" var="prod">
+                            <tr>
+                                <td>${prod.name}</td>
+                                <td>${prod.description}</td>
+                                <form action="process" method="post">
+                                <td>
+                                    <input type="hidden" name="command" value="changeCount">
+                                    <div class="form-group w3-agile">
+                                        <input type="number" min="0" class="form-control" placeholder="${prod.count}"
+                                               name="productCount">
+                                        <input type="hidden" name="productId" value="${prod.id}"/>
+                                    </div>
+                                </td>
+                                <td><button class="btn btn-sm btn-danger">Change</button></td>
+                                </form>
+
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </c:if>
 <!-- footer -->
 <div class="footer">
