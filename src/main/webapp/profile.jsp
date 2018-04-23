@@ -58,7 +58,7 @@
             <br/>
         </form>
         <div class="cart cart box_1">
-            <form action="bucket.jspx" method="post" class="last">
+            <form action="bucket.jsp" method="post" class="last">
                 <button class="w3view-cart" type="submit" name="submit" value=""><i class="fa fa-cart-arrow-down"
                                                                                     aria-hidden="true"></i></button>
             </form>

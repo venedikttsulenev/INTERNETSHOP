@@ -68,6 +68,7 @@
     <c:if test="${message != null}">
         ${message}
         <br/>
+        <br/>
         <c:remove var="message" scope="session"/>
     </c:if>
     <c:set var="name" value="bucketList"/>
