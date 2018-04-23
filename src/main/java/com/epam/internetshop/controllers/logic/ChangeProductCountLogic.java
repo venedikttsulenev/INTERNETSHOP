@@ -2,7 +2,7 @@ package com.epam.internetshop.controllers.logic;
 
 import com.epam.internetshop.services.ProductService;
 import com.epam.internetshop.services.exception.ProductException;
-import com.epam.internetshop.services.manager.ServiceFactory;
+import com.epam.internetshop.services.impl.ServiceFactory;
 
 public class ChangeProductCountLogic {
     private static final ProductService productService = ServiceFactory.newProductService();

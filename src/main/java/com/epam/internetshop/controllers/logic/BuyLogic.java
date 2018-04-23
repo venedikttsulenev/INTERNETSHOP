@@ -4,7 +4,7 @@ import com.epam.internetshop.domain.Product;
 import com.epam.internetshop.domain.User;
 import com.epam.internetshop.services.PaymentService;
 import com.epam.internetshop.services.ProductService;
-import com.epam.internetshop.services.manager.ServiceFactory;
+import com.epam.internetshop.services.impl.ServiceFactory;
 
 import java.util.HashMap;
 

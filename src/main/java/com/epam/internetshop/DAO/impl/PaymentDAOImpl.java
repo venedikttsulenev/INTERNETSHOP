@@ -22,7 +22,7 @@ public class PaymentDAOImpl extends DAO<Payment> implements PaymentDAO {
     final static Logger logger = Logger.getLogger(PaymentDAOImpl.class);
 
     public List<Payment> getAll() {
-        Session session = HibernateSessionFactory.getSession();
+        Session session = HibernateSessionFactory.openSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
 
         CriteriaQuery<Payment> criteria = builder.createQuery(Payment.class);
@@ -34,7 +34,7 @@ public class PaymentDAOImpl extends DAO<Payment> implements PaymentDAO {
     }
 
     public void createFromPaylist(Long userId, HashMap<Product, Long> productCountList){
-        Session session = HibernateSessionFactory.getSession();
+        Session session = HibernateSessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
         User user = session.get(User.class, userId);
@@ -64,7 +64,7 @@ public class PaymentDAOImpl extends DAO<Payment> implements PaymentDAO {
     }
 
     public Payment getById(Long id) {
-        Session session = HibernateSessionFactory.getSession();
+        Session session = HibernateSessionFactory.openSession();
         Payment payment;
 
         payment = session.get(Payment.class, id);

@@ -7,7 +7,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8"
-         import="com.epam.internetshop.services.manager.ServiceFactory" %>
+         import="com.epam.internetshop.services.impl.ServiceFactory" %>
 <html>
 <head>
     <title>Profile</title>

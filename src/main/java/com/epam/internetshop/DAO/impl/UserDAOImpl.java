@@ -18,7 +18,7 @@ public class UserDAOImpl extends DAO<User> implements UserDAO {
     final static Logger logger = Logger.getLogger(UserDAOImpl.class);
 
     public List<User> getAll() {
-        Session session = HibernateSessionFactory.getSession();
+        Session session = HibernateSessionFactory.openSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
 
         CriteriaQuery<User> criteria = builder.createQuery(User.class);
@@ -30,7 +30,7 @@ public class UserDAOImpl extends DAO<User> implements UserDAO {
     }
 
     public List<User> getAllUsers() {
-        Session session = HibernateSessionFactory.getSession();
+        Session session = HibernateSessionFactory.openSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
 
         CriteriaQuery<User> query = builder.createQuery(User.class);
@@ -45,7 +45,7 @@ public class UserDAOImpl extends DAO<User> implements UserDAO {
     }
 
     public User getById(Long id) {
-        Session session = HibernateSessionFactory.getSession();
+        Session session = HibernateSessionFactory.openSession();
 
         User user = session.get(User.class, id);
 
@@ -54,7 +54,7 @@ public class UserDAOImpl extends DAO<User> implements UserDAO {
     }
 
     public User getByLogin(String login) {
-        Session session = HibernateSessionFactory.getSession();
+        Session session = HibernateSessionFactory.openSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         User user = null;
 
@@ -73,18 +73,20 @@ public class UserDAOImpl extends DAO<User> implements UserDAO {
     }
 
     public User setBlackListed(Long userId, boolean isBlackListed){
-        Session session = HibernateSessionFactory.getSession();
+        Session session = HibernateSessionFactory.openSession();
 
         User user = session.get(User.class, userId);
+        Transaction transaction = session.beginTransaction();
         user.setBlackListed(isBlackListed);
         session.update(user);
+        transaction.commit();
 
         session.close();
         return user;
     }
 
     public Boolean isBlackListed(String login) {
-        Session session = HibernateSessionFactory.getSession();
+        Session session = HibernateSessionFactory.openSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         Boolean isBlackListed = null;
 
@@ -103,7 +105,7 @@ public class UserDAOImpl extends DAO<User> implements UserDAO {
     }
 
     public Boolean isAdmin(String login) {
-        Session session = HibernateSessionFactory.getSession();
+        Session session = HibernateSessionFactory.openSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         Boolean isAdmin = null;
 
@@ -122,7 +124,7 @@ public class UserDAOImpl extends DAO<User> implements UserDAO {
     }
 
     public Long getAccount(Long userId) {
-        Session session = HibernateSessionFactory.getSession();
+        Session session = HibernateSessionFactory.openSession();
 
         User user = session.get(User.class, userId);
 
@@ -131,7 +133,7 @@ public class UserDAOImpl extends DAO<User> implements UserDAO {
     }
 
     public void withdraw(Long userId, Long withdrawAmount) {
-        Session session = HibernateSessionFactory.getSession();
+        Session session = HibernateSessionFactory.openSession();
 
         Transaction transaction = session.beginTransaction();
         try {
@@ -161,7 +163,7 @@ public class UserDAOImpl extends DAO<User> implements UserDAO {
     }
 
     public void incrementAccount(Long userId, Long amount) {
-        Session session = HibernateSessionFactory.getSession();
+        Session session = HibernateSessionFactory.openSession();
 
         Transaction transaction = session.beginTransaction();
         try {

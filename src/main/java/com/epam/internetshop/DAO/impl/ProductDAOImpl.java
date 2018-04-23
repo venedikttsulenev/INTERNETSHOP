@@ -21,7 +21,7 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
     final static Logger logger = Logger.getLogger(ProductDAOImpl.class);
 
     public List<Product> getAll() {
-        Session session = HibernateSessionFactory.getSession();
+        Session session = HibernateSessionFactory.openSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
 
         CriteriaQuery<Product> criteria = builder.createQuery(Product.class);
@@ -33,7 +33,7 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
     }
 
     public Product getById(Long id) {
-        Session session = HibernateSessionFactory.getSession();
+        Session session = HibernateSessionFactory.openSession();
 
         Product product = session.get(Product.class, id);
 
@@ -42,7 +42,7 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
     }
 
     public Long getCount(Long id) {
-        Session session = HibernateSessionFactory.getSession();
+        Session session = HibernateSessionFactory.openSession();
 
         Product product = session.get(Product.class, id);
 
@@ -55,7 +55,7 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
             logger.error("Can't set count.");
             throw new ProductException();
         }
-        Session session = HibernateSessionFactory.getSession();
+        Session session = HibernateSessionFactory.openSession();
         Product product = session.get(Product.class, productId);
         product.setCount(productCount);
         Transaction transaction = session.beginTransaction();
@@ -73,7 +73,7 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
             throw new ProductException();
         }
 
-        Session session = HibernateSessionFactory.getSession();
+        Session session = HibernateSessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         Product product = session.get(Product.class, productId);
         Long count = product.getCount();
@@ -88,7 +88,7 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
     }
 
     public void decrementCount(HashMap<Product, Long> productCountList) {
-        Session session = HibernateSessionFactory.getSession();
+        Session session = HibernateSessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         try {
             logger.info("Count decrease began.");
@@ -122,7 +122,7 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
     }
 
     public void decrementCount(Long productId, Long decrementCount) {
-        Session session = HibernateSessionFactory.getSession();
+        Session session = HibernateSessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
         Product product = session.get(Product.class, productId);
@@ -141,7 +141,7 @@ public class ProductDAOImpl extends DAO<Product> implements ProductDAO {
     }
 
     public List<Product> getAllSorted(String columnName, boolean isAsc) {
-        Session session = HibernateSessionFactory.getSession();
+        Session session = HibernateSessionFactory.openSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
 
         CriteriaQuery<Product> query = builder.createQuery(Product.class);

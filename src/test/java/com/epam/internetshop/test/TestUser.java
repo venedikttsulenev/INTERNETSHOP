@@ -2,7 +2,7 @@ package com.epam.internetshop.test;
 
 import com.epam.internetshop.domain.User;
 import com.epam.internetshop.services.UserService;
-import com.epam.internetshop.services.manager.ServiceFactory;
+import com.epam.internetshop.services.impl.ServiceFactory;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

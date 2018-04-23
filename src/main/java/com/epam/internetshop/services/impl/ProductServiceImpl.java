@@ -6,7 +6,6 @@ import com.epam.internetshop.DAO.impl.HibernateDAOFactory;
 import com.epam.internetshop.domain.Product;
 import com.epam.internetshop.services.ProductService;
 import com.epam.internetshop.services.exception.ProductException;
-import com.epam.internetshop.services.manager.ServiceFactory;
 import com.epam.internetshop.services.validator.ProductValidator;
 import org.apache.log4j.Logger;
 
