@@ -141,7 +141,7 @@
                                             <form action="process" method="post">
                                                 <input type="hidden" name="command" value="unblack">
                                                 <input type="hidden" name="userLogin" value="${users.login}">
-                                                <button class="btn btn-sm btn-danger">Delete from BL</button>
+                                                <button class="btn btn-sm btn-danger">Remove from BL</button>
                                             </form>
                                         </td>
                                     </c:when>

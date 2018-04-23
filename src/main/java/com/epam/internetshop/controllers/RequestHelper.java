@@ -21,6 +21,7 @@ public class RequestHelper {
         supportedCommands.put("newProduct", new NewProductCommand());
         supportedCommands.put("black", new BlacklistCommand());
         supportedCommands.put("unblack", new UnBlacklistCommand());
+        supportedCommands.put("changeCount", new ChangeProductCountCommand());
     }
 
     public Command getCommand(HttpServletRequest request) {
