@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
     private UserDAO userDAO = daoFactory.newUserDAO();
     private UserValidator userValidator = ServiceFactory.newUserValidator();
 
-    final static Logger logger = Logger.getLogger(UserServiceImpl.class);
+    private final static Logger logger = Logger.getLogger(UserServiceImpl.class);
 
     public User create(User user) {
         if (user == null || !userValidator.validateAll(user)) {
@@ -90,7 +90,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public User increaseAccount(String login, Long currencyAmount) {
-        if (login == null || currencyAmount == null)
+        if (login == null || currencyAmount == null) {
             throw new UserException("Null values.");
         }
         if (currencyAmount <= 0) {
