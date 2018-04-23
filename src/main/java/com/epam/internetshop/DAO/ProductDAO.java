@@ -19,6 +19,8 @@ public interface ProductDAO {
 
     Long getCount(Long id);
 
+    Product setCount(Long productId, Long productCount) throws ProductException;
+
     void increaseCount(Long productId, Long additionalCount) throws ProductException;
 
     void decrementCount(Long productId, Long decrementCount) throws ProductException;
