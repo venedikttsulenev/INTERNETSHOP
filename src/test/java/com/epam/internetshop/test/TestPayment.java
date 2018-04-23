@@ -50,7 +50,7 @@ public class TestPayment {
     public void testPaymentNotEnoughCash() {
         User user = userService.create(new User("paymentTest", "12345678", 0L, false, false));
         Product product = productService.create(
-                new Product("name", "disc", 10L, 10L));
+                new Product("productName", "disc", 10L, 10L));
         HashMap<Product, Long> map = new HashMap<>();
         map.put(product, 1L);
         paymentService.performPayment(user.getLogin(), map);
@@ -60,7 +60,7 @@ public class TestPayment {
     public void testPayment() {
         User user = userService.create(new User("paymentTest1", "12345678", 10L, false, false));
         Product product = productService.create(
-                new Product("name", "disc", 10L, 10L));
+                new Product("productName", "disc", 10L, 10L));
         HashMap<Product, Long> map = new HashMap<>();
         map.put(product, 1L);
         paymentService.performPayment(user.getLogin(), map);
@@ -69,7 +69,7 @@ public class TestPayment {
     @Test(expected = NullPointerException.class)
     public void testPaymentNullLogin() {
         Product product = productService.create(
-                new Product("name", "disc", 10L, 10L));
+                new Product("productName", "disc", 10L, 10L));
         HashMap<Product, Long> map = new HashMap<>();
         map.put(product, 1L);
         paymentService.performPayment(null, map);
@@ -86,7 +86,7 @@ public class TestPayment {
         User user = userService.create(
                 new User("paymentTest3", "12345678", 10L, false, false));
         Product product = productService.create(
-                new Product("name", "disc", 1L, 10L));
+                new Product("productName", "disc", 1L, 10L));
         HashMap<Product, Long> map = new HashMap<>();
         map.put(product, 2L);
         paymentService.performPayment(user.getLogin(), map);

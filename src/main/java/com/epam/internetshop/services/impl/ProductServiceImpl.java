@@ -3,7 +3,6 @@ package com.epam.internetshop.services.impl;
 import com.epam.internetshop.DAO.DAOFactory;
 import com.epam.internetshop.DAO.ProductDAO;
 import com.epam.internetshop.DAO.impl.HibernateDAOFactory;
-import com.epam.internetshop.DAO.impl.PaymentDAOImpl;
 import com.epam.internetshop.domain.Product;
 import com.epam.internetshop.services.ProductService;
 import com.epam.internetshop.services.exception.ProductException;
@@ -68,7 +67,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public List<Product> getAllNameSorted(boolean isAsc) {
-        return productDAO.getAllSorted("name", isAsc);
+        return productDAO.getAllSorted("productName", isAsc);
     }
 
     public List<Product> getAllPriceSorted(boolean isAsc) {
