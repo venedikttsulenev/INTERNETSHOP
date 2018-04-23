@@ -14,17 +14,24 @@ public class ReplenishBalanceCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
 
-        try {
-            Long amount = Long.valueOf(request.getParameter("amount"));
-            User user = (User) session.getAttribute("user");
+        String amountParameter = request.getParameter("amount");
+        if (null == amountParameter)
+            session.setAttribute("message", "Error: amount of money is not specified");
+        else if (amountParameter.length() == 0)
+            session.setAttribute("message", "Please, enter the sum");
+        else {
+            try {
+                Long amount = Long.valueOf(amountParameter);
+                User user = (User) session.getAttribute("user");
 
-            user = ReplenishBalanceLogic.replenishBalance(user, amount);
+                user = ReplenishBalanceLogic.replenishBalance(user, amount);
 
-            session.setAttribute("user", user); /* Update user data */
-        } catch (UserException e) {
-            session.setAttribute("message", e.getMessage());
-        } catch (NumberFormatException e) {
-            session.setAttribute("message", "You are not supposed to add such amounts of money");
+                session.setAttribute("user", user); /* Update user data */
+            } catch (UserException e) {
+                session.setAttribute("message", e.getMessage());
+            } catch (NumberFormatException e) {
+                session.setAttribute("message", "You are not supposed to add such amounts of money");
+            }
         }
 
         return ConfigurationManager.getInstance().getProperty(ConfigurationManager.PROFILE_PAGE_PATH);
