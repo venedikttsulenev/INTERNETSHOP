@@ -6,7 +6,6 @@ import com.epam.internetshop.DAO.impl.HibernateDAOFactory;
 import com.epam.internetshop.domain.User;
 import com.epam.internetshop.services.UserService;
 import com.epam.internetshop.services.exception.UserException;
-import com.epam.internetshop.services.manager.ServiceFactory;
 import com.epam.internetshop.services.validator.UserValidator;
 import org.apache.log4j.Logger;
 

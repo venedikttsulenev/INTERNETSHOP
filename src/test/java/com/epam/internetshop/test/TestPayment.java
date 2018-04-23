@@ -8,7 +8,7 @@ import com.epam.internetshop.services.ProductService;
 import com.epam.internetshop.services.UserService;
 import com.epam.internetshop.services.exception.ProductException;
 import com.epam.internetshop.services.exception.UserException;
-import com.epam.internetshop.services.manager.ServiceFactory;
+import com.epam.internetshop.services.impl.ServiceFactory;
 import org.junit.Test;
 
 import java.util.Date;

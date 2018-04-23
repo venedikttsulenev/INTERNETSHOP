@@ -10,7 +10,7 @@ public abstract class DAO<T> {
     private final static Logger logger = Logger.getLogger(DAO.class);
 
     public T create(T entity) {
-        Session session = HibernateSessionFactory.getSession();
+        Session session = HibernateSessionFactory.openSession();
 
         Transaction transaction = session.beginTransaction();
         session.save(entity);
@@ -22,7 +22,7 @@ public abstract class DAO<T> {
     }
 
     public T update(T entity) {
-        Session session = HibernateSessionFactory.getSession();
+        Session session = HibernateSessionFactory.openSession();
 
         Transaction transaction = session.beginTransaction();
         session.update(entity);
@@ -34,7 +34,7 @@ public abstract class DAO<T> {
     }
 
     public void delete(T entity) {
-        Session session = HibernateSessionFactory.getSession();
+        Session session = HibernateSessionFactory.openSession();
 
         Transaction transaction = session.beginTransaction();
         session.delete(entity);

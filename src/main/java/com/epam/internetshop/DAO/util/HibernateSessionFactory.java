@@ -18,15 +18,7 @@ public class HibernateSessionFactory {
         }
     }
 
-    private static SessionFactory buildSessionFactory() {
-        return new Configuration().configure().buildSessionFactory();
-    }
-
-    public static SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
-
-    public static Session getSession() {
+    public static Session openSession() {
         return sessionFactory.openSession();
     }
 
