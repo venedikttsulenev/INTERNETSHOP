@@ -119,7 +119,7 @@
                         <thead>
                         <tr>
                             <th scope="col" style="color: black">Name</th>
-                            <th scope="col" style="color: black">Is black list</th>
+                            <th scope="col" style="color: black">Is blacklisted</th>
                             <th scope="col" style="color: black"></th>
                         </tr>
                         </thead>
@@ -129,12 +129,8 @@
                             <jsp:scriptlet>
                             </jsp:scriptlet>
                             <tr>
-                                <td>
-                                        ${users.login}
-                                </td>
-                                <td>
-                                        ${users.isBlackListed()}
-                                </td>
+                                <td>${users.login}</td>
+                                <td>${users.isBlackListed()}</td>
                                 <c:if test="${users.isBlackListed()}">
                                     <td class="text-right">
                                         <form action="process" method="post">
@@ -165,31 +161,37 @@
         <div class="container">
             <div class="grid_3 grid_4">
                 <h3 class="w3ls-hdg">Add product</h3>
+                <c:if test="${newProductMessage != null}">
+                    ${newProductMessage}
+                    <br/>
+                    <c:remove var="newProductMessage" scope="session"/>
+                </c:if>
                 <div class="tab-content">
                     <div class="tab-pane active" id="horizontal-form">
-                        <form class="form-horizontal" action="#" method="post">
+                        <form class="form-horizontal" action="process" method="post">
+                            <input type="hidden" name="command" value="newProduct">
                             <div class="form-group">
-                                <label for="mediuminput1" class="col-sm-2 control-label">Продукт</label>
+                                <label for="mediuminput1" class="col-sm-2 control-label">Product</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control1" id="mediuminput1" placeholder="Продукт">
+                                    <input type="text" name="productName" class="form-control1" id="mediuminput1" placeholder="Product">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="mediuminput2" class="col-sm-2 control-label">Описание</label>
+                                <label for="mediuminput2" class="col-sm-2 control-label">Description</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control1" id="mediuminput2" placeholder="Описание">
+                                    <input type="text" name="productDescription" class="form-control1" id="mediuminput2" placeholder="Description">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="mediuminput3" class="col-sm-2 control-label">Количество</label>
+                                <label for="mediuminput3" class="col-sm-2 control-label">Available</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control1" id="mediuminput3" placeholder="Количество">
+                                    <input type="number" name="productAvailable" class="form-control1" id="mediuminput3" placeholder="Available">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="mediuminput" class="col-sm-2 control-label">Цена</label>
+                                <label for="mediuminput" class="col-sm-2 control-label">Price</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control1" id="mediuminput" placeholder="Цена">
+                                    <input type="number" name="productPrice" class="form-control1" id="mediuminput" placeholder="Price">
                                 </div>
                             </div>
                             <input class="btn btn-sm btn-danger" type="submit" value="Send">
