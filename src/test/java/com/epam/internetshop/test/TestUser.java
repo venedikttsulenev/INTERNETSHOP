@@ -1,8 +1,6 @@
 package com.epam.internetshop.test;
 
-
 import com.epam.internetshop.domain.User;
-import com.epam.internetshop.services.PaymentService;
 import com.epam.internetshop.services.UserService;
 import com.epam.internetshop.services.manager.ServiceFactory;
 import org.junit.Test;
@@ -28,7 +26,7 @@ public class TestUser {
     @Test
     public void createWrongPassword() {
         assertEquals(null, userService.create(
-                new User("TestPassadmin", "123456", 0L, false, false)));
+                new User("TestPassAdmin", "123456", 0L, false, false)));
     }
 
     @Test
