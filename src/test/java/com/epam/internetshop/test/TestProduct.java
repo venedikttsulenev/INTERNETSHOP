@@ -14,25 +14,25 @@ public class TestProduct {
     @Test
     public void createProduct() {
         assertNotEquals(null, productService.create(
-                new Product("name", "disc", 10L, 10L)));
+                new Product("productName", "disc", 10L, 10L)));
     }
 
     @Test
     public void createZeroCount() {
         assertNotEquals(null, productService.create(
-                new Product("name", "disc", 0L, 10L)));
+                new Product("productName", "disc", 0L, 10L)));
     }
 
     @Test
     public void createZeroPrice() {
         assertNotEquals(null, productService.create(
-                new Product("name", "disc", 1L, 0L)));
+                new Product("productName", "disc", 1L, 0L)));
     }
 
     @Test
     public void update() {
         Product product =
-                productService.create(new Product("name", "disc", 1L, 0L));
+                productService.create(new Product("productName", "disc", 1L, 0L));
         product.setName("eman");
         assertNotEquals(null, productService.update(product));
     }
@@ -40,7 +40,7 @@ public class TestProduct {
     @Test
     public void updateNullName() {
         Product product =
-                productService.create(new Product("name", "disc", 1L, 0L));
+                productService.create(new Product("productName", "disc", 1L, 0L));
         product.setName(null);
         assertEquals(null, productService.update(product));
     }
@@ -48,19 +48,19 @@ public class TestProduct {
     @Test
     public void delete() {
         Product product =
-                productService.create(new Product("name", "disc", 1L, 0L));
+                productService.create(new Product("productName", "disc", 1L, 0L));
         productService.delete(product);
     }
 
     @Test
     public void createWrongCount() {
         assertEquals(null, productService.create(
-                new Product("name", "disc", -10L, 10L)));
+                new Product("productName", "disc", -10L, 10L)));
     }
 
     @Test
     public void createWrongPrice() {
         assertEquals(null, productService.create(
-                new Product("name", "disc", 10L, -10L)));
+                new Product("productName", "disc", 10L, -10L)));
     }
 }
