@@ -26,6 +26,8 @@ public interface UserService {
 
     User increaseAccount(String login, Long currencyAmount);
 
+    User setBlackListed(String userLogin, boolean isBlackListed);
+
     Boolean isAdmin(String login);
 
     Boolean isBlackListed(String login);

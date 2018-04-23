@@ -72,6 +72,17 @@ public class UserDAOImpl extends DAO<User> implements UserDAO {
         return user;
     }
 
+    public User setBlackListed(Long userId, boolean isBlackListed){
+        Session session = HibernateSessionFactory.getSession();
+
+        User user = session.get(User.class, userId);
+        user.setBlackListed(isBlackListed);
+        session.update(user);
+
+        session.close();
+        return user;
+    }
+
     public Boolean isBlackListed(String login) {
         Session session = HibernateSessionFactory.getSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();

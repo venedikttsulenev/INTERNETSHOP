@@ -21,6 +21,8 @@ public interface UserDAO {
 
     User getByLogin(String login);
 
+    User setBlackListed(Long userId, boolean isBlackListed);
+
     Boolean isBlackListed(String login);
 
     Boolean isAdmin(String login);
