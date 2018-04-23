@@ -57,12 +57,14 @@
             <br/>
             <br/>
         </form>
-        <div class="cart cart box_1">
-            <form action="bucket.jsp" method="post" class="last">
-                <button class="w3view-cart" type="submit" name="submit" value=""><i class="fa fa-cart-arrow-down"
-                                                                                    aria-hidden="true"></i></button>
-            </form>
-        </div>
+        <c:if test="${!user.isBlackListed()}">
+            <div class="cart cart box_1">
+                <form action="bucket.jsp" method="post" class="last">
+                    <button class="w3view-cart" type="submit" name="submit" value=""><i class="fa fa-cart-arrow-down"
+                                                                                        aria-hidden="true"></i></button>
+                </form>
+            </div>
+        </c:if>
     </div>
 </div>
 <!-- //header -->
@@ -76,7 +78,10 @@
 <div class="header">
     <div class="container">
         <div class="w31_logo">
-            <h1><span>User name: ${user.login}</span></h1>
+            <h1>User name: ${user.login}</h1>
+            <c:if test="${user.isBlackListed()}">
+                You were put in blacklist by administrator
+            </c:if>
         </div>
     </div>
 </div>
@@ -96,7 +101,8 @@
                     <form class="navbar-form navbar-left" action="process" method="post">
                         <input type="hidden" name="command" value="addMoney">
                         <div class="form-group w3-agile">
-                            <input type="number" min="1" max="20000" class="form-control" placeholder="Amount" name="amount">
+                            <input type="number" min="1" max="20000" class="form-control" placeholder="Amount"
+                                   name="amount">
                         </div>
                         <button type="submit" class="btn btn-sm btn-danger">Add</button>
                     </form>
@@ -126,29 +132,30 @@
                         <tbody>
 
                         <c:forEach items="${userList}" var="users">
-                            <jsp:scriptlet>
-                            </jsp:scriptlet>
                             <tr>
                                 <td>${users.login}</td>
-                                <td>${users.isBlackListed()}</td>
-                                <c:if test="${users.isBlackListed()}">
-                                    <td class="text-right">
-                                        <form action="process" method="post">
-                                            <input type="hidden" name="command" value="unblack">
-                                            <input type="hidden" name="userId" value="${users.id}">
-                                            <button class="btn btn-sm btn-danger">Delete from BL</button>
-                                        </form>
-                                    </td>
-                                </c:if>
-                                <c:if test="${!users.isBlackListed()}">
-                                    <td class="text-right">
-                                        <form action="process" method="post">
-                                            <input type="hidden" name="command" value="black">
-                                            <input type="hidden" name="userId" value="${users.id}">
-                                            <button class="btn btn-sm btn-danger">Add to BL</button>
-                                        </form>
-                                    </td>
-                                </c:if>
+                                <c:choose>
+                                    <c:when test="${users.isBlackListed()}">
+                                        <td style="font-weight: bold">Yes</td>
+                                        <td class="text-right">
+                                            <form action="process" method="post">
+                                                <input type="hidden" name="command" value="unblack">
+                                                <input type="hidden" name="userLogin" value="${users.login}">
+                                                <button class="btn btn-sm btn-danger">Delete from BL</button>
+                                            </form>
+                                        </td>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <td>No</td>
+                                        <td class="text-right">
+                                            <form action="process" method="post">
+                                                <input type="hidden" name="command" value="black">
+                                                <input type="hidden" name="userLogin" value="${users.login}">
+                                                <button class="btn btn-sm btn-danger">Add to BL</button>
+                                            </form>
+                                        </td>
+                                    </c:otherwise>
+                                </c:choose>
                             </tr>
                         </c:forEach>
                         </tbody>
@@ -173,25 +180,29 @@
                             <div class="form-group">
                                 <label for="mediuminput1" class="col-sm-2 control-label">Product</label>
                                 <div class="col-sm-8">
-                                    <input type="text" name="productName" class="form-control1" id="mediuminput1" placeholder="Product">
+                                    <input type="text" name="productName" class="form-control1" id="mediuminput1"
+                                           placeholder="Product">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="mediuminput2" class="col-sm-2 control-label">Description</label>
                                 <div class="col-sm-8">
-                                    <input type="text" name="productDescription" class="form-control1" id="mediuminput2" placeholder="Description">
+                                    <input type="text" name="productDescription" class="form-control1" id="mediuminput2"
+                                           placeholder="Description">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="mediuminput3" class="col-sm-2 control-label">Available</label>
                                 <div class="col-sm-8">
-                                    <input type="number" name="productAvailable" class="form-control1" id="mediuminput3" placeholder="Available">
+                                    <input type="number" name="productAvailable" class="form-control1" id="mediuminput3"
+                                           placeholder="Available">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="mediuminput" class="col-sm-2 control-label">Price</label>
                                 <div class="col-sm-8">
-                                    <input type="number" name="productPrice" class="form-control1" id="mediuminput" placeholder="Price">
+                                    <input type="number" name="productPrice" class="form-control1" id="mediuminput"
+                                           placeholder="Price">
                                 </div>
                             </div>
                             <input class="btn btn-sm btn-danger" type="submit" value="Send">
