@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public List<User> getAllUsers() {
-        return  userDAO.getAllUsers();
+        return userDAO.getAllUsers();
     }
 
     public User createUser(String login, String password) {
@@ -100,6 +100,14 @@ public class UserServiceImpl implements UserService {
         User user = userDAO.getByLogin(login);
         userDAO.incrementAccount(user.getId(), currencyAmount);
         return userDAO.getById(user.getId());
+    }
+
+    public User setBlackListed(String userLogin, boolean isBlackListed) {
+        if (userLogin == null) {
+            throw new NullPointerException();
+        }
+        User user = userDAO.getByLogin(userLogin);
+        return userDAO.setBlackListed(user.getId(), isBlackListed);
     }
 
     public Boolean isAdmin(String login) {
