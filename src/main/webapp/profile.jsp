@@ -238,7 +238,7 @@
                                 <td>
                                     <input type="hidden" name="command" value="changeCount">
                                     <div class="form-group w3-agile">
-                                        <input type="number" min="0" class="form-control" placeholder="${prod.count}"
+                                        <input type="number" min="0" class="form-control" value="${prod.count}"
                                                name="productCount">
                                         <input type="hidden" name="productId" value="${prod.id}"/>
                                     </div>
